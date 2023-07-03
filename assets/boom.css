@@ -1,0 +1,177 @@
+/*---------------------------------------------
+GENERAL
+-----------------------------------------------*/
+.d-flex.gap-3 {
+    gap: 1em;
+}
+
+.d-flex.gap-2 {
+    gap: .8em;
+}
+
+.d-flex.gap-1 {
+    gap: .5em;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .md\:w-m-50 {
+        width: 50% !important;
+    }
+
+    .md\:mt-m-5 {
+        margin-top: 3rem !important;
+    }
+
+    .md\:mt-m-4 {
+        margin-top: 1.5rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .md\:w-100 {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 580px) {
+    .sm\:order-3 {
+        order: 3;
+    }
+    
+    .sm\:order-2 {
+        order: 2;
+    }
+}
+
+/*---------------------------------------------
+Boom Header
+-----------------------------------------------*/
+.boom--header .header--mobile {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .boom--header .header--desktop {
+        display: none;
+    }
+
+    .boom--header .header--mobile {
+        display: block;
+    }
+
+    .boom--header .clean--icons span {
+        font-size: .6em;
+    }
+}
+
+@media (max-width: 580px) {
+    .boom--header .header--btns-container {
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+    }
+
+    .boom--header .header--btns-container .header--btns a {
+        font-size: .8em;
+    }
+}
+
+/*---------------------------------------------
+Boom Banner
+-----------------------------------------------*/
+.boom--banner picture img {
+    max-height: 600px;
+    object-fit: cover;
+}
+
+.boom--banner .col-md-6.offset-md-6 {
+    background-color: #181818;
+}
+
+.boom--banner .banner--title-main {
+    color: #FFFFFF;
+    font-size: 2.2em;
+    margin-bottom: 1em;
+}
+
+.boom--banner .banner--title-sub {
+    color: #FFFFFF;
+}
+
+.boom--banner .banner--btn {
+    font-size: 1.5em;
+    padding: .5em 1.5em;
+    margin-top: 1em;
+}
+
+/*---------------------------------------------
+Boom Content One
+-----------------------------------------------*/
+.boom--content-one .sticky--product-head,
+.boom--content-two .sticky--product-head {
+    min-height: 75px;
+}
+
+.boom--content-one .sticky--container,
+.boom--content-two .sticky--container {
+    position: sticky;
+    top: 10px;
+}
+
+@media (max-width: 768px) {
+    .boom--content-one .sticky--products,
+    .boom--content-two .sticky--products {
+        margin-top: 1em;
+    }
+}
+
+/*---------------------------------------------
+Boom CTA One
+-----------------------------------------------*/
+.boom--cta-one {
+    background-color: #F7F8F9;
+}
+
+@media (max-width: 580px) {
+    .boom--cta-one h2.cta--title {
+        font-size: 1.3em !important;
+    }
+}
+
+/*---------------------------------------------
+Boom Products
+-----------------------------------------------*/
+.boom--products .products--content {
+    background-color: rgba(241, 122, 21, .2);
+    padding-bottom: 2em;
+}
+
+.boom--products .products--container {
+    margin-top: -50px;
+}
+
+.boom--products .products--container .product--price {
+    font-weight: 400;
+}
+
+.boom--products .card.product--card .card-header p {
+    height: 4em;
+}
+
+/*---------------------------------------------
+Boom CTA and Contents
+-----------------------------------------------*/
+.boom--cta-and-contents .quote--content {
+    background-color: #F7F8F9;
+}
+
+.boom--cta-and-contents .after--quote-content {
+    background-color: #E6EAED;
+}
+
+.boom--cta-and-contents .product--price {
+    color: #F17A1570;
+}

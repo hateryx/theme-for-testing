@@ -1,0 +1,348 @@
+<div class="container-fluid mt-5">
+    <div class="form-group row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 contact--grid">
+            <div class="form-group row mb-5 title--container">
+                <div class="col-12 text-center">
+                    <h2 class="top title">Get in touch with us</h2>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-12 col-sm-6 col-lg-12 col-xl-6 content">
+                    <div class="text-center mb-3">
+                        <h2 class="title"><i class="fa fa-phone-volume"></i> Customer Service</h2>
+                    </div>
+    
+                    {% for block in section.blocks %}
+                        {% if block.type == "customer_service" %}
+                            {% if block.settings.type == "text" %}
+                                <p class="d-block info text-center">{{ block.settings.text }}</p>
+                            {% else %}
+                                <a href="{{ block.settings.type }}:{{ block.settings.text }}" class="d-block info hover text-center">{{ block.settings.text }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-12 col-sm-6 col-lg-12 col-xl-6 content">
+                    <div class="text-center mb-3">
+                        <h2 class="title"><i class="fa fa-boxes"></i> Wholesale</h2>
+                    </div>
+    
+                    {% for block in section.blocks %}
+                        {% if block.type == "wholesale" %}
+                            {% if block.settings.type == "text" %}
+                                <p class="d-block info text-center">{{ block.settings.text }}</p>
+                            {% else %}
+                                <a href="{{ block.settings.type }}:{{ block.settings.text }}" class="d-block info hover text-center">{{ block.settings.text }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-12 col-sm-6 col-lg-12 col-xl-6 content">
+                    <div class="text-center mb-3">
+                        <h2 class="title"><i class="fa fa-map-marked-alt"></i> Mailing Address</h2>
+                    </div>
+    
+                    {% for block in section.blocks %}
+                        {% if block.type == "address" %}
+                            {% if block.settings.type == "text" %}
+                                <p class="d-block info text-center">{{ block.settings.text }}</p>
+                            {% else %}
+                                <a href="{{ block.settings.type }}:{{ block.settings.text }}" class="d-block info hover text-center">{{ block.settings.text }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="col-12 col-sm-6 col-lg-12 col-xl-6 content">
+                    <div class="text-center mb-3">
+                        <h2 class="title"><i class="fa fa-business-time"></i> Business Hours</h2>
+                    </div>
+    
+                    {% for block in section.blocks %}
+                        {% if block.type == "business_hours" %}
+                            {% if block.settings.type == "text" %}
+                                <p class="d-block info text-center">{{ block.settings.text }}</p>
+                            {% else %}
+                                <a href="{{ block.settings.type }}:{{ block.settings.text }}" class="d-block info hover text-center">{{ block.settings.text }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 testimonial--grid">
+            <div class="form-group row">
+                <div class="col-10 mx-auto text-center pt-3">
+                    <div class="testimonial--image">
+                        <img loading="lazy" src="{{ section.settings.testimonial-image | img_url: 'master' }}" class="img-fluid">
+                    </div>
+                    <div class="testimonial--rating">
+                        {% for star in (1..section.settings.rating) %}
+                            <span class="{{ star }}"><i class="fas fa-star"></i></span>
+                        {% endfor %}
+                    </div>
+                    <div class="testimonial--text">
+                        {{ section.settings.testimonial-text }}
+                    </div>
+                    <div class="testimonial--author">
+                        <b>{{ section.settings.testimonial-author }}</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .contact--grid .content {
+        min-height: 150px;
+    }
+
+    .contact--grid .top {
+        font-size: 35px;
+    }
+
+    .contact--grid .title {
+        color: #FD9639;
+        font-weight: 600;
+    }
+
+    .contact--grid .info {
+        color: #000;
+        font-size: 20px;
+    }
+
+    .contact--grid .info.hover:hover {
+        color: #FD9639;
+    }
+
+    .testimonial--grid {
+        font-size: 20px;
+    }
+
+    @media screen and (max-width: 576px) {
+        .contact--grid .container-fluid {
+            margin-top: 5px !important;
+        }
+
+        .contact--grid .title--container {
+            margin-bottom: 5px !important;
+        }
+
+        .contact--grid .content {
+            min-height: unset;
+            margin-bottom: 25px;
+        }
+    }
+
+    @media screen and (max-width: 425px) {
+        .contact--grid .content {
+            min-height: unset;
+            margin-bottom: 15px;
+        }
+
+        .contact--grid .top.title {
+            font-size: 25px;
+        }
+
+        .contact--grid .title {
+            font-size: 18px;
+        }
+
+        .contact--grid .info {
+            font-size: 15px;
+        }
+
+        .testimonial--grid {
+            font-size: 15px;
+        }
+
+        .contact--grid .d-block.info {
+            margin-bottom: 5px !important;
+        }
+    }
+</style>
+
+{% schema %}
+
+{
+    "name": "Contact Grid",
+    "class": "contact--grid",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "testimonial-image",
+            "label": "Testimonial Image"
+        },
+        {
+            "type": "richtext",
+            "id":"testimonial-text",
+            "label":"Testimonial Text"
+        },
+        {
+            "type": "text",
+            "id":"testimonial-author",
+            "label":"Testimonial Author"
+        },
+        {
+            "type": "range",
+            "id": "rating",
+            "label": "Rating",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "default": 5
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Customer Service",
+            "type": "customer_service",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "text",
+                    "id": "icon",
+                    "label": "Icon class name"
+                },
+                {
+                    "type": "select",
+                    "id": "type",
+                    "label": "Text Type",
+                    "options": [
+                        {
+                            "value": "tel",
+                            "label": "Phone"
+                        },
+                        {
+                            "value": "mailto",
+                            "label": "Email"
+                        },
+                        {
+                            "value": "text",
+                            "label": "Plain text"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Wholesale",
+            "type": "wholesale",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "text",
+                    "id": "icon",
+                    "label": "Icon class name"
+                },
+                {
+                    "type": "select",
+                    "id": "type",
+                    "label": "Text Type",
+                    "options": [
+                        {
+                            "value": "tel",
+                            "label": "Phone"
+                        },
+                        {
+                            "value": "mailto",
+                            "label": "Email"
+                        },
+                        {
+                            "value": "text",
+                            "label": "Plain text"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Address",
+            "type": "address",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "text",
+                    "id": "icon",
+                    "label": "Icon class name"
+                },
+                {
+                    "type": "select",
+                    "id": "type",
+                    "label": "Text Type",
+                    "options": [
+                        {
+                            "value": "tel",
+                            "label": "Phone"
+                        },
+                        {
+                            "value": "mailto",
+                            "label": "Email"
+                        },
+                        {
+                            "value": "text",
+                            "label": "Plain text"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Business Hours",
+            "type": "business_hours",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "text",
+                    "id": "icon",
+                    "label": "Icon class name"
+                },
+                {
+                    "type": "select",
+                    "id": "type",
+                    "label": "Text Type",
+                    "options": [
+                        {
+                            "value": "tel",
+                            "label": "Phone"
+                        },
+                        {
+                            "value": "mailto",
+                            "label": "Email"
+                        },
+                        {
+                            "value": "text",
+                            "label": "Plain text"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "category": "Content",
+            "name": "Contact Grid"
+        }
+    ]
+}
+
+{% endschema %}

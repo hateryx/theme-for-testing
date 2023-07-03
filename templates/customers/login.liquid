@@ -1,0 +1,37 @@
+<div class="login__container container ">
+  <div class="row row-cols-1 row-cols-lg-2 text-center my-4">
+    <div id="login_form">
+      {% section 'login' %}
+    </div>
+    <div id="reset_form" style="display: none;">
+      {% section 'recover_email' %}
+    </div>
+    <div id="register_form">
+      {% section 'register' %}
+    </div>
+  </div>
+</div>
+
+{% section 'video-tuts-tabs' %}
+
+<script>
+  $('body').on('click', '.recoverBtn', function(e) {
+    e.preventDefault()
+    $('#login_form').hide()
+    $('#reset_form').show()
+  })
+
+  $('body').on('click', '.loginBtn', function(e) {
+    e.preventDefault()
+    $('#login_form').show()
+    $('#reset_form').hide()
+  })
+
+  // @legend ft = form type
+  // @description rcv = recovery
+  let ft = new URLSearchParams(window.location.search).get('ft')
+  if ( ft == 'rcv' ) {
+    $('#login_form').hide()
+    $('#reset_form').show()
+  }
+</script>

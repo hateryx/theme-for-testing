@@ -1,0 +1,68 @@
+<div class="testimonials__container container-fluid bg-light">
+    <h3 class="text-center py-4">See what people are saying about Sport Formula</h3>
+  <div class="row row-cols-1 row-cols-xl-2 pb-md-4 pb-sm-4">
+    {% for block in section.blocks %}
+      <div class="col mt-5">
+        <div class="m-auto h-100 d-flex align-items-center justify-content-center" style="max-width: 740px;">
+          <div class="row">
+            <div class="col-md-5 d-flex align-items-center justify-content-center justify-content-md-end">
+              {% if block.settings.testimonialImage %}
+                <img class="rounded-circle my-auto me-1 img-fluid lazyload" data-src="{{ block.settings.testimonialImage | img_url: 'x200' }}">
+              {% endif %}
+            </div>
+            <div class="col-md-7">
+              <div class="card-body">
+                {% comment %}<div class="card-title h5 text-capitalize">Sport{% endcomment %}
+                  {% comment %}Formula {{ block.settings.productUrl | replace: '/', ' ' | replace: '-', ' ' | replace: 'products ', '' }}</div>{% endcomment %}
+                {% comment %}<h5 class="card-title">Card title</h5>{% endcomment %}
+                <p class="h5 card-text">{{ block.settings.testimonial }}</p>
+                <div class="card-text">- {{ block.settings.testimonialPerson }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+{% schema %}
+{
+"name": "Testominals",
+"blocks": [
+{
+"type": "text",
+"name": "Testimonial",
+"settings": [
+{
+"id": "testimonial",
+"type": "richtext",
+"label": "Testimonial Text"
+},
+{
+"type": "text",
+"id": "testimonialPerson",
+"label": "Person's Name"
+},
+{
+"type": "image_picker",
+"id": "testimonialImage",
+"label": "Image of Person"
+},
+{
+"type": "url",
+"id": "productUrl",
+"label": "Product Url"
+}
+]
+}
+],
+"presets": [
+{
+"category": "Testimonials",
+"name":"Homepage Testimonial"
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,274 @@
+<div class="cta-bg">
+ <div class="cta-row">
+    <div class="cta-column col-01">
+      <div class="cta-content">
+      <div class="contact-us"><span class="t-span">Contact us</span></div>
+      <h4 class="cta-title">Get in Touch with Us</h4>
+      <div class="icon-container">
+        <div class="icon-text-box">
+          <img src="https://cdn.shopify.com/s/files/1/0082/3079/7364/files/Vector.png?v=1660532331" width="41px" style="float:left; margin-right: 50px;">
+          <div class="content-wrapper">
+            <p class="icon-title">{{ section.settings.c-title-1 }}</p>
+            <span>{{ section.settings.c-details-1 }}</span>
+          </div>
+        </div>
+          
+        <div class="icon-text-box">
+              <img src="https://cdn.shopify.com/s/files/1/0082/3079/7364/files/Group.png?v=1660534394" width="41px" style="float:left; margin-right: 50px;" />
+              <div class="content-wrapper">
+                <p class="icon-title">{{ section.settings.c-title-2 }}<p>
+                <span>{{ section.settings.c-details-2 }}</span>
+              </div>
+        </div>
+        
+        <div class="icon-text-box">
+            <img src="https://cdn.shopify.com/s/files/1/0082/3079/7364/files/Vector_2.png?v=1660532331" width="41px" style="float:left; margin-right: 50px;" />
+            <div class="content-wrapper">
+              <p class="icon-title">{{ section.settings.c-title-3 }}</p>
+              <span>{{ section.settings.c-details-3 }}</span>
+            </div>
+        </div>
+      
+        <div class="icon-text-box">
+          <img src="https://cdn.shopify.com/s/files/1/0082/3079/7364/files/Vector_3_d1f9d735-44fe-49f9-929f-2cba92a42b58.png?v=1660532331"  width="41px" style="float:left; margin-right: 50px;" />
+          <div class="content-wrapper">
+            <p class="icon-title">{{ section.settings.c-title-4 }}</p>
+            <span>{{ section.settings.c-details-4 }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="inside-button">
+        <button type="button" class="btn newsletter--submit" id="contact-us-btn">Contact Us</button>
+      </div>
+      </div>
+    </div>
+    <div class="cta-column col-02">
+    </div>
+ </div>
+</div>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    .cta-bg {
+      background-color: black;
+      width: 100%;
+      height: 100px;
+    }
+    /* .cta-row {
+      width: 1440px;
+      margin-left: -590px;
+    } */
+    .cta-column {
+      float: left;
+      padding: 10px;
+      height: 800px;
+    }
+
+    .col-01 {
+      width: 50%;
+      background-color: #F5f5f5;
+      padding-top: 50px;
+      display: inline-flex;
+    }
+    .col-02 {
+      width: 50%;
+      background-image: url({{ section.settings.image_on_right | img_url : 'master' }});
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    
+    .cta-row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    .contact-us {
+      margin: auto;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 16px;
+    }
+    .contact-us .cta-bg {
+      background-color: #fff;
+    }
+    .contact-us .t-span{
+      background-color: #F17A15;
+      color: #FFF;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .contact-us .cta-row{
+      margin: auto;
+    }
+    .cta-title {
+      text-transform: uppercase;
+      font-size: 2.25rem;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #212529;s
+    }
+
+    .contact-us-btn {
+      text-transform: uppercase;
+      text-align: center;
+      margin: auto;
+      background-color: #f17a15;
+      color: white;
+      
+    }
+    .cub {
+      margin: auto;
+      width: 150px;
+      text-align: center;
+    }
+
+    .icon-text-box {
+      margin-bottom: 10px;
+      text-transform: none;
+      display: flex;
+      align-items: center;
+    }
+    .content-wrapper p{
+      margin-bottom: 0px;
+    }
+    .content-wrapper .icon-title{
+      font-style: normal;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #F17A15;
+    }
+    .content-wrapper span{
+      color: #212529;
+    }
+    .cta-content {
+      width: 550px;
+      margin: auto;
+      color: black;
+      text-align: left;
+    }
+   
+    .newsletter--submit {
+        background-color: #f17a15;
+        color: white;
+        font-size: 1.3rem;
+        padding: 7px 11px;
+        height: 47px;
+        width: 200px;
+        font-weight: bold;
+        position: relative;
+        text-transform: uppercase;
+    }
+  .newsletter--submit::before {
+    position: absolute;
+    height: inherit;
+    width: inherit;
+    top: -8px;
+    left: 6px;
+    background: transparent;
+    border: 1px solid #f17a15;
+    content: '';
+    }
+    .inside-button {
+      margin-top: 3rem;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    strong {
+      color: #f17a15;
+      
+    }
+    
+    @media screen and (max-width: 425px) {
+      .cta-column {
+        width: 425px;
+      }
+
+      .cta-row {
+          width: 425px;
+          margin-left: -133px;
+      }
+      .cta-title {
+          text-transform: uppercase;
+          font-size: 28px;
+          text-align: center;
+          margin-top: 20px;
+          margin-bottom: 20px;
+      }
+    
+      .cta-content {
+        margin-left: 40px;
+        width: 345px;
+        }
+      .icon-text-box {
+        font-size: 12px;
+      }
+      .inside-button {
+            margin-left: 0px;
+      }
+    }
+
+    </style>
+{% schema %}
+{
+    "name": "Contact Us",
+    "class": "contact-us",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image_on_right",
+            "label": "Image on the right"
+        },
+        {
+            "type": "text",
+            "id": "c-title-1",
+            "label": "Phone | Contact Title"
+        },
+        {
+            "type": "text",
+            "id": "c-details-1",
+            "label": "Phone | Contact Details"
+        },
+      {
+            "type": "text",
+            "id": "c-title-2",
+            "label": "Whole Sale | Contact Title"
+        },
+        {
+            "type": "text",
+            "id": "c-details-2",
+            "label": "Whole Sale | Contact Details"
+        },
+      {
+            "type": "text",
+            "id": "c-title-3",
+            "label": "Mail | Contact Title"
+        },
+        {
+            "type": "text",
+            "id": "c-details-3",
+            "label": "Mail | Contact Details"
+        },
+      {
+            "type": "text",
+            "id": "c-title-4",
+            "label": "Business Hours | Contact Title"
+        },
+        {
+            "type": "text",
+            "id": "c-details-4",
+            "label": "Business Hours | Contact Details"
+        }
+    ],
+    
+    "presets": [
+      {
+        "category": "Content",
+        "name": "Contact Us"
+      }
+    ]
+}
+{% endschema %}

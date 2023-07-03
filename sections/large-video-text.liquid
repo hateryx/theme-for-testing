@@ -1,0 +1,36 @@
+<div class="large-video-text__container d-flex my-md-5 my-sm-2 container-fluid justify-content-center {% if section.settings.flip %} flex-column flex-xl-row {% else %} flex-xl-row-reverse flex-column {% endif %}">
+	<div class="col col-xl-5 align-self-center">{{ section.settings.text }}</div>
+	<div class="col col-xl-6 p-0" style="max-width: 500px;">{{ section.settings.embed }}</div>
+</div>
+
+
+{% schema %}
+{
+	"name": "Large Video + Text",
+	"settings": [
+	{
+			"type": "checkbox",
+			"id": "flip",
+			"label": "Flip text and video",
+			"default": false
+		},
+		{
+			"type": "html",
+			"id": "text",
+			"label": "Text"
+		},
+		{
+			"type": "html",
+			"id": "embed",
+			"label": "Video embed"
+		}
+		
+	],
+	"presets": [
+		{
+			"category": "Video",
+			"name":"Large Video + Text"
+		}
+	]
+}
+{% endschema %}

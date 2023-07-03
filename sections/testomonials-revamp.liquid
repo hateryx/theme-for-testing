@@ -1,0 +1,385 @@
+<!-- Slider main container -->
+<div class="swiper testominial--swipper uidTestimonalSwipesec" style="overflow-x: hidden; margin-bottom: 20px;">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      {%- for block in section.blocks -%}
+        <div class="swiper-slide h-400" id="box-t">
+            <div class="form-group row h-100">
+                <div class="col-4" id="adjust-left">
+                    <div class="uidSliderClipImg-container">
+                      <div id="t-media" class="uidSliderClipImg-border img-fluid testomonial--media w-100 h-100" style="clip-path: polygon(0 0, 100% 0, 84% 100%, 0% 100%);"></div>
+                      <img id="t-head-img" src="{{ block.settings.author_image | img_url }}" class="uidSliderClipImg img-fluid testomonial--media w-100 h-100" >
+                      
+                    </div>
+                </div>
+
+                <div class="col-8" id="adjust-right">
+                    <div id="testimonial-container" class="testominial--container h-100 text-white d-flex flex-column justify-content-center">
+                        <div class="row mb-4 testi-info">
+                            <div class="col-1 pr-0">
+                                <img id="t-author" style="margin-top: 10px;" src="{{ block.settings.author_image | img_url: 'master' }}" class="uid-img-x img-fluid testomonial--author-image" />
+                            </div>
+                            <div class="col-8">
+                                <i class="fa fa-quote-right"></i>
+                                <p class="h5 testomonial--author"><img id="t-author-2" src="{{ block.settings.author_image | img_url: 'master' }}" class="uid-img-x img-fluid testomonial--author-image" /><br>{{ block.settings.author }}</p>
+                                <div class="d-flex testomonial--ratings align-items-center" id="rate">
+                                    <p class="mr-3 mb-0">Customer</p>
+                                    {%- for rate in (1 .. block.settings.rating) -%}
+                                        <i class="fa fa-star text-white"></i>
+                                    {%- endfor -%}
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col-9">
+                                <p class="testomonial--content">{{ block.settings.content }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+      {%- endfor -%}
+
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+
+
+<style>
+  
+  .testominial--container {
+        background: #F17A15;
+        padding: 5em 5em 2em 5em;
+        width: 75%;
+        margin-left: 280px;
+        padding: 5em 5em 2em 15em;
+  }
+
+   .testomonial--media {
+       
+        margin-left: 23em;
+         width: 81%;
+
+      
+    }
+
+  #t-author-2 {
+    display: none;
+  }
+  
+  @media(max-width: 725px) {
+    .uidSliderClipImg-border, .uidSliderClipImg {
+      height: auto !important;
+    }
+    .testominial--container.h-100.text-white.d-flex.flex-column.justify-content-center {
+      padding: 10px !important;
+      padding-left: 65px !important;
+    }
+  }
+  .uidTestimonalSwipesec{
+    background-size: 30px 30px;
+    background-image: radial-gradient(
+    circle,
+    #deddd0 2px,
+    rgba(0, 0, 0, 0) 1px
+    );
+  }
+  #shopify-section-header ul.d-xl-max-none li:nth-child(1) a{
+    color: #F17A15 !important;
+  }
+  .uidSliderClipImg{
+    clip-path: polygon(0 0, 100% 0, 84% 100%, 0% 100%);
+    transform: scale(0.96);
+  }
+  .uidSliderClipImg-border{
+/*     border: 8px solid grey; */
+    background-color: grey;
+  }
+
+  #shopify-section-template--14256787783774__1659352384788b6e07 .uid-img-x {
+    border-radius: 50%;
+
+  }
+
+    @media (max-width: 1199px) {
+        .swiper.testominial--swipper {
+            width: 100vw;
+        }
+    }
+
+    .swiper-wrapper {
+        margin-bottom: 5em;
+    }
+
+    .h-400 {
+        height: 430px;
+    }
+  
+
+    .testomonial--author {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .testomonial--media {
+        position: absolute;
+        margin-top: 2em;
+        z-index: 99;
+       margin-left: 29em;
+    width: 85%!important;
+    object-fit: cover;
+    }
+
+    .testominial--container {
+        background: #F17A15;
+        padding: 5em 5em 2em 5em;
+      clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .testomonial--ratings p,
+    .testomonial--ratings i.fa-star::before{
+        font-size: 1em;
+    }
+
+    .testomonial--content {
+        font-size: 1.1em;
+        letter-spacing: .8px;
+    }
+
+    .testominial--container .fa-quote-right {
+        position: absolute;
+        font-size: 8em;
+        top: -50px;
+        right: 10%;
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .testomonials--revamp {
+        background-image: url({{ section.settings.background_image | img_url: 'master' }});
+        background-size: contain;
+        background-position: center left;
+        background-repeat: no-repeat;
+        padding: 5rem 0px;
+    }
+    .testomonials--revamp .testi-info{
+      display: flex;
+      align-items: center;
+    }
+
+
+    
+
+  @media only screen and (max-width: 425px) {
+   .uidSliderClipImg {
+ 
+    transform: scale(1.5);
+   }
+
+  .testominial--container {
+    width: 75%;
+    margin-left: 216px;
+    background: #F17A15;
+    padding: 5em 5em 2em 15em;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+  #box-t {
+    height: 500px;
+  }
+  .testomonial--content {
+      font-size: 0.9em;
+      letter-spacing: 0px;
+      text-align: center;
+  }
+}
+
+
+  @media screen and (max-width: 425px) {
+  #adjust-right {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-left: 7%;
+  }
+  #adjust-left {
+    flex: 0 0 0%;
+    max-width: 0;
+  }
+  .uidSliderClipImg {
+    transform: scale(10);
+    margin-left: 150px;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 0;
+    margin-left: 0;
+  }
+ .testominial--container {
+      margin: 0;
+      width: 100%;
+      margin-top: 120px;
+      padding: 0;
+  }
+  #testimonial-container {
+    padding-left: 0;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+  }
+
+  .testominial--container.h-100.text-white.d-flex.flex-column.justify-content-center {
+    padding-left: 0px !important;
+  }
+
+  .col-1 {
+    flex: 0 0 8.33333%;
+    max-width: 8.33333%;
+    display: none;
+  }
+
+  .col-8 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    text-align: center;
+    margin: auto;
+  }
+  .col-9 {
+    flex: 0 0 75%;
+    max-width: 75%;
+    margin: auto;
+      }
+
+    .uidSliderClipImg {
+        margin-top: 8px;
+    transform: scale(13);
+    margin-left: 182px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  #testimonial-container {
+    padding-left: 0;
+    text-align: center;
+    /* margin-top: 230px; */
+  }
+  #box-t {
+    height: 644px;
+  }
+  #t-author-2 {
+  display: block;
+  }
+
+  .fa-quote-right:before {
+    content: "\f10e";
+    display: none;
+  }
+
+  .uid-img-x {
+    margin: auto;
+  }
+
+  #rate {
+    width: 165px;
+    margin: auto;
+  }
+
+  .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction { 
+    display: none;
+  }
+
+}
+.swiper-pagination-bullet {
+    width: var(--swiper-pagination-bullet-width,var(--swiper-pagination-bullet-size,8px));
+    height: var(--swiper-pagination-bullet-height,var(--swiper-pagination-bullet-size,8px));
+    display: inline-block;
+    width: 10px;
+    background: var(--swiper-pagination-bullet-inactive-color,#000);
+    opacity: var(--swiper-pagination-bullet-inactive-opacity, .2);
+}
+  .swiper-pagination-bullet-active {
+    width: 50px;
+    border-radius: 50px;
+    background-color: white;
+    opacity: 1;
+  }
+.swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: 116px;
+    left: 10%;
+    width: 100%;
+}
+  .swiper-pagination-bullet {
+    background-color: white;
+    opacity: 1;
+    height: 10px !important;
+  }
+</style>
+
+<script>
+    window.onload = () => {
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+
+            pagination: {
+                el: ".swiper-pagination",
+            },
+        })
+    }
+</script>
+
+{% schema %}
+{
+    "name": "Testominials Revamp",
+    "class": "testomonials--revamp",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "background_image",
+            "label": "Background Image"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Testimonial",
+            "type": "testimonials",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "author",
+                    "label": "Author"
+                },
+                {
+                    "type": "number",
+                    "id": "rating",
+                    "label": "Rating"
+                },
+                {
+                    "type": "textarea",
+                    "id": "content",
+                    "label": "Content"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "author_image",
+                    "label": "Author Image"
+                },
+                {
+                    "type": "textarea",
+                    "id": "media",
+                    "label": "Media"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "category": "Content",
+        "name": "Testominials Revamp"
+      }
+    ]
+}
+{% endschema %}

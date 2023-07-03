@@ -1,0 +1,16 @@
+{% if cart.item_count == 0 %}
+<div class="container text-center my-5">
+  <h1>Shopping cart is empty</h1>
+  <a class="btn btn-primary btn-lg text-uppercase" href="/collections/formula">Continue Shopping</a>
+</div>
+{% else %}
+<div id="cart-page__container" class="mb-md-4 mb-sm-1 mt-1 d-flex flex-column-reverse flex-xl-row">
+  <div class="col col-xl-4 bg-light">{% section 'cart-social-proof' %}</div>
+
+  <div class="col col-xl-8">{% section 'cart' %}</div>
+</div>
+
+<!-- Begin Recharge code -->
+{% include 'subscription-cart-footer' %}
+<!-- End Recharge code -->
+{% endif %}

@@ -1,0 +1,30 @@
+<div class="product-info__container container mw-50 mt-lg-4">
+    {% if product.metafields.extra_info.testimonial %}
+        {{ product.metafields.extra_info.testimonial }}
+    {% else %}
+        {{ product.title }}
+    {% endif %}
+
+    {% if product.metafields.extra_info.short_description or product.metafields.extra_info.extended_description or product.metafields.extra_info.specs %}
+        <div>
+            {{ product.metafields.extra_info.short_description }}
+        </div>
+        <div class="my-2">
+            {{ product.metafields.extra_info.extended_description }}
+        </div>
+        <div>
+            {{ product.metafields.extra_info.specs }}
+        </div>
+    {% else %}
+        {{ product.description }}
+    {% endif %}
+</div>
+
+
+{% schema %}
+
+{
+"class": "mw-100"
+}
+
+{% endschema %}

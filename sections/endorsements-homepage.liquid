@@ -1,0 +1,130 @@
+<div class="container endorsements__container text-center">
+  <h3 class="h2">
+    {{ section.settings.heading }}
+  </h3>
+  <p>
+    {{ section.settings.subHeading }}
+  </p>
+  <div class="splide" id="endorsements-slider">
+    <div class="splide__track">
+      <ul class="splide__list">
+        {% for block in section.blocks %}
+          <li class="splide__slide mb-3 {% if forloop.index > 4 %}px-3{% endif %}">
+            {% render 'responsiveImage' with imageSrc: block.settings.image, firstLoadWidth: '100x', classes: 'img-fluid' %}
+            <div>
+              <h5 class="uppercase mt-3">
+                Juan Dela Cruz
+              </h5>
+              <p class="capitalize">
+                Text text 1
+              </p>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .splide__arrow svg {
+    width: 1.5em;
+    height: 1.5em;
+    fill: #212529;
+    transition: fill .2s linear;
+  }
+
+  .splide {
+    padding: 1em;
+  }
+
+  svg.bi.bi-play-btn {
+    width: 100%;
+    height: 100%;
+  }
+
+  .splide__slide img {
+    width: 100%;
+    height: auto;
+  }
+
+  .splide__arrow--next {
+    right: -0.5em;
+  }
+
+  .splide__arrow--prev {
+    left: -0.5em;
+  }
+
+  @media screen and (min-width: 768px) {
+    .splide__pagination {
+      display: none;
+    }
+  }
+  
+  #endorsements-slider .splide__slide img {
+    height: auto;
+    width: auto;
+    max-height: 314px;
+  }
+  
+  @media screen and (max-width: 1100px) {
+    #endorsements-slider .splide__slide img {
+      height: 380px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    #endorsements-slider .splide__slide img {
+      height: 400px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Endorsements Home",
+  "class": "bg-light pt-5",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Heading",
+      "id": "heading"
+    },
+    {
+      "type": "richtext",
+      "label": "Sub Heading",
+      "id": "subHeading"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Slide",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Endorsements Home",
+      "name": "Endorsements Homepage"
+    }
+  ]
+}
+{% endschema %}

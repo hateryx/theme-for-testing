@@ -1,0 +1,56 @@
+<div class="hidden sticky-add-to-cart sticky-add-to-cart-hidden">
+  add to cart
+
+</div>
+<footer>
+  <nav class="navbar navbar-expand navbar-light bg-light d-flex flex-column flex-md-row">
+    <ul class="navbar-nav me-auto mb-lg-8 py-2 collapse navbar-collapse text-center justify-content-center">
+      {% for link in linklists.footer-menu-main.links %}
+        <li class="nav-item h5 my-0 font-weight-bold text-uppercase mx-1 mx-lg-4">
+          <a class="nav-link text-dark" href="{{ link.url }}">{{ link.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="footer__icons">
+      <a href="{{ section.settings.facebook }}" target="_blank">
+        {% render 'icon-facebook' %}
+      </a>
+      <a href="{{ section.settings.instagram}}" target="_blank">
+        {% render 'icon-instagram' %}
+      </a>
+      <a href="{{ section.settings.youtube}}" target="_blank">
+        {% render 'icon-youtube' %}
+      </a>
+
+    </div>
+  </nav>
+</footer>
+{% schema %}
+    {
+          "name": "Footer Icons",
+          "settings": [
+                {
+                "type": "url",
+                "id": "facebook",
+                "label": "Facebook"
+                },
+                {
+                "type": "url",
+                "id": "youtube",
+                "label": "Youtube"
+                },
+                {
+                "type": "url",
+                "id": "instagram",
+                "label": "Instagram"
+                }
+          ],
+        "presets": [
+            {
+                "name": "Footer Icons",
+                "category": "custom section"
+            }
+        ]
+    }
+
+{% endschema %}

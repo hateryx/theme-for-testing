@@ -1,0 +1,54 @@
+<div class="product-grid__container container-fluid">
+  <ul class="row row-cols-1 row-cols-lg-3 justify-content-center align-items-center list-unstyled m-0 align-items-stretch">
+    {% assign allProducts = collections['ambassador'].products %}
+
+    {% for product in allProducts %}
+      {% assign btnText = '' %}
+      {% for tag in product.tags %}
+        {% if tag contains 'get' %}
+          {% assign btn = tag | split: '-' | last %}
+          {% assign btnText = btn %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      
+      <li class="card p-3 m-1 col product-grid__container-item">
+        <a class="product-card d-flex align-items-center justify-content-center flex-column"
+          href="{{ product.url | within: collection }}">
+          <div class="reveal">
+            <img loading="lazy" class="reveal img-fluid card-img-top" src="{{ product.featured_image.src | img_url: 'x400' }}" alt="{{product.featured_image.alt | escape }}">
+            <img loading="lazy" class="hidden" src="{{ product.images[1] | img_url: '450x450' }}" alt="{{ product.images.last.alt | escape }}"/>
+          </div>
+          
+          <div class="ratings-container text-center">
+            {% render 'collection-ratings', rating: product.metafields.stamped.reviews_average %}
+            
+            <p>
+              {% if product.metafields.extra_info.one_liner  %}
+                {{ product.metafields.extra_info.one_liner }}
+              {% else %}
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+              {% endif %}
+            </p>
+          </div>
+          
+          <button class="product-grid__grid-button btn btn-primary btn-lg w-75 sm-max:w-100 mt-2 text-uppercase">
+            {% if btnText %}
+              View
+              {{ btnText }}
+            {% else %}
+              View
+            {% endif %}</button>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<style>
+@media screen and (min-width: 768px){
+  .product-grid__container-bariatric li{
+    max-width: 45%;
+  }
+}
+</style>

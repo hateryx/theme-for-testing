@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="{{ shop.locale }}">
+<head>
+    {% render 'pagefly-head' %}
+    {% comment %}EasylockdownHeadBegin{% endcomment %}{% capture elhRender %}{% render 'easylockdown_head', easylockdownRender: true, easylockdownCustomPriceSelector: easylockdownCustomPriceSelector %}{% endcapture %}{% assign elhRender = elhRender | split: '--elhResults--'%}{{ elhRender[0] }}{% comment %}EasylockdownHeadEnd{% endcomment %}
+    {% include 'wp_shopify_tracking' %}
+    <meta name="facebook-domain-verification" content="ofx00trxg7giwx022sfl61x8a9cjfu" />
+    <link rel="dns-prefetch" href="//cdn.shopify.com">
+    <link rel="preconnect" href="//cdn.shopify.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {% render 'wp_shopify_tracking' %}
+    <title>
+        {{ page_title -}}
+        {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+        {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+        {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+        <meta name="description" content="{{ page_description | escape }}" />
+    {% endif %}
+
+    <link rel="canonical" href="{{ canonical_url }}" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="alternate" hreflang="en" href="{{ shop.url }}" />
+    <link rel="shortcut icon" href="{{ 'favicon.ico' | asset_url }}">
+    {{ 'boom.css' | asset_url | stylesheet_tag }}
+    {{ 'custom-dev.css' | asset_url | stylesheet_tag }}
+    {{ 'custom-mobile.css' | asset_url | stylesheet_tag }}
+    {{ 'theme.min.css' | asset_url | stylesheet_tag: preload: true }}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    {{ 'custom.min.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'theme-unused.min.css' | asset_url | stylesheet_tag: preload: true }}
+
+    <script src="{{ 'jquery.js' | asset_url }}"></script>
+
+    {{ content_for_header }}
+</head>
+
+<body data-template="{{ template.name }}" data-template-suffix="{{ template.suffix }}">
+    {% section 'boom-header' %}
+    {{ content_for_layout }}
+
+    <script src="{{ 'bootstrap.bundle.js' | asset_url }}"></script>
+    <script>
+        // Hotjar Tracking Code for my site
+        (function (h, o, t, j, a, r) {
+            h.hj = h.hj || function () {
+                (h.hj.q = h.hj.q || []).push(arguments)
+            };
+            h._hjSettings = {
+                hjid: 2984696,
+                hjsv: 6
+            };
+            a = o.getElementsByTagName('head')[0];
+            r = o.createElement('script');
+            r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
+
+<script>
+    ( function() {
+      var wistia = document.querySelectorAll( ".wistia--lazyload" );
+
+      for (var i = 0; i < wistia.length; i++) {
+        var source = "https://embed-ssl.wistia.com/deliveries/"+ wistia[i].dataset.thumb;
+
+        var image = new Image();
+        image.src = source;
+        image.setAttribute( 'width', '100%' )
+        image.setAttribute( 'height', '100%' )
+        image.addEventListener( "load", function() {
+          wistia[ i ].appendChild( image );
+        }( i ) );
+
+        wistia[i].addEventListener( "click", function() {
+
+        var iframe = document.createElement( "iframe" );
+          iframe.setAttribute( "allow", "autoplay; fullscreen" );
+          iframe.setAttribute( "allowtransparency", "true" );
+          iframe.setAttribute( "frameborder", "0" );
+          iframe.setAttribute( "allowfullscreen", "" );
+          iframe.setAttribute( "mozallowfullscreen", "" );
+          iframe.setAttribute( "webkitallowfullscreen", "" );
+          iframe.setAttribute( "oallowfullscreen", "" );
+          iframe.setAttribute( "msallowfullscreen", "" );
+          iframe.setAttribute( "width", "100%" );
+          iframe.setAttribute( "height", "100%" );
+          iframe.setAttribute( "name", "wistia_embed" );
+          iframe.setAttribute( "src", "//fast.wistia.net/embed/iframe/"+ this.dataset.embed +"?videoFoam=true&autoPlay=true&muted=false&controlsVisibleOnLoad=true" );
+
+          this.innerHTML = "";
+          this.appendChild( iframe );
+        } );    
+      };
+    } )();
+  </script>
+</body>
+</html>

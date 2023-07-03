@@ -1,0 +1,265 @@
+<div class="desktop-pos">
+<div id="con-vid-rev" class="container-fluid container--revamp p-5">
+    {% for block in section.blocks %}
+        <div class="form-group row align-items-center h-100 main--content">
+            <div id="thumbnail"
+                class="col-12 col-lg-6 content--background{% if block.settings.flipped %} order-1{% endif %}"
+                style="background-image: url({{ block.settings.content_background | img_url: 'master' }}); "
+            >
+                <h2 class="content--tagline d-inline-block mb-4">{{ block.settings.tagline }}</h2>
+                <h2 class="content--title mb-5" id="cv-title">{{ block.settings.title }}</h2>
+
+                <p class="content--text mb-5" id="cv-text">{{ block.settings.text }}</p>
+
+                <a href="#" class="btn learn--more">Learn More</a>
+              
+            </div>
+            <div class="col-12 col-lg-6" id="img-thumb">
+                <div class="text-center">
+                  <div class="fitter">
+                    <div class="uidImgCC" id="poster">
+                     {% if block.settings.media !=blank %}
+                     <div class="video-container">
+                      <img src="{{ block.settings.image | img_url: 'master' }}" data-video="{{ block.id }}" class="img-responsive play-video">
+                      <div style="display:none" id="video-{{ block.id }}" class="video" data-id="{{ block.id }}">
+                        {{ block.settings.media }} 
+                      </div>
+                     </div>
+                     {% endif %}
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <script>
+      $(document).ready(function() {
+          $( document ).on( 'click', '.play-video', function( ev ) {
+              const id = $( this ).data( 'video' )
+              const thevid = document.getElementById( `video-${id}` )
+              this.style.display = 'none'
+              thevid.style.display = 'block'
+              $( `video-${id}` )[0].src += "?autoplay=1"
+              ev.preventDefault()
+          });
+      }); 
+  </script>
+</div>
+</div>
+<div class="mobile-pos">
+<div id="con-vid-rev" class="container-fluid container--revamp p-5">
+    {% for block in section.blocks %}
+        <div class="form-group row align-items-center h-100 main--content">
+            <div 
+                class="col-12 col-lg-6 content--background order-1"
+                style="background-image: url({{ block.settings.content_background | img_url: 'master' }});"
+            >
+                <h2 class="content--tagline d-inline-block mb-4">{{ block.settings.tagline }}</h2>
+                <h2 class="content--title mb-5" id="cv-title">{{ block.settings.title }}</h2>
+
+                <p class="content--text mb-5" id="cv-text">{{ block.settings.text }}</p>
+
+                <a href="#" class="btn learn--more">Learn More</a>
+            </div>
+            <div class="col-12 col-lg-6" id="img-thumb">
+                <div class="text-center">
+                  <div class="fitter">
+                    <div class="uidImgCC" id="poster">
+                      <div class="uidImgCC_copy" id="poster"></div>
+                      <img src="{{ block.settings.image | img_url: 'master' }}" class="img-fluid">
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</div>
+<style>
+    #play-video{
+        cursor: pointer;
+      }
+      .video-container iframe{
+        height: 600px !important;
+        width: 100%;
+      }
+
+    .content--video-revamp {
+        background-color: #212529;
+        padding: 2rem 0px;
+    }
+
+    .content--video-revamp .main--content {
+        margin-top: 1rem;
+        margin-bottom: 5rem;;
+    }
+
+    .content--video-revamp .content--background {
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+    }
+    
+    .content--video-revamp .content--tagline {
+        background-color: #F17A15;
+        color: #FFF;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .content--video-revamp .content--title {
+        width: 90%;
+        color: #FFF;
+        text-transform: uppercase;
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .content--video-revamp .content--text {
+        font-size: 1.1rem;
+        color: #FFF;
+        letter-spacing: 0.8px;
+    }
+
+    .content--video-revamp .learn--more {
+            background-color: #F17A15;
+            color: #FFF;
+            font-size: 1rem;
+            padding: 10px 13px;
+            font-weight: bold;
+            width: 142px;
+            height: 48px;
+            position: relative;
+            text-transform: uppercase;
+    }
+  .content--video-revamp .learn--more::before {
+    position: absolute;
+    height: inherit;
+    width: inherit;
+    top: -8px;
+    left: 6px;
+    background: transparent;
+    border: 2px solid #F17A15;
+    content: '';
+  }
+
+  .mobile-pos {
+    display: none;
+  }
+  .play-button {
+        clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0% 100%);
+      transform: skewX(0deg) rotateX(0deg) scale(01);
+  }
+
+  @media only screen and (max-width: 425px) {
+    #cv-text {
+      text-align: justify;
+      }
+    
+    #poster-image {
+      transform: skewX(0deg) skewY(0deg) rotateX(0deg);
+
+    }
+
+    #cv-title {
+    font-size: 32px;
+    }
+
+    .uidImgCC_copy{
+      clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0% 100%);
+      transform: skewX(0deg) rotateX(0deg) scale(01);
+    }
+
+    #con-vid-rev .text-center img{
+  
+      clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0% 100%);
+      transform: skewX(0deg) rotateX(0deg) scale(1);
+          object-fit: cover;
+          width: auto;
+    }
+
+    #img-thumb {
+    }
+
+    .uidImgCC::before, .uidImgCC::after {
+    }
+
+    .fitter {
+    padding: 0;
+  }
+    .desktop-pos {
+      display: none;
+    }
+    .mobile-pos {
+      display: block;
+    }
+    
+  }
+
+  }
+  
+</style>
+
+{% schema %}
+{
+    "name": "Content Video Revamp",
+    "class": "content--video-revamp",
+    "blocks": [
+        {
+            "name": "Video Content",
+            "type": "video_content",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "tagline",
+                    "label": "Tagline"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "text",
+                    "label": "Content"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "content_background",
+                    "label": "Content Background"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Url"
+                },
+                {
+                    "type": "html",
+                    "id": "media",
+                    "label": "Video Embbed"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "flipped",
+                    "label": "Flipped"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "category": "Content",
+        "name": "Content Video Revamp"
+      }
+    ]
+}
+{% endschema %}

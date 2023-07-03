@@ -1,0 +1,160 @@
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+<div class="main0">
+  <div class="slider slide-show">
+   {% for block in section.blocks %}
+    <div class="img-wish">
+        <img src="{{ block.settings.image | img_url }}" >
+        <h5 style="margin-top: 10px;">{{ block.settings.name }}</h5>
+        <p style="text-transform: uppercase">{{ block.settings.title }}</p>
+    </div>
+     {% endfor %}
+          
+       
+  </div>
+  <div class="slider slide-show-2">
+   {% for block in section.blocks %}
+    <div class="img-wish">
+        <img src="{{ block.settings.image | img_url }}" >
+        <h5  style="margin-top: 10px;">{{ block.settings.name }}</h5>
+        <p style="text-transform: uppercase">{{ block.settings.title }}</p>
+    </div>
+     {% endfor %}
+          
+       
+  </div>
+</div>
+
+ <style>
+.bg-light {
+}
+      .main0 {
+          width: 1200px;
+          display:block;
+          margin: auto;
+          height: 500px;
+          align-items: center;
+          padding-top: 50px;
+        margin-bottom: 20px;
+      }
+      .img-wish{text-align: center;}
+      .img-wish img{width: 350px; margin: auto; margin-left: 37px;} 
+      
+      .slick-next {
+
+      }
+
+      .slick-prev {
+
+      }
+      .slick-prev:before {
+      content: '<';
+      color: black;
+      font-size: 50px;
+      font-weight: bold;
+      }
+
+    .slick-next:before {
+      content: '>';
+      color: black;
+      font-size: 50px;
+      font-weight: bold;
+
+    }
+     .slide-show-2 {
+       display: none;
+     }
+     @media only screen and (max-width: 425px) {
+     .slide-show {
+       display: none;
+     }
+     .slide-show-2 {
+       display: block;
+       width: 400px;
+     }
+       .main0 {
+         width: 425px;
+         margin-bottom: 20px;
+       }
+       .slick-prev:before {
+        display: none;
+      }
+        .slick-next:before {
+                display: none;
+              }
+
+     }
+   
+    </style>
+
+
+    <script>
+          $('.slide-show').slick({
+   slidesToShow: 3,
+   slidesToScroll: 1,
+   arrows: true, 
+
+           
+ });
+    </script>
+
+    <script>
+          $('.slide-show-2').slick({
+   slidesToShow: 1,
+   slidesToScroll: 1, 
+   dots: true,
+            
+ });
+    </script>
+
+{% schema %}
+{
+  "name": "Endorsements Homepage",
+  "class": "bg-light pt-5",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Heading",
+      "id": "heading"
+    },
+    {
+      "type": "richtext",
+      "label": "Sub Heading",
+      "id": "subHeading"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Slide",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Endorsements Homepage",
+      "name": "Endorsements Homepage"
+    }
+  ]
+}
+{% endschema %}

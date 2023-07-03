@@ -1,0 +1,45 @@
+{% if section.settings.isActive %}
+  <div class="as-seen-on__container container text-center my-5">
+    <h5 class="h2 text-uppercase fw-bolder">{{ section.settings.heading }}</h5>
+    <div class="d-flex flex-wrap justify-content-around align-items-center">
+      {% for block in section.blocks %}
+        <img loading="lazy" class="lazyload" data-src="{{ block.settings.image | img_url: "x50"}}">
+        {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+
+{% schema %}
+{
+"name": "As Seen On",
+"settings": [
+{
+"id": "isActive",
+"type": "checkbox",
+"label": "Is Active"
+},
+{
+"id": "heading",
+"type": "text",
+"label": "Heading"
+}
+],
+"blocks": [
+{
+"name": "Image",
+"type": "image",
+"settings": [
+
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"
+}
+
+]
+}
+
+]
+}
+{% endschema %}

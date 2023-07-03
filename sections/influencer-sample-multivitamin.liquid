@@ -1,0 +1,562 @@
+<script async src="https://fast.wistia.com/embed/medias/m9e6iyr90x.jsonp"></script>
+<script async src="https://fast.wistia.com/assets/external/E-v1.js"></script>
+
+{{ "quiz.js" | asset_url | script_tag }}
+
+{% assign sample = all_products['sample-product'] %}
+{% assign male_shirt = all_products['mens-sport-formula-athletic-cut-t-shirt'] %}
+{% assign female_shirt = all_products['womens-sport-formula-athletic-cut-t-shirt'] %}
+{% assign shaker = all_products['sport-formula-bpa-free-shaker-bottle'] %}
+{% assign collection = collections.coach-sample %}
+
+<div class="quiz__wrapper mt-2 mb-5">
+  <div class="quiz__container container text-center mt-20">
+    <section class="question-section col-sm-12 text-center">
+      <h1>{{ section.settings.startPageHeading }}</h1>
+      <h2>{{ section.settings.startPageHeading2 }}</h2>
+      <h2>{{ section.settings.startPageHeading3 }}</h2>
+
+      <img class="w-100" src="{{ section.settings.startPageImage | img_url: 'master' }}">
+    </section>
+    <h2>{{ section.settings.startPageFooting }}</h2>
+    <!-- <h2 class="quiz__instructions mx-auto text-left d-table">
+      {{ section.settings.instructions }}
+    </h2> -->
+    <button class="go-button btn btn-primary btn-lg text-uppercase" type="button">Get yours free now</button>
+  </div>
+</div>
+
+<style>
+  header,
+  footer {
+    display: none !important;
+  }
+
+  .footer__back-to-top {
+    display: none;
+  }
+
+  .disable-form {
+    background-color: gray;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .go-button {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 30px;
+    font-weight: bold;
+  }
+</style>
+
+
+<script>
+  const store = {
+    questions: [{% for block in section.blocks %}
+        {% if block.type == 'text'  %}
+        {
+          question: `{{ block.settings.question }}`,
+          answers: [
+            `{{ block.settings.answer1 }}`, `{{ block.settings.answer2 }}`, `{{ block.settings.answer3 }}`
+          ],
+          correctAnswer: "All of the above",
+          video: `<div class="video__container">{{ block.settings.video }}</div>`,
+          heading: `{{ block.settings.heading }}`
+        },
+        {% endif %}
+      {% endfor %}],
+    promoVideo: [`{{ section.settings.promoVideo }}`],
+    quizStarted: false,
+    questionNumber: 2,
+    hasShaker: {{ section.settings.add_shaker_product }},
+    hasShirt: {{ section.settings.add_shirt_product }},
+    score: 0
+  };
+
+  let form = document.getElementById("coach-form")
+  const currentQuestion = store.questions[store.questionNumber];
+  const currentAnswer = currentQuestion.answers;
+  let email = $("#email")
+
+  function ungateForm() {
+    console.log("done")
+    $("#video-warning").toggle(false)
+    return $("#coach-form").toggleClass("disable-form", false)
+  }
+
+  function sendIt(e) {
+    e.preventDefault
+    let form = $("#coach-form")
+    let email = $("#email").val() || "{{ customer.email }}"
+    // let teamName = $('#team-name').val()
+    // let sportType = $('#sport-type').val()
+    // let teamSize = $('#team-size').val()
+    let selectedShirt = $("#this-better-work").val()
+    // if (sportType == "Other") {
+    // sportType = $('#other-sport').val()
+    // }
+    submitToKlaviyo(email)
+    testAdd(selectedShirt)
+  }
+
+  function submitToKlaviyo(email) {
+    _learnq.push([
+      "identify", {
+        "$email": email,
+        "influencer__completedSampleTraining": true
+      }
+    ]);
+  }
+
+  function testAdd(shirtId) {
+    let sampleProductQty = "{{ section.settings.sampleProductQty }}" || 1;
+    let sampleProduct = $('#sampleProduct__selector').val();
+    let discount = "{{ section.settings.discount }}" || "";
+    let items = [
+        {
+            quantity: sampleProductQty,
+            id: sampleProduct
+        }
+    ]
+
+    if ( shirtId && store.hasShirt ) {
+      items.push({
+        quantity: 1,
+        id: shirtId,
+        discounted_price: 1
+      })
+    }
+
+    if ( store.hasShaker ) {
+      items.push({
+        quantity: 1,
+        // id: `{{ shaker.first_available_variant.id }}`,
+        id: 39562575872094, // Ambassador Kit - Shaker Variant ID
+        discounted_price: 1
+      })
+    }
+
+    $.post( '/cart/clear.js', function() {
+      $.post( '/cart/add.js', { items: items }, function() {
+        window.location.href = `/checkout/?discount=${discount}`
+      } )
+    } )
+  }
+
+  function checkSampleProduct() {
+    $('#sampleProduct__selector').on('input', function() {
+      
+      if (  $(this).val() && !store.hasShirt ) {
+        $("#sample-submit").removeClass("disable-form")
+      } 
+    })
+     
+  }
+
+  function checkShirtSelected() {
+    $("#select-shirt").click(function () {
+      $("#final-form").removeClass("disable-form")
+
+      if ($(this).val() != "female") {
+       $("#sample-submit").removeClass("disable-form")
+        $(".shirt-selection")
+          .append()
+          .html(`
+            <select name="id[]" id="this-better-work" class="shirt-selector form-control my-1">
+                {% for variant in male_shirt.variants %}
+                <option {% if variant==product.selected_or_first_available_variant %} selected="selected" {% endif %}
+                    value="{{ variant.id }}">{{ variant.title }}
+                </option>
+                <span style="text-decoration: line-through;">{{ variant.price | money }}</span> FREE!</option>
+                {% endfor %}
+            </select>`)
+      } else {
+        $("#sample-submit").removeClass("disable-form")
+        $(".shirt-selection")
+          .append()
+          .html(`
+            <select name="id[]" id="this-better-work" class="shirt-selector form-control my-1">
+                {% for variant in female_shirt.variants %}
+                <option {% if variant==product.selected_or_first_available_variant %} selected="selected" {% endif %}
+                    value="{{ variant.id }}">{{ variant.title }}
+                </option>
+                <span style="text-decoration: line-through;">{{ variant.price | money }}</span> FREE!</option>
+                {% endfor %}
+            </select> `)
+      }
+
+    })
+  }
+
+  function finishTemplateWatchers() {
+    checkSampleProduct()
+    checkShirtSelected()
+  }
+
+  function questionsTemplate() {
+    let disabled = ''
+
+    $(".quiz__container").html(`
+    <h2 class="question-heading"> ${ store.questions[store.questionNumber].heading || "" }</h2>
+    <div class="video-embed col-12 col-md-9 col-xl-7 mx-auto">
+        ${ store.questions[store.questionNumber].video }
+    </div>
+    <div class="question-section-wrapper col-12 col-md-9 col-xl-7 mx-auto">
+        <section class="question-section">
+            <div class="question-div mt-20">
+                <h2>${ store.questions[store.questionNumber].question }</h2>
+            </div>
+        </section>
+        <section class="question-area">
+            <div class="question-div">
+                <!-- Add disable-form on form class-->
+                <form class="question-list {% if section.settings.disableForm %}disable-form{% endif %} d-grid gap-2 p-20"
+                    id="coach-form">
+                    <input class="btn btn-block btn-outline-dark text-wrap " type="submit" value="${ store.questions[store.questionNumber].answers[0] }" ${disabled}>
+                    <input class="btn btn-block text-wrap btn-outline-dark" type="submit" value="${ store.questions[store.questionNumber].answers[1] }" ${disabled}>
+                    <input class="btn btn-block text-wrap btn-outline-dark" type="submit" value="${ store.questions[store.questionNumber].answers[2] }" ${disabled}>
+                </form>
+                <div id="video-warning">Please watch the full video before answering.</div>
+            </div>
+        </section>
+
+    </div>`)
+    answerQuestion();
+  }
+
+  function capitalizeEachWord( string ) {
+    if ( typeof string == undefined ) return '-'
+    var splitStr = string.toLowerCase().split( ' ' )
+    for ( var i = 0; i < splitStr.length; i++ ) {
+      splitStr[i] = splitStr[i].charAt( 0 ).toUpperCase() + splitStr[i].substring( 1 )   
+    }
+    return splitStr.join( ' ' ) 
+  }
+
+  function questionsTemplateNew() {
+    let btnLabel = 'SportFormula'
+    let pathName = window.location.pathname
+    pathName = pathName.replace( '/pages/influencer-sample-', '' )
+
+    if ( pathName !== 'multivitamin' ) {
+      const _pathName = pathName.replace( '-', ' ' )
+      btnLabel = capitalizeEachWord( _pathName )
+    }
+
+    $(".quiz__container").html(`
+      <div class="form-group row">
+        <div class="video-embed col-12 col-md-9 col-xl-7 mx-auto">
+          ${ store.promoVideo }
+        </div>
+        <div class="button-container mt-3 col-12 col-md-9 col-xl-7 mx-auto">
+          <button type="button" class="btn btn-primary go-button" onclick="finishTemplateNew()">Get my ${btnLabel}</button>
+        </div>
+      </div>
+    `)
+    answerQuestion();
+  }
+
+  function finishTemplate() {
+
+    $(".quiz__container").html(`
+      <h2>{{ section.settings.formHeading }}</h2>
+      <h2 class="quiz__instructions-final d-table mx-auto text-left"> {{ section.settings.instructions-final }} </h2>
+      <div class="final-page-form col-sm-12 col-md-9 col-lg-6 mx-auto my-20 fs-4">
+          <form>
+              <input id="email" class="form-control my-1" placeholder="Enter your email" type="email"
+                  value="{% if customer %}{{ customer.email }} {% endif %}" required>
+              {% comment %} Sample product selection {% endcomment %}
+            
+              <select name="id[]" id="sampleProduct__selector" class="form-control my-1">
+                  <option disabled selected value="">Select your sample</option>
+                  {% for block in section.blocks %}
+                    {% if block.type == 'sample_product' %}
+                      {% comment %}
+                        {% if block.settings.sample_product.first_available_variant.id == 14944190464052 %}
+                          <option value="{{ block.settings.sample_product.first_available_variant.id }}" disabled>{{ block.settings.sample_product.title }} - Out of Stock</option>
+                        {% else %}
+                          <option value="{{ block.settings.sample_product.metafields.ambassador_kit.prod_id }}">{{ block.settings.sample_product.title }}</option>
+                        {% endif %}
+                      {% endcomment %}
+                      <option value="{{ block.settings.sample_product.metafields.ambassador_kit.prod_id }}">{{ block.settings.sample_product.title }}</option>
+                    {% endif %}
+                  {% endfor %}
+
+                  {% comment %}
+                    {% for block in section.blocks %}
+                      {% if block.type == 'sample_product'  %}
+                        {% if block.settings.sample_product.first_available_variant.id == 14944190464052 %} 
+                        <option value="{{ block.settings.sample_product.first_available_variant.id }}" disabled>{{ block.settings.sample_product.title }} - Out of Stock</option>
+                        {% else %}
+                        <option value="{{ block.settings.sample_product.first_available_variant.id }}">{{ block.settings.sample_product.title }}</option>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  {% endcomment %}
+
+                  {% comment %} {% for variant in section.settings.sampleProduct.variants %}
+                  <option value="{{ variant.id }}">{{ variant.title }}</option>
+                  {% endfor %} {% endcomment %}
+              </select>
+
+              {% if section.settings.add_shirt_product %}
+              <div class="shirt-selection-wrapper my-20">
+                  <select id="select-shirt" class="form-control my-1" name="shirt-size">
+                      <option disabled selected value="">Select Men's or Women's Shirt</option>
+                      <option value="male">Men's</option>
+                      <option value="female">Women's</option>
+                  </select>
+                  <div class="shirt-selection">Please select shirt type above</div>
+              </div>
+              {% endif %}
+      </div>
+      <button id="sample-submit" onclick="sendIt(event)"
+          class="disable-form btn btn-lg btn-primary go-button my-2">Submit</button>
+      </form>
+
+      <h2>{{ section.settings.formFooting }}</h2>
+    `)
+    finishTemplateWatchers()
+  }
+
+  function finishTemplateNew() {
+    $(".quiz__container").html(`
+      <h2 class="quiz__instructions-final d-table mx-auto text-left">{{ section.settings.instructions-final }}</h2>
+      <div class="final-page-form col-sm-12 col-md-9 col-lg-6 mx-auto my-20 fs-4">
+        <form>
+          <input id="email" class="form-control my-1" placeholder="Enter your email" type="email" value="{% if customer %}{{ customer.email }} {% endif %}" required>
+            <select name="id[]" id="sampleProduct__selector" class="form-control my-1">
+              <option disabled selected value="">Select your sample</option>
+              {% for block in section.blocks %}
+                {% if block.type == 'sample_product' %}
+                  <option value="{{ block.settings.sample_product.metafields.ambassador_kit.prod_id }}">{{ block.settings.sample_product.title }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+
+            {% if section.settings.add_shirt_product %}
+              <div class="shirt-selection-wrapper my-20">
+                <select id="select-shirt" class="form-control my-1" name="shirt-size">
+                  <option disabled selected value="">Select Men's or Women's Shirt</option>
+                  <option value="male">Men's</option>
+                  <option value="female">Women's</option>
+                </select>
+                <div class="shirt-selection">Please select shirt type above</div>
+              </div>
+            {% endif %}
+          </div>
+          <button id="sample-submit" onclick="sendIt(event)" class="disable-form btn btn-lg btn-primary go-button my-2">Submit</button>
+        </form>
+
+      <h2>{{ section.settings.formFooting }}</h2>
+    `)
+    finishTemplateWatchers()
+  }
+
+  function render() {
+    window.scroll(0, 0)
+    startGame();
+    if (store.quizStarted === true && store.questionNumber < store.questions.length) {
+      $(".quiz__container").html(questionsTemplateNew());
+    } else if (store.questionNumber >= store.questions.length) {
+      $(".quiz__container").html(finishTemplateNew())
+    }
+  }
+
+  function startGame() {
+    $(".go-button").click(function () {
+      store.quizStarted = true;
+      render();
+    });
+  }
+
+  function answerQuestion() {
+    store.hasAnswered = false;
+    $("input").click(function (event) {
+      event.preventDefault();
+      store.questionNumber++;
+      render()
+    });
+  }
+
+  function goQuiz() {
+    render();
+    startGame();
+    // listenForRestart();
+  }
+
+  $(goQuiz);
+  // event callback pattern, when document object fires event called ready, when all sources have loaded
+
+  // Setting up Wistia video watcher
+  window._wq = window._wq || [];
+  _wq.push({
+    id: "_all",
+    onReady: function (video) {
+      video.bind("percentwatchedchanged", function (percent, lastPercent) {
+        // if (checkHasReceivedSampleKit()) {
+        //     //TODO: Make an error if they already received sample kit
+        //     console.log("percentwatch has receive sample kit already")
+        //     video.unbind("percentwatchedchanged");
+        //     return
+        // }
+        console.log(percent)
+        if (percent >= 0.95) {
+          $('.question-list input').removeAttr('disabled')
+          console.log("percentwatched did not receive, form ungated")
+          video.unbind("percentwatchedchanged", ungateForm());
+        }
+      })
+    }
+  });
+  // Klaviyo Variable
+  var _learnq = _learnq || [];
+  let klaviyoProfile = _learnq.push([
+    "identify", {
+      "$email": email
+    }
+  ])
+</script>
+
+{% schema %}
+{
+  "name": "Quiz Multivitamins",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "disableForm",
+      "label": "Disable Form",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "startPageHeading",
+      "label": "Heading on the Start Page"
+    },
+    {
+      "type": "text",
+      "id": "startPageHeading2",
+      "label": "Heading on the Start Page"
+    },
+    {
+      "type": "text",
+      "id": "startPageHeading3",
+      "label": "Heading on the Start Page"
+    },
+    {
+      "type": "text",
+      "id": "instructions",
+      "label": "Start Page Instructions"
+    },
+    {
+      "type": "text",
+      "id": "startPageFooting",
+      "label": "Start Page Footing"
+    },
+    {
+      "type": "image_picker",
+      "id": "startPageImage",
+      "label": "Image for Start Page"
+    },
+    {
+      "type": "textarea",
+      "id": "promoVideo",
+      "label": "Promotional Video"
+    },
+    {
+      "type": "text",
+      "id": "formHeading",
+      "label": "Final page heading"
+    },
+    {
+      "type": "text",
+      "id": "instructions-final",
+      "label": "Final Page Instructions"
+    },
+    {
+      "type": "text",
+      "id": "formFooting",
+      "label": "Final page bottom text"
+    },
+    {
+      "type": "number",
+      "id": "sampleProductQty",
+      "label": "Quantity of sample product"
+    },
+    {
+      "type": "checkbox",
+      "id": "add_shaker_product",
+      "label": "Add Shaker Product",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "add_shirt_product",
+      "label": "Add Shirt Product",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "discount",
+      "label": "Discount code"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "questions",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "video",
+          "label": "Video Embed"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "text",
+          "id": "answer1",
+          "label": "First answer"
+        },
+        {
+          "type": "text",
+          "id": "answer2",
+          "label": "Second answer"
+        },
+        {
+          "type": "text",
+          "id": "answer3",
+          "label": "Third Answer"
+        }
+      ]
+    },
+    {
+      "type": "sample_product",
+      "name": "Sample Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "sample_product",
+          "label": "Select product to include on the option"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Quiz Multivitamins",
+      "name": "Quiz Multivitamins"
+    }
+  ]
+}
+{% endschema %}

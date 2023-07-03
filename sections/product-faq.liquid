@@ -1,0 +1,82 @@
+<div class="container my-5">
+    <div
+        class="accordion accordion-flush"
+        id="accordionFlushExample"
+        >
+        <h2 class="text-center">
+            {{ section.settings.heading }}
+        </h2>
+        {% for block in section.blocks %}
+            <div class="accordion-item">
+                <h2
+                    class="accordion-header"
+                    id="flush-heading{{ forloop.index }}"
+                    >
+                    <button
+                        class="accordion-button collapsed font-weight-bold text-uppercase"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapse{{ forloop.index }}"
+                        aria-expanded="false"
+                        aria-controls="flush-collapse{{ forloop.index }}"
+                        >
+                        {{ block.settings.question }}
+                    </button>
+                </h2>
+                <div
+                    id="flush-collapse{{ forloop.index }}"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="flush-heading{{forloop.index }}"
+                    data-bs-parent="#accordionFlushExample"
+                    >
+                    <div class="accordion-body">
+                        {{ block.settings.answer }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container my-4 mb-5">
+    <div class="d-flex justify-content-center learn-more-container">
+      <button data-href="/pages/feature-and-benefit" class="mb-3 btn btn-primary btn-learn-more mx-1">
+        Learn More about Features and Benefits
+      </button>
+      <button data-href="/pages/supplement-facts" class="mb-3 btn btn-primary btn-learn-more mx-1">
+        Learn More about Multivitamin Facts
+      </button>
+    </div>
+  </div>
+
+{% schema %}
+{
+"name": "Product FAQ",
+"settings": [
+{
+"type": "text",
+"id": "heading",
+"label": "Heading"
+}
+],
+"blocks": [
+{
+"name": "FAQ",
+"type": "text",
+"settings": [
+{
+"type": "text",
+"id": "question",
+"label": "Question"
+},
+{
+"type": "html",
+"id": "answer",
+"label": "Answer",
+"info": "Enter HTML, use an online HTML editor. Can attach pictures to it"
+}
+]
+}
+]
+}
+{% endschema %}

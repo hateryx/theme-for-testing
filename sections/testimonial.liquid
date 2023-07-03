@@ -1,0 +1,45 @@
+<div class="testimonial {{ section.id }}">
+    <div class="testimonial_image">
+       <img loading="lazy" src="{{ section.settings.testimonial-image | img_url: 'master' }}">
+    </div>
+    <div class="testimonial_rating">
+{% for star in (1..section.settings.rating) %}
+    <span class="{{ star }}"><i class="fas fa-star"></i></span>
+    {% endfor %}
+    </div>
+    <div class="testimonial_text">
+        {{ section.settings.testimonial-text  }}
+    </div>
+</div>
+
+
+
+
+ 
+{% schema %}
+
+ {
+     "name": "Testimonial",
+  "settings": [
+      {
+          "id": "testimonial-image",
+          "type": "image_picker",
+          "label": "Testimonial Image"
+      },
+      {
+          "id":"testimonial-text",
+          "type": "richtext",
+          "label":"Testimonial Text"
+      },
+      {
+          "id": "rating",
+          "type": "range",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+      }
+    ]
+ }
+    {% endschema %}

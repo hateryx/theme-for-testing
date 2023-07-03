@@ -1,0 +1,104 @@
+{% assign productTags = product.tags | join: ',' %}
+
+<div class="my-2 product-features-images__container align-items-start justify-content-start row row-cols-3
+row-cols-lg-4" style="max-width: 100%;">
+    {% if productTags contains 'no-benifits-icons' %}
+    {% else %}
+
+    {% unless productTags contains 'no-gluten' %}
+    <div
+        class="product-features-images__group col d-flex justify-content-center align-items-center flex-column text-center">
+        <img loading="lazy" class="img-fluid lazyload" data-src="{{ "gluten-free.png" | asset_img_url: "50x" }}">
+        <h6 class="text-uppercase text-wrap">Gluten Free</h6>
+    </div>
+    {% endunless %}
+
+    {% unless productTags contains 'no-lactose' %}
+    <div
+        class="product-features-images__group col d-flex justify-content-center align-items-center flex-column text-center">
+        <img loading="lazy" class="img-fluid lazyload" data-src="{{ "lactose-free.png" | asset_img_url: "50x" }}">
+        <h6 class="text-uppercase text-wrap">Lactose Free</h6>
+    </div>
+    {% endunless %}
+
+    {% unless productTags contains 'no-gmo' %}
+    <div class="product-features-images__group col d-none d-lg-flex justify-content-center align-items-center
+            flex-column text-center">
+        <img loading="lazy" class="img-fluid lazyload" data-src="{{ "non-gmo.png" | asset_img_url: "50x" }}">
+        <h6 class="text-uppercase text-wrap">Non-GMO</h6>
+    </div>
+    {% endunless %}
+
+    {% unless productTags contains 'no-pesticide' %}
+    <div class="product-features-images__group col d-none d-lg-flex justify-content-center align-items-center
+            flex-column text-center">
+        <img loading="lazy" class="img-fluid lazyload" data-src="{{ "pesticide-free.png" | asset_img_url: "50x" }}">
+        <h6 class="text-uppercase text-wrap">Pesticide Free</h6>
+    </div>
+    {% endunless %}
+
+
+    {% unless productTags contains 'no-soy' %}
+    <div class="product-features-images__group col {% unless product.title contains 'Greens' %}d-none {%
+                    endunless %}
+            d-lg-flex
+            justify-content-center
+            align-items-center
+            flex-column text-center">
+        <img loading="lazy" class="img-fluid lazyload" data-src="{{ "soy-free.png" | asset_img_url: "50x" }}">
+        <h6 class="text-uppercase text-wrap">Soy Free</h6>
+    </div>
+    {% endunless %}
+
+
+    {% unless productTags contains 'no-vegan' %}
+    <div
+        class="product-features-images__group col d-none d-lg-flex justify-content-center align-items-center flex-column text-center">
+        <img loading="lazy" class="img-fluid lazyload" data-src="{{ "vegan.png" | asset_img_url: "50x" }}">
+        <h6 class="text-uppercase text-wrap">Vegan</h6>
+    </div>
+    {% endunless %}
+
+    {% unless productTags contains 'no-keto' %}
+    <div
+        class="product-features-images__group col d-flex justify-content-center align-items-center flex-column text-center">
+        <img loading="lazy" class="img-fluid lazyload" data-src="{{ "keto.png" | asset_img_url: "50x" }}">
+        <h6 class="text-uppercase text-wrap">Keto</h6>
+    </div>
+    {% endunless %}
+
+
+    {% unless productTags contains 'no-organic' %}
+    <div class="product-features-images__group col d-none d-lg-flex justify-content-center align-items-center
+            flex-column text-center">
+        <img loading="lazy" class="img-fluid lazyload" data-src="{{ "organic.png" | asset_img_url: "50x" }}">
+        <h6 class="text-uppercase text-wrap">Organic</h6>
+    </div>
+    {% endunless %}
+
+
+    {% unless productTags contains 'no-raw' %}
+    <div class="product-features-images__group col d-none d-lg-flex justify-content-center align-items-center
+            flex-column text-center">
+        <img loading="lazy" class="img-fluid lazyload" data-src="{{ "raw-nutrients.png" | asset_img_url: "50x" }}">
+        <h6 class="text-uppercase text-wrap">Raw Nutrients</h6>
+    </div>
+    {% endunless %}
+
+    {% unless productTags contains 'no-cold-process' %}
+    <div class="product-features-images__group col d-none d-lg-flex justify-content-center align-items-center
+            flex-column text-center">
+        <img loading="lazy" class="img-fluid lazyload" data-src="{{ "cold-processed.png" | asset_img_url: "50x" }}">
+        <h6 class="text-uppercase text-wrap no-break-word">Cold Processed</h6>
+    </div>
+    {% endunless %}
+    {% endif %}
+</div>
+
+<style>
+    .product-features-images__group {
+        width: 100%;
+        min-width: 32%;
+
+    }
+</style>

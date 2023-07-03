@@ -1,0 +1,106 @@
+<div class="container-fluid mt-5" id="bundle-product-header">
+  <div class="text-center">
+    <h3 class="py-4">BUNDLES</h3>
+  </div>
+</div>
+
+<div class="product-grid__container container-fluid">
+  <ul class="row row-cols-1 row-cols-lg-3 justify-content-center align-items-center list-unstyled m-0 align-items-stretch">
+    {% capture collection_handle_name %}
+      {% if collection.handle == 'formula' %}
+        bundles
+      {% else %}
+        ambassador-bundle
+      {% endif %}
+    {% endcapture %}
+    {% assign collection_handle_name = collection_handle_name | strip %}
+    {% for product in collections[collection_handle_name].products %}
+      {% assign btnText = product.title %}
+
+      {% capture newBtnText %}
+        {% assign btnText = btnText | replace: "Ambassador", "" %}
+    
+        {% if btnText contains '-' %}
+          {% assign btnTextSplit = btnText | split: '-' %}
+          {% assign btnText = btnTextSplit.first %}
+
+          {% if btnText contains 'Ultimate Stack' %}
+            {% assign btnText = 'Ultimate Health' %}
+          {% endif %}
+
+          {% if btnText contains 'Essentials Bundle' %}
+            {% assign btnText = 'Health Essentials Bundle' %}
+          {% endif %}
+        {% endif %}
+
+        {% unless btnText contains 'bundle' or btnText contains 'Bundle' %}
+          {% assign btnText = btnText | append: ' bundle' %}
+        {% endunless  %}
+
+        {{ btnText }}
+      {% endcapture %}
+      <li class="card p-3 m-1 col product-grid__container-item">
+        <a class="product-card d-flex align-items-center justify-content-center flex-column" href="{{ product.url | within: collection }}">
+          <img class="img-fluid lazyload" data-src="{{ product.featured_image.src | img_url: 'x400' }}" alt="{{product.featured_image.alt | escape }}">
+          <!-- <div class="ratings-container text-center">
+            {% render 'collection-ratings', rating: product.metafields.stamped.reviews_average %}
+            
+            <p>
+              {% if product.metafields.extra_info.one_liner  %}
+                {{ product.metafields.extra_info.one_liner }}
+              {% else %}
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+              {% endif %}
+            </p>
+          </div> -->
+          <button class="product-grid__grid-button btn btn-primary btn-lg w-75 sm-max:w-100 mt-2 text-uppercase">
+            {{ newBtnText }}
+          </button>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% schema %}
+  {
+    "name": "Bundle Product Collection",
+    "class": "bg-light my-5 pb-5"
+  }
+{% endschema %}
+
+<script>
+  document.addEventListener( 'DOMContentLoaded', () => {
+    let scrollInterval = null
+    const viewBundlesBtn = document.getElementById( 'view-bundles' )
+    const scrollToBundles = () => {
+      document.querySelector( '#bundle-product-header' ).scrollIntoView( {
+        // behavior: 'smooth'
+      } )
+    }
+    const stopInterval = ( condition ) => {
+      if ( condition ) clearInterval( scrollInterval )
+    }
+    viewBundlesBtn.addEventListener( 'click', () => {
+      scrollInterval = setInterval( () => {
+        const bundlesPos = Math.round( document.getElementById( 'bundle-product-header' ).offsetTop )
+        const scrollPos =  Math.round( document.documentElement.scrollTop || document.body.scrollTop )
+        const posDiff = ( ( bundlesPos - scrollPos ) == 1 ) ? true : false
+
+        scrollToBundles()
+        stopInterval( bundlesPos == scrollPos )
+        stopInterval( posDiff )
+      }, 100 )
+    } )
+
+    $( 'body,html' ).bind( 'scroll mousedown wheel DOMMouseScroll mousewheel keyup', function( e ) {
+      if ( e.which == 0 && e.type == 'wheel' ) stopInterval( true )
+    } )
+
+    window.addEventListener( 'touchstart', function() { stopInterval( true ) } )
+    window.addEventListener( 'touchend', function() { stopInterval( true ) } )
+    /* const urlSection = new URLSearchParams( window.location.search ).get( 'section' )
+    if ( urlSection && urlSection == 'bundle' ) {
+      setTimeout( () => viewBundlesBtn.click(), 3000 )
+    } */
+  } )
+</script>

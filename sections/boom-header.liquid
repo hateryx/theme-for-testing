@@ -1,0 +1,126 @@
+{% liquid
+      assign logo = section.settings.logo | img_url: "master"
+      assign logo_url = section.settings.logo_url
+      assign text = section.settings.text
+  
+      assign first_btn = section.settings.first_btn
+      assign first_btn_text = section.settings.first_btn_text
+  
+      assign second_btn = section.settings.second_btn
+      assign second_btn_text = section.settings.second_btn_text
+  
+      assign call_number = section.settings.call_number
+  %}
+
+<div class="container-fluid header--desktop">
+  <div class="row h-100 align-items-center">
+    <div class="col-3">
+      <a href="{{ logo_url }}">
+        <img src="{{ logo }}" class="img-fluid"/>
+      </a>
+    </div>
+    <div class="col-6 text-center py-4">
+      <div class="w-75 mx-auto">
+        <p class="d-block">{{ text }}
+        </p>
+        <div class="d-flex justify-content-center gap-3 header--btns">
+          <a href="{{ first_btn }}" class="btn btn-primary text-uppercase">{{ first_btn_text }}
+          </a>
+          <a href="{{ second_btn }}" class="btn btn-primary text-uppercase">{{ second_btn_text }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 text-right">
+      <div class="d-flex flex-column gap-2">
+        <div class="d-flex gap-3 justify-content-end">
+          <a href="/account" class="clean--account text-primary">
+            <i class="fa fa-user-circle"></i>
+            Account
+          </a>
+          <a href="/cart" class="clean--cart text-primary">
+            <i class="fa fa-shopping-cart"></i>
+            Cart
+          </a>
+        </div>
+        <a href="tel:{{ call_number }}">Please Call Us:
+          {{ call_number }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid header--mobile">
+  <div class="row h-100 align-items-center py-3">
+    <div class="col-6 col-sm-3">
+      <img src="{{ logo }}" class="img-fluid"/>
+    </div>
+    <div class="col-12 col-sm-6 text-center py-4 sm:order-3 header--btns-container">
+      <div class="d-flex justify-content-center gap-3 header--btns">
+        <a href="{{ first_btn }}" class="btn btn-primary text-uppercase">New Products</a>
+        <a href="{{ first_btn }}" class="btn btn-primary text-uppercase">Join The Club</a>
+      </div>
+    </div>
+    <div class="col-6 col-sm-3 text-right sm:order-2">
+      <div class="d-flex justify-content-end gap-2">
+        <div class="clean--icons text-primary d-flex flex-column align-items-center gap-1">
+          <i class="fa fa-user-circle fa-2x"></i>
+          <span>ACCOUNT</span>
+        </div>
+        <div class="clean--icons text-primary d-flex flex-column align-items-center gap-1">
+          <i class="fa fa-shopping-cart fa-2x"></i>
+          <span>SHOP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Boom Header",
+    "class": "boom--header",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "url",
+        "id": "logo_url",
+        "label": "Logo Link"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Header Text",
+        "default": "It's about women. It's about beauty. It's about time."
+      },
+      {
+        "type": "url",
+        "id": "first_btn",
+        "label": "First Button"
+      }, {
+        "type": "text",
+        "id": "first_btn_text",
+        "label": "First Button Text",
+        "default": "Check Out Our New Products"
+      }, {
+        "type": "url",
+        "id": "second_btn",
+        "label": "Second Button"
+      }, {
+        "type": "text",
+        "id": "second_btn_text",
+        "label": "Second Button Text",
+        "default": "Join The Club"
+      }, {
+        "type": "text",
+        "id": "call_number",
+        "label": "Tel. Number",
+        "default": "800.964.8482"
+      }
+    ]
+  }
+{% endschema %}

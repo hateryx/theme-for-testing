@@ -1,0 +1,59 @@
+<div class="container mb-4">
+  <div class="accordion accordion-flush" id="accordionFlushExample">
+    {% for block in section.blocks %}
+      <div class="accordion-item" {{ block.type }}>
+        <h2 class="accordion-header" id="flush-heading-{{ forloop.index }}-{{ section.id }}">
+          <button
+            class="accordion-button collapsed font-weight-bold"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#flush-collapse-{{ forloop.index }}-{{ section.id }}"
+            aria-expanded="false"
+            aria-controls="flush-collapse-{{ forloop.index }}-{{ section.id }}">
+            {{ block.settings.question }}
+          </button>
+        </h2>
+          <div
+            id="flush-collapse-{{ forloop.index }}-{{ section.id }}"
+            class="accordion-collapse collapse"
+            aria-labelledby="flush-heading-{{ forloop.index }}-{{ section.id }}"
+            data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "blocks": [
+    {
+      "name": "FAQ",
+      "type": "text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "html",
+          "id": "answer",
+          "label": "Answer",
+          "info": "Enter HTML, use an online HTML editor. Can attach pictures to it"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Text",
+      "name": "FAQ"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,60 @@
+<div class="big-image-text__container">
+  {% for block in section.blocks %}
+    <div class="large-video-text__container d-flex my-md-5 my-sm-2  justify-content-center {% if block.settings.flip %}
+                    flex-column-reverse flex-lg-row {% else %} flex-lg-row-reverse flex-column-reverse {% endif %}">
+      <div class="col col-lg-6 col-xl-5 align-self-center">{{ block.settings.text }}</div>
+      {% if block.settings.image %}
+        <div class="col col-lg- col-xl-5 text-center">
+
+          {% render 'responsiveImage' with imageSrc: block.settings.image,firstLoadWidth: '570x', classes:
+          'img-fluid w-100' %}
+        </div>
+      {% else %}
+        <div class="col col-lg-6 col-xl-5">{{ block.settings.embed }}</div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+
+
+{% schema %}
+
+{
+  "name": "50/50 Embed + Text",
+  "presets": [
+    {
+      "category": "Video",
+      "name": "Large Video + Text"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Text + Image",
+      "type": "select",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "flip",
+          "label": "Flip text and video",
+          "default": false
+        }, {
+          "type": "html",
+          "id": "text",
+          "label": "Text",
+          "info": "Use an online html editor to get the style exactly how you'd like"
+        }, {
+          "type": "html",
+          "id": "embed",
+          "label": "Video embed"
+        }, {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "If there is no video embed, it will try to use this image"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

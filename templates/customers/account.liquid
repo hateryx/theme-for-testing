@@ -1,0 +1,134 @@
+<div class="account__container container-fluid row my-lg-4 mx-auto">
+  <div class="account__info col-lg-3 col-12 text-center mb-3 mb-lg-0 text-lg-right">
+    <h1>Your Account</h1>
+    <div class="grid__item myaccount__account-details ">
+      {{ customer.default_address | format_address }}
+      <p>
+        <a href="{{ routes.account_addresses_url }}" class="btn btn--small">View Addresses({{ customer.addresses_count }})</a>
+      </p>
+    </div>
+    <div class="d-flex justify-content-center flex-column account-page-buttons" id="account__links">
+      <button type="button" class="btn btn-primary text-uppercase my-1" id="trigger-video-modal" data-target="#accountVideoModal">View video instructions</button>
+      <a class="btn btn-primary text-uppercase my-1 pointer-event-none" action-type="change-date" href="/tools/recurring/portal/temp_hash/schedule?token=6124ac82b37c4984a52d431b10ed54ee">Change Next Delivery Date</a>
+      <a class="btn btn-primary text-uppercase my-1 pointer-event-none" action-type="add-remove-product" href="/tools/recurring/portal/temp_hash/subscriptions?token=6124ac82b37c4984a52d431b10ed54ee">Add or Remove a Product</a>
+      <a class="btn btn-primary text-uppercase my-1 pointer-event-none" action-type="change-address" href="/tools/recurring/portal/temp_hash/addresses?token=6124ac82b37c4984a52d431b10ed54ee">Change Delivery Address</a>
+      <a class="btn btn-primary text-uppercase my-1 pointer-event-none" action-type="update-payment" href="/tools/recurring/portal/temp_hash/payment_methods?token=6124ac82b37c4984a52d431b10ed54ee">Update Payment Info</a>
+      <a class="btn btn-primary text-uppercase my-1 pointer-event-none" action-type="pause-cancel-subs" href="/tools/recurring/portal/temp_hash/subscriptions?token=6124ac82b37c4984a52d431b10ed54ee">Skip/Cancel Shipment</a>
+      <a class="btn btn-primary text-uppercase my-1" action-type="logout" href="/account/logout">Logout</a>
+    </div>
+  </div>
+  <div class="grid__item myaccount__order-history text-center col-lg-9 col-12">
+    <h2>Your Orders</h2>
+    {% paginate customer.orders by 20 %}
+      {% if customer.orders.size != 0 %}
+        <div class="table-responsive">
+          <table class="mx-auto table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">Order Number</th>
+              <th scope="col">Order Date</th>
+              <th scope="col">Payment Status</th>
+              <th scope="col">Fulfillment</th>
+              <th scope="col">Order Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in customer.orders %}
+              <tr>
+                <th data-label="{{ 'customer.orders.order_number' | t }}" scope="row">
+                  <a href="{{ order.customer_url }}" class="btn btn-primary btn-small" aria-label="{{ 'customer.orders.order_number_link' | t: number: order.name }}">{{ order.name }}</a>
+                </th>
+                <td data-label="{{ 'customer.orders.date' | t }}">
+                  {{ order.created_at | time_tag: format: "date" }}
+                </td>
+                <td data-label="{{ 'customer.orders.payment_status' | t }}">
+                  {{ order.financial_status_label }}
+                </td>
+                <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">
+                  {{ order.fulfillment_status_label }}
+                </td>
+                <td data-label="{{ 'customer.orders.total' | t }}">
+                  {{ order.total_price | money }}
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>{{ "customer.orders.none" | t }}</p>
+      {% endif %}
+      {%- if paginate.pages > 1 -%}
+        {% include 'pagination', paginate: paginate %}
+      {%- endif -%}
+    {% endpaginate %}
+  </div>
+</div>
+
+{% section 'video-tuts-tabs' %}
+
+<script>
+  function dynamicRechargeLinks() {
+    const customerId = window.sessionStorage.getItem( 'customerId' )
+    checkCustomerSubscription( customerId ).then( data => {
+      const customer = data.customers[0]
+      window.sessionStorage.setItem( 'customerHash', customer.hash )
+      // if ( customer.number_subscriptions === 0 ) return
+      if ( ! customer.hash ) return
+
+      displaySubscriptionLinks( window.sessionStorage.getItem( 'customerHash' ) )
+      return data
+    } )
+  }
+
+  function displaySubscriptionLinks(customerHash) {
+    devDebug( 'init buttons' )
+    let url = `/tools/recurring/portal/${customerHash}/`
+    let token = `6124ac82b37c4984a52d431b10ed54ee`
+    let types = [
+      {
+        type: 'change-date',
+        href: `${url}schedule?token=${token}`
+      },
+      {
+        type: 'add-remove-product',
+        href: `${url}subscriptions?token=${token}`
+      },
+      {
+        type: 'change-address',
+        href: `${url}addresses?token=${token}`
+      },
+      {
+        type: 'update-payment',
+        href: `${url}payment_methods?token=${token}`
+      },
+      {
+        type: 'pause-cancel-subs',
+        href: `${url}subscriptions?token=${token}`
+      },
+      {
+        type: 'logout',
+        href: `/account/logout`
+      }
+    ]
+
+    types.forEach( type => {
+      $( `#account__links a[action-type="${type.type}"]` ).attr( 'href', type.href )
+      $( `#account__links a[action-type="${type.type}"]` ).removeClass( 'pointer-event-none' )
+    } )
+  }
+
+  async function checkCustomerSubscription(customerId) {
+    const url = `https://sf-recharge-get-customer.refactorthis.workers.dev/${customerId}`
+    const response = await fetch(url)
+    return response.json()
+  }
+
+  dynamicRechargeLinks()
+  function devDebug( title ) {
+    const debug = new URLSearchParams( window.location.search ).get( 'debug' )
+    if ( debug ) {
+      console.log( title )
+    }
+  }
+</script>

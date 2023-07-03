@@ -1,0 +1,27 @@
+<div class="text-center m-auto">
+    <form action="/cart/add" method="post" enctype="multipart/form-data" data-productid="{{ product.id }}" class="d-flex justify-content-center align-items-center flex-column">
+        {% if product.available %}
+            {% render 'subscription-product' %}
+        {% endif %}
+
+        <select name="id" {% if product.handle contains "shirt" %} {% else %} hidden {% endif %}
+                id="product-select-{{ product.id }}">
+
+            {% for variant in product.variants %}
+                {% if variant.available == true %}
+                    <option value="{{ variant.id }}">
+                        {{ variant.title }}
+                        for
+                        {{ variant.price | money_with_currency }}</option>
+                {% else %}
+                    <option disabled="disabled">
+                        {{ variant.title }}
+                        - sold out!</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <!-- <input class="btn btn-primary btn-lg text-uppercase mx-auto font-weight-bold" id="add" name="add" type="submit" value="Add to Cart"> -->
+    </form>
+    {% render 'social-proof-reviews'  %}
+    {% render 'money-back' %}
+</div>

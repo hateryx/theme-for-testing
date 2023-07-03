@@ -1,0 +1,135 @@
+{% liquid
+    assign title_one = section.settings.title_one
+    assign content_one = section.settings.content_one
+    assign link = section.settings.link
+    assign content_image = section.settings.content_image | img_url: "master"
+    assign title_two = section.settings.title_two
+    assign content_two = section.settings.content_two
+    assign content_quote = section.settings.content_quote
+    assign sticky_product_one = all_products[section.settings.sticky_product_one]
+    assign sticky_product_two = all_products[section.settings.sticky_product_two]
+%}
+
+<div class="container my-5">
+    <div class="form-group row">
+        <div class="col-12 col-md-6">
+            {% if title_one != blank %}
+                <h3 class="text-center main--title">{{ title_one }}</h3>
+            {% endif %}
+
+            <div class="first--content mt-3">
+                {{ content_one }}
+            </div>
+
+            {% unless content_image contains 'no-image' %}
+                <img src="{{ content_image }}" class="img-fluid mx-auto py-4 w-100" />
+            {% endunless %}
+
+            {% if title_two != blank %}
+                <h3 class="secondary--title mt-5">{{ title_two }}</h3>
+            {% endif %}
+
+            {% if content_two != blank %}
+                <div class="second--content mt-3">
+                    {{ content_two }}
+                </div>
+            {% endif %}
+            
+            {% if content_quote != blank %}
+                <div class="second--content-quote text-center">
+                    <h3 class="text-primary mt-5">{{ content_quote }}</h3>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-12 col-md-6 sticky--products">
+            <div class="card border sticky--container">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center mb-4">
+                            <div class="card border-0 sticky--product">
+                                <div class="card-header bg-white border-0 m-0 p-0">
+                                    <img src="{{ sticky_product_one.featured_image | img_url: '150x' }}" class="img-fluid" />
+                                    <p class="font-weight-bold">{{ sticky_product_one.title }}</p>
+                                </div>
+                                <div class="card-body mt-0 pt-0">
+                                    <p>{{ sticky_product_one.description | slice: 0, 100 }}</p>
+                                </div>
+                                <div class="card-footer bg-white border-0 shadow-none">
+                                    <a href="{{ sticky_product_one.url }}" class="btn btn-primary w-100">SHOP NOW</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 text-center mb-4">
+                            <div class="card border-0 sticky--product">
+                                <div class="card-header bg-white border-0 m-0 p-0">
+                                    <img src="{{ sticky_product_two.featured_image | img_url: '150x' }}" class="img-fluid" />
+                                    <p class="font-weight-bold">{{ sticky_product_two.title }}</p>
+                                </div>
+                                <div class="card-body mt-0 pt-0">
+                                    <p>{{ sticky_product_two.description | slice: 0, 100 }}</p>
+                                </div>
+                                <div class="card-footer bg-white border-0 shadow-none">
+                                    <a href="{{ sticky_product_two.url }}" class="btn btn-primary w-100">SHOP NOW</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Boom Content Two",
+    "class": "boom--content-two",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title_one",
+            "label": "Enter Content Two Title"
+        },
+        {
+            "type": "richtext",
+            "id": "content_one",
+            "label": "Enter Content Two"
+        },
+        {
+            "type": "url",
+            "id": "link",
+            "label": "Content Link"
+        },
+        {
+            "type": "image_picker",
+            "id": "content_image",
+            "label": "Content Image"
+        },
+        {
+            "type": "text",
+            "id": "title_two",
+            "label": "Enter Content Two Title"
+        },
+        {
+            "type": "richtext",
+            "id": "content_two",
+            "label": "Content Two"
+        },
+        {
+            "type": "richtext",
+            "id": "content_quote",
+            "label": "Content Quote"
+        },
+        {
+            "type": "product",
+            "id": "sticky_product_one",
+            "label": "Select First Product"
+        },
+        {
+            "type": "product",
+            "id": "sticky_product_two",
+            "label": "Select Second Product"
+        }
+    ]
+}
+{% endschema %}

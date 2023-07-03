@@ -1,0 +1,172 @@
+
+
+@media only screen and (min-width: 1561px)  {
+  .footer-logo {
+    width: 300px;
+  }
+}
+@media only screen and (max-width: 1560px) and (min-width: 1440px)  {
+    /* Testimonial */
+    .testomonial--media{
+        margin-left: 70% !important;
+    }
+    .testomonial--author{
+        font-size: 1.25rem; 
+    }
+    /* Banner */
+    #banner--revamp .banner--title{
+        max-width: 70% !important;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    #nl-text br {
+        display: none;
+    }
+    /* Menu */
+    .navbar-nav.mx-auto {
+        margin-right: unset !important;
+      }
+     /* Banner */
+     #banner--revamp .banner--title{
+        max-width: 100% !important;
+    } 
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 1201px)  {
+    #navbar--revamp .nav-link {
+        font-size: 13px !important;
+    }
+}
+
+@media screen and (max-width: 1366px) {
+      /* Newsletter */
+      .newsletter--revamp .col-lg-9{
+        flex: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .navbar-nav.d-xl-max-none.ml-auto{
+      display: none;
+    }
+  
+}
+
+@media screen and (max-width: 991px) {
+    #uid_trapeziod{
+        transform: translateX(-90px) !important;
+    }
+    #uid_trapeziod2{
+        transform: translateX(-25px) !important;
+    }
+    .navbar-nav.mx-auto{
+        margin-bottom: 20px !important;
+        margin-top: 20px !important;
+    }
+ 
+    /* Header */
+    .navbar-collapse{
+        width: 100%;
+        top: 100%;
+    }
+    .menu-item{
+        width: auto !important;
+    }
+    /* Who we are */
+    #who-we-are-rev .form-group{
+        flex-direction: column-reverse;
+    }
+    #who-we-are-rev img{
+        width: 50% !important;
+    }
+    #who-we-are-rev .col-12{
+        text-align: center;
+    }
+    /* Newsletter */
+    .newsletter--revamp .newsletter--container{
+        display: block;
+        text-align: center;
+    }
+    .newsletter--revamp .newsletter--text{
+        max-width: 50%;
+        margin: auto;
+        padding-bottom: 1rem;
+    }
+    .newsletter--revamp .col-md-6{
+        flex: 100% !important;
+        max-width: 100% !important;
+    }
+    .uidnewltRevampedStyling{
+        flex-direction: unset !important;
+    }
+    .newsletter--revamp .newsletter--submit{
+        margin-left: 10px;
+        margin-top: -22px;
+    }
+    #con-vid-rev .video-container{
+        margin-bottom: 4rem !important;
+    }
+    .content--video-revamp .main--content:nth-child(2){
+        flex-direction: column-reverse !important;
+    }
+    .best--selling-revamp .col-md-4 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        margin-bottom: 1rem;
+    }
+    .content--video-revamp .content--title br{
+        display: none !important;
+    }
+    /* Testimonial */
+    .testominial--container{
+        clip-path: unset !important;
+        width: 100% !important;
+        margin-left: 100% !important;
+        padding: 5em 5em 2em 5em !important;
+    }
+    .testomonial--media{
+        display: none !important;
+    }
+    .testomonials--revamp .col-8 {
+        flex: 100%;
+        max-width: 100%;
+    }
+    .swiper-pagination-bullets.swiper-pagination-horizontal{
+       display: none !important;
+    }
+    .cta-column{
+        padding: 2rem !important;
+    }
+    /* Footer */
+    .footer-header{
+        padding-left: 0px !important;
+        width: 100% !important;
+        height: auto !important;
+        margin-bottom: 1rem !important;
+    }
+    .footer-link{
+        margin-right: unset !important;
+        margin-left: 0% !important;
+        padding-left: 0px !important;
+        margin-top: 0px !important;
+        width: 100% !important;
+    }
+}
+
+
+
+@media screen and (max-width: 600px) {
+    #banner--revamp{
+        height: 500px !important;
+    }
+    #navbar--revamp .container-fluid{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    #navbar--revamp .nav-link:hover{
+        color: #F17A15;
+    }
+ 
+}

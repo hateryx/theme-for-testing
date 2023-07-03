@@ -1,0 +1,154 @@
+<div class="footer">
+  <div class="footer-columns">
+    <div class="footer-menu">
+    <div class="footer-header">
+        <img class="footer-logo" src="{{ section.settings.footer-logo | img_url : 'master' }}" width="200px" alt="">
+        <p style="text-transform: capitalize">{{ section.settings.footer-desc }}</p>
+        <a href="{{ section.settings.facebook }}" target="_blank"><img src="https://cdn.shopify.com/s/files/1/0082/3079/7364/files/Vector_4.png?v=1660540716" style="margin-right: 15px" alt=""></a>
+        <a href="{{ section.settings.instagram }}" target="_blank"><img src="https://cdn.shopify.com/s/files/1/0082/3079/7364/files/Vector_5_28a75a1e-bc5d-4e5c-8b8d-bcde3b0b3a53.png?v=1660540716" style="margin-right: 15px" alt="" srcset=""></a>
+        <a href="{{ section.settings.twitter }}" target="_blank"><img src="https://cdn.shopify.com/s/files/1/0082/3079/7364/files/Vector_6.png?v=1660540716" alt="" srcset=""></a>
+    </div>
+    <div class="footer-link">
+        <strong class="li-title">Quick Links</strong>
+        <ul>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">About FAQ</a></li>
+          <li><a href="#">Subscribe & Save</a></li>
+          <li><a href="#">Join the Club</a></li>
+        </ul>
+    </div>
+    <div class="footer-link">
+      <strong class="li-title">Information</strong>
+      <ul>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+      </ul>
+  </div>
+  </div>
+</div>
+</div>
+<div class="copy"><p class="copyright">Copyright © 2022 Sportsformula. All rights reserved.</p>
+
+<style>
+  .footer {
+    width: 90%;
+    height: 150px;
+    padding: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+    line-height: 2;
+    margin-bottom: 10px;
+  }
+
+  .footer-menu {
+    height: 200px;
+    /* border-bottom: 2px solid #f17a15; */
+    margin-top: 20px;
+  }
+  .footer-header {
+    height: 200px;
+    width: 450px;
+    float: left;
+    margin-top: 50px;
+    padding-left: 45px;
+  }
+  li {
+    text-transform: uppercase;
+    list-style-type: none;
+    text-decoration: none;
+  }
+  a {
+text-decoration: none;
+    color: black;
+}
+  ul {
+    padding: 0;
+  }
+  .li-title {
+    text-transform: uppercase;
+    color: #f17a15;
+    font-weight: bold;
+  }
+  .footer-link {
+        width: 218px;
+    float: left;
+    margin-right: 72px;
+    margin-left: 40px;
+    margin-top: 50px;
+    padding-left: 35px;
+  }
+  .copyright {
+    text-align: center;
+  }
+
+  .copy {
+    clear: both;
+    border-top: 2px solid #f17a15;
+    width: 90%;
+    margin: auto;
+    padding-top: 10px;
+    margin-top: 850px;
+}
+@media only screen and (max-width: 425px) {
+    .footer-header {
+      margin-left: -65px;
+      width: 410px;
+      margin-top: -130px;
+    }
+    .footer-link {
+      margin-left: -50px;
+      margin-top: 10px;
+    }
+</style>
+
+{% schema %}
+    {
+          "name": "FOOTER",
+          "settings": [
+                {
+                "type": "image_picker",
+                "id": "footer-logo",
+                "label": "Footer Logo"
+                },
+                {
+                "type": "richtext",
+                "id": "footer-desc",
+                "label": "Footer Text"
+                },
+                {
+                "type": "url",
+                "id": "facebook",
+                "label": "Facebook Link"
+                },
+                {
+                "type": "url",
+                "id": "instagram",
+                "label": "Instagram Link"
+                },
+                {
+                "type": "url",
+                "id": "twitter",
+                "label": "Twitter Link"
+                },
+                {
+                "type": "link_list",
+                "id": "menu-pic-1",
+                "label": "Column 1"
+                },
+                {
+                "type": "link_list",
+                "id": "menu-pic-2",
+                "label": "Column 2"
+                }
+          ],
+        "presets": [
+            {
+                "name": "FOOTER",
+                "category": "custom section"
+            }
+        ]
+    }
+
+{% endschema %}

@@ -1,0 +1,56 @@
+{% comment %}
+<div class="hero__container">
+    <div class="jumbotron jumbotron-fluid d-flex align-items-center" id="{{ section.id }}"
+         style="background: url('{{ section.settings.heroImage | img_url: 'master' }}') no-repeat center center; background-size: cover; height:{{ section.settings.height }};">
+        <div class="bg-primary">
+            <h1 class="display-4">{{ section.settings.heading }}</h1>
+            {% if section.settings.link %}
+                <a href="{{ section.settings.link }}" class="btn btn-primary px-5 text-uppercase">shop now</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endcomment %}
+
+
+<div id="hero__banner" class="px-4 py-5 mb-5 text-center border-bottom"
+     style="background: url('{{ section.settings.heroImage | img_url: "master" }}'); background-position: bottom;box-shadow: inset 0px 0px 200px 200px #0000005e;">
+    <h1 id="hero__heading" class="display-4 fw-bold">{{ section.settings.heading }}</h1>
+</div>
+
+{% schema %}
+
+{
+"name": "Hero Banner",
+"settings": [
+{
+"type": "text",
+"id": "heading",
+"label": "Heading"
+},
+{
+"type": "image_picker",
+"id": "heroImage",
+"label": "Hero Image"
+},
+{
+"type": "text",
+"id": "height",
+"label": "Hero Height",
+"default": "400px"
+},
+{
+"type": "url",
+"id": "link",
+"label": "Button link"
+}
+],
+"presets": [
+{
+"category": "Hero Banners",
+"name": "Homepage Hero"
+}
+]
+}
+
+{% endschema %}

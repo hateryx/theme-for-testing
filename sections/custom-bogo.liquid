@@ -1,0 +1,23 @@
+{% assign globalBogoImageOverlay = section.settings.bogo-overlay | img_url: "master" %}
+
+<script>
+  const customBogoProductId = window.sessionStorage.setItem( 'customBogoProductId', {{ all_products[section.settings.bogo-product].selected_or_first_available_variant.id }} )
+</script>
+
+{% schema %}
+{
+  "name": "Custom Bogo",
+  "settings": [
+    {
+      "type": "product",
+      "id": "bogo-product",
+      "label": "Product - Custom Bogo"
+    },
+    {
+      "type": "image_picker",
+      "id": "bogo-overlay",
+      "label": "Product - Bogo Overlay"
+    }
+  ]
+}
+{% endschema %} 

@@ -1,0 +1,56 @@
+<div class="m-4">
+    {% form 'create_customer' %}
+    {{ form_errors | default_errors }}
+
+    <h2>Register</h2>
+    <div class="first-name mb-3">
+        <label hidden for="first-name">First name</label>
+        <input type="text" placeholder="First Name" class="form-control" name="customer[first_name]" required>
+    </div>
+
+    <div class="last-name mb-3">
+        <label hidden for="last-name">Last name</label>
+        <input type="text" placeholder="Last Name" class="form-control" name="customer[last_name]" required>
+    </div>
+
+    <div class="email mb-3">
+        <label hidden for="email">Email</label>
+        <input type="email" placeholder="Email" class="form-control" name="customer[email]" required>
+    </div>
+
+    <div class="password mb-3">
+        <label hidden for="password">Password</label>
+        <input type="password" placeholder="Password" class="form-control" name="customer[password]" id="customer_password" required>
+    </div>
+
+    <div class="confirm-password mb-3">
+        <label hidden for="confirm-password">Confirm Password</label>
+        <input type="password" placeholder="Confirm Password" class="form-control" name="customer[password_confirmation]" id="customer_password_confirmation" required>
+        <span class="invalid-feedback" id="password_confirmation_error">Password doesn't match</span>
+    </div>
+
+    <div class="submit">
+        <input type="hidden" name="return_to" value="/pages/thank-you-for-registering-page">
+        <input type="submit" class="btn btn-primary w-50 sm:w-100 btn-lg text-uppercase" value="Register">
+    </div>
+    {% endform %}
+</div>
+
+<script>
+    ( function ( $ ) {
+        $( '#create_customer' ).submit( function ( e ) {
+            let pw = $( 'input#customer_password' ).val()
+            let cpw = $( 'input#customer_password_confirmation' ).val()
+
+            if ( pw !== cpw ) {
+                e.preventDefault()
+                e.stopImmediatePropagation()
+                
+                $( '#password_confirmation_error' ).addClass( 'd-block' )
+
+            } else {
+                $( '#password_confirmation_error' ).removeClass( 'd-block' )
+            }
+        } )
+    } )( jQuery )
+</script>

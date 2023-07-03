@@ -1,0 +1,89 @@
+<div class="error-404 w-50 mx-auto">
+  <div class="row bg-light py-2 mb-3">
+    <div class="col-md-12">
+      <img class="lazyload testi-image mx-auto" data-src="{{ section.settings.testimonial_image | img_url: "x200" }}">
+    </div>
+    <div class="col-md-12">
+      <div class="card-body text-center">
+        {% render 'collection-ratings', rating: section.settings.testimonial_stars %}
+        <p>“{{ section.settings.testimonial_quote }}” - {{ section.settings.testimonial_author }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 text-center">
+      <p class="oh--no mb-0">Oh no... <span class="text--404">404</span></p>
+      <p class="oh--no-text mb-3">Unfortunately that page no longer exists</p>
+      <a class="btn btn-primary btn-xl text-uppercase" href="/collections/formula">Shop Now</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .testi-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .oh--no {
+    font-size: 2.5em;
+  }
+
+  .oh--no span {
+    color: #F17A15;
+  }
+
+  .oh--no-text {
+    font-size: 1.5em;
+  }
+
+  a.btn-xl {
+    max-width: 400px;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .error-404.w-50 {
+      width: 100% !important;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .error-404.w-50 {
+      padding: 0 20px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "testimonial_image",
+      "label": "Testimonial Image",
+      "info": "The selected image must be circle."
+    },
+    {
+      "type": "number",
+      "id": "testimonial_stars",
+      "label": "Testimonial Stars"
+    },
+    {
+      "type": "textarea",
+      "id": "testimonial_quote",
+      "label": "Testimonial Quote"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_author",
+      "label": "Testimonial Author"
+    }
+  ]
+}
+{% endschema %}

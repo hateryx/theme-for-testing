@@ -1,0 +1,44 @@
+{% assign productTags = product.tags | join: ',' %}
+
+<div class="text-center m-auto d-flex align-items-center justify-content-center flex-column">
+
+    <form action="/cart/add" method="post" enctype="multipart/form-data" data-productid="{{ product.id }}" class="d-flex justify-content-center align-items-center flex-column w-100 px-2">
+        {% if product.available %}
+            {% render 'subscription-product' %}
+        {% endif %}
+
+        <select name="id" {% if product.handle contains "shirt" %} {% else %} hidden {% endif %}
+                id="product-select-{{ product.id }}"  class="product__add-to-cart-select" style="margin-bottom: 5px">
+
+            {% for variant in product.variants %}
+                {% if variant.available == true %}
+                    <option value="{{ variant.id }}">
+                        {{ variant.title }}
+                        for
+                        {{ variant.price | money_with_currency }}</option>
+                {% else %}
+                    <option disabled="disabled">
+                        {{ variant.title }}
+                        - sold out!</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <!-- <input class="btn btn-primary btn-lg text-uppercase mx-auto font-weight-bold" id="add" name="add" type="submit" value="Add to Cart"> -->
+<div class="mt-0 input-quantity input-quantity--type-03 d-flex js-product-quantity" {% if quantity_connect %} data-js-quantity-connect="{{ quantity_connect }}" {% endif %} style="width: 100%;">
+<input class="btn btn-primary btn-lg text-uppercase mx-auto primary-add-to-cart" id="add" name="add" style="width: 100%;" type="submit" value="Add to Cart">
+          <!--     <input type="number" class="mb-0 mr-10" name="quantity" value="1" min="1"> -->
+          <div class="quantity-main"><select class="mb-0 mr-10" id="quantity_select" name="quantity">
+
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+            </select>
+          </div>
+        </div>
+    </form>
+    {% render 'money-back', productTags: productTags %}
+</div>

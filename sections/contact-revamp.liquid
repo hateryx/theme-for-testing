@@ -1,0 +1,119 @@
+<div class="container-fluid container--revamp h-100">
+    <div class="form-group row py-5 h-100 align-items-center">
+        <div class="col-12 text-center mb-5">
+            <h2 class="cta--title">{{ section.settings.title }}</h2>
+            <p class="cta--text">{{ section.settings.text }}</p>
+        </div>
+
+        <div class="col-6">
+            <input type="email" class="form-control newsletter--email col-4 ml-auto" placeholder="Email">
+        </div>
+        <div class="col-6">
+            <button type="button" class="btn newsletter--submit w-25">Submit</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .newsletter--cta-revamp .cta--title {
+        color: #000;
+        text-transform: uppercase;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #F17A15;
+    }
+
+    .newsletter--cta-revamp .cta--text {
+        color: #FFF;
+        font-size: 1.1em;
+        letter-spacing: .8px;
+    }
+
+    .newsletter--cta-revamp .newsletter--email {
+        padding: 23px 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .newsletter--cta-revamp .newsletter--email::placeholder {
+        color: #B8B8B8;
+    }
+
+    .newsletter--cta-revamp .newsletter--submit {
+        background-color: #F17A15;
+        color: #FFF;
+        font-size: 1.3rem;
+        padding: 7px 25px;
+        font-weight: bold;
+        width: 40%;
+    }
+
+    .newsletter--cta-revamp {
+        background-image: url({{ section.settings.background_image | img_url: 'master' }});
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 300px;
+    }
+</style>
+
+{% schema %}
+{
+    "name": "Contact Us Revamp",
+    "class": "contact--revamp",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "background_image",
+            "label": "Background Image"
+        },
+        {
+            "type": "text",
+            "id": "tagline",
+            "label": "Tagline",
+            "default": "Contact Us"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Get In Touch With Us"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Information",
+            "type": "information",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "icon",
+                    "label": "Icon"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "text",
+                    "id": "info_one",
+                    "label": "Info One"
+                },
+                {
+                    "type": "text",
+                    "id": "info_two",
+                    "label": "Info Two"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "category": "Content",
+            "name": "Contact Us Revamp"
+        }
+    ]
+}
+{% endschema %}

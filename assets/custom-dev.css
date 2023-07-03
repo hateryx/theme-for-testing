@@ -1,0 +1,32 @@
+@media screen and (min-width: 2000px) {
+    /* footer */
+    #shopify-section-template--14256787783774__166054342152c14969{
+      max-width: 1440px;
+      margin: auto;
+    }
+}
+
+
+
+/* Footer */
+.footer-header p {
+    font-size: 1rem !important;
+    max-width: 70% !important;
+}
+
+/* Font */
+*{
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header */
+.nav-link{
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+
+/* Test banner */
+#shopify-section-template--14256787783774__166130671480e9f2de #hero__banner{
+    height: 100vh;
+    box-shadow: unset !important;
+}

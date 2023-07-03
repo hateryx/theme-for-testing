@@ -1,0 +1,43 @@
+<div class="two-large-images__container">
+  {% for block in section.blocks %}
+    <div class="large-video-text__container d-flex my-md-5 my-sm-2 justify-content-center flex-lg-row-reverse flex-column">
+      <div class="col col-lg-6 col-xl-5 align-self-center d-flex justify-content-center"><img loading="lazy" class="img-fluid" src="{{ block.settings.image | img_url: '600x' }}">
+      </div>
+      <div class="col col-lg-6 col-xl-5 align-self-center d-flex justify-content-center"><img loading="lazy" class="img-fluid" src="{{ block .settings.image2 | img_url: '600x' }}"></div>
+    </div>
+
+  {% endfor %}
+</div>
+
+
+{% schema %}
+{
+"name": "50/50 Images",
+"presets": [
+{
+"category": "Image",
+"name":"50/50 Images"
+}
+],
+"blocks":[
+{
+"name": "Images",
+"type": "select",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "If there is no video embed, it will try to use this image"
+},
+{
+"type": "image_picker",
+"id": "image2",
+"label": "Image",
+"info": "If there is no text, it will try to use this image"
+}
+]
+}
+]
+}
+{% endschema %}

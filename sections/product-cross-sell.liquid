@@ -1,0 +1,44 @@
+<div class="product-cross-sell__container d-flex">
+  {% for block in section.blocks %}
+    <a href="{{ block.settings.product.url }}" class="product-cross-sell__item{% if block.settings.isActive %}-active{% endif %}">
+        <div>{{ block.settings.descriptor}}</div>
+        <div>{{ block.settings.color }}</div>
+    </a>
+  {% endfor %}
+</div>
+
+{% schema %}
+
+{
+"name": "Product Cross-sells",
+"blocks": [
+{
+"name": "Cross-sell",
+"type": "product",
+"settings": [
+{
+"id":"descriptor",
+"label":"Upsell Descriptor",
+"type":"text"
+},
+{
+"id":"color",
+"label":"color",
+"type":"color"
+},
+{
+"type":"checkbox",
+"id":"isActive",
+"label": "Matches current product"
+},
+{
+"type": "product",
+"id": "product",
+"label": "Cross-sell product"
+}
+]
+}
+]
+}
+
+{% endschema %}

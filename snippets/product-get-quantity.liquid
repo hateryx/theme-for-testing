@@ -1,0 +1,43 @@
+{%- assign quantity_type = quantity_type | default: 4 -%}
+{%- case quantity_type -%}
+{%- when 1 %}
+<label{% unless quantity_show_title %} class="d-none"{% endunless %}>{{ 'products.product.quantity' | t }}</label>
+<div class="input-quantity input-quantity--type-01 d-flex js-product-quantity"{% if quantity_connect %} data-js-quantity-connect="{{ quantity_connect }}"{% endif %}>
+    <input type="number" class="mb-0 mr-10" name="quantity" value="1" min="1">
+    <div class="d-flex flex-center mr-10 border cursor-pointer" data-control="-"><i>{% include 'icon-theme-189' %}</i></div>
+    <div class="d-flex flex-center border cursor-pointer" data-control="+"><i>{% include 'icon-theme-188' %}</i></div>
+</div>
+{%- when 2 %}
+<label{% unless quantity_show_title %} class="d-none"{% endunless %}>{{ 'products.product.quantity' | t }}</label>
+<div class="input-quantity input-quantity--type-02 d-flex js-product-quantity"{% if quantity_connect %} data-js-quantity-connect="{{ quantity_connect }}"{% endif %}>
+    <div class="d-flex flex-center cursor-pointer" data-control="-"><i>{% include 'icon-theme-189' %}</i></div>
+    <input type="number" class="mb-0 text-center" name="quantity" value="1" min="1">
+    <div class="d-flex flex-center cursor-pointer" data-control="+"><i>{% include 'icon-theme-188' %}</i></div>
+</div>
+{%- when 3 %}
+<div class="quantity-main">
+<label{% unless quantity_show_title %} class="d-none"{% endunless %}>{{ 'products.product.quantity' | t }}</label>
+<div class="input-quantity input-quantity--type-03 d-flex js-product-quantity"{% if quantity_connect %} data-js-quantity-connect="{{ quantity_connect }}"{% endif %}>
+    <input type="number" class="mb-0 mr-10" name="quantity" value="1" min="1">
+</div>
+</div>
+{%- when 4 %}
+<label{% unless quantity_show_title %} class="d-none"{% endunless %}>{{ 'products.product.quantity' | t }}</label>
+<div class="input-quantity input-quantity--type-03 d-flex js-product-quantity"{% if quantity_connect %} data-js-quantity-connect="{{ quantity_connect }}"{% endif %}>
+<!--     <input type="number" class="mb-0 mr-10" name="quantity" value="1" min="1"> -->
+  <div class="quantity-main">
+  <select class="mb-0 mr-10" name="quantity">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+  </select>
+</div>
+</div>
+{%- endcase -%}
+{%- assign quantity_type = null -%}
+{%- assign quantity_connect = null -%}
+

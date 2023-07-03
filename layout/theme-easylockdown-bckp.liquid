@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="{{ shop.locale }}">
+<head>
+
+
+  {% include 'wp_shopify_tracking' %}
+  <meta name="facebook-domain-verification" content="ofx00trxg7giwx022sfl61x8a9cjfu"/>
+  <link rel="dns-prefetch" href="//cdn.shopify.com">
+  <link rel="preconnect" href="//cdn.shopify.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+  <script src="{{ 'jquery.js' | asset_url }}"></script>
+  {% render 'wp_shopify_tracking' %}
+  <title>
+    {{ page_title -}}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}"/>
+  {% endif %}
+
+  <link rel="canonical" href="{{ canonical_url }}"/>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="">
+
+  <link rel="alternate" hreflang="en" href="{{ shop.url }}"/>
+  <link rel="shortcut icon" href="{{ 'favicon.ico' | asset_url }}">
+
+  {% comment %}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {{ 'splide-sea-green.min.css' | asset_url | stylesheet_tag }}
+  {{ 'accordion.css' | asset_url | stylesheet_tag }}
+  {{ 'custom.css' | asset_url | stylesheet_tag }}
+
+  <link rel="stylesheet"
+  href="https://static.rechargecdn.com/static/css/rcWidget.css">
+  {% endcomment %}
+
+
+  {% render 'header-scripts.zipifypages', renderctx: 'thm' %}{{ content_for_header }}
+  {{ content_for_header }}
+  {% include 'pagefly-header' %}
+</head>
+
+<body data-template="{{ template.name }}" data-template-suffix="{{ template.suffix }}">
+  <script src="https://static.rechargecdn.com/static/js/rcWidget.js"></script>
+<script src="{{ 'lazysizes.min.js' | asset_url }}" async></script>
+{% section 'top-bar' %}
+{% section 'header' %}
+{% if template.name contains 'index' %}
+  {% section 'hero-slider' %}
+{% endif %}
+
+<script src="{{ 'splide.js' | asset_url }}"></script>
+<script src="{{ 'splide-extension-video.min.js' | asset_url }}"></script>
+
+<script src="{{ 'theme.js' | asset_url }}"></script
+
+{{ 'splide-extension-video.min.css' | asset_url | stylesheet_tag }}
+{{ 'splide-sea-green.min.css' | asset_url | stylesheet_tag }}
+{{ 'accordion.css' | asset_url | stylesheet_tag }}
+{{ 'custom.css' | asset_url | stylesheet_tag }}
+{{ 'theme-unused.css' | asset_url | stylesheet_tag }}
+{{ 'recharge-overwrites.css' | asset_url | stylesheet_tag }}
+
+{% if template.name contains 'product' %}
+  <script src="{{ 'product.js' | asset_url }}"></script>
+{% endif %}
+<script src="{{ 'shopify.js' | asset_url }}"></script>
+<script src="{{ 'bootstrap.bundle.js' | asset_url }}"></script>
+<script src="{{ 'recharge-overwrite.js' | asset_url }}"></script>
+
+{% render 'subscription-theme-footer' %}
+
+<div style="max-width: 1440px; margin: auto;">
+  {{ content_for_layout }}
+</div>
+
+{% comment %}{{ 'bootstrap.bundle.js' | asset_url | script_tag }}{% endcomment %}
+{% comment %}{{ 'shopify.js' | asset_url | script_tag }}{% endcomment %}
+{% comment %}{{ 'splide.js' | asset_url | script_tag }}{% endcomment %}
+{% comment %}{{ 'cart.js' | asset_url | script_tag }}{% endcomment %}
+{% comment %}{{ 'theme.js' | asset_url | script_tag }}{% endcomment %}
+<a id="back-to-top" onclick="backToTop()">{% render 'icon-arrowup' %}Top</a>
+{% comment %}
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-video@0.4.6/dist/css/splide-extension-video.min.css">
+{% endcomment %}
+
+
+{% section 'hero-footer' %}
+{% section 'footer' %}
+
+
+<script>
+  window.onload = function () {
+    let redirectURL = "/account";
+    let challengeURL = "/challenge";
+    if (window.location.pathname === challengeURL) {
+      // 1. create a new redirect input element
+      let redirectInput = document.createElement('input');
+      redirectInput.type = "hidden";
+      redirectInput.name = "return_to";
+      redirectInput.value = redirectURL;
+      // 2. find the captcha element within the form
+      let $recaptcha = document.getElementById('g-recaptcha');
+      // 3. now add the redirect input within the form
+      $recaptcha.parentNode.insertBefore(redirectInput, $recaptcha.nextSibling);
+    }
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+{% render 'page-footer.zipifypages', renderctx: 'thm', ocuapp: ocuapp %}
+
+
+<!-- Hotjar Tracking Code for sportformula.com -->
+<script>
+  (function (h, o, t, j, a, r) {
+    h.hj = h.hj || function () {
+      (h.hj.q = h.hj.q || []).push(arguments)
+    };
+    h._hjSettings = {hjid: 2126244, hjsv: 6};
+    a = o.getElementsByTagName('head')[0];
+    r = o.createElement('script');
+    r.async = 1;
+    r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+</script>
+
+<!-- Stamped - Begin Script-->
+<script async type="text/javascript" data-api-key="" id="stamped-script-widget"
+        src="https://cdn-stamped-io.azureedge.net/files/widget.min.js"></script>
+<!-- Stamped - End Script -->
+
+<link href="{{ 'rcWidget.css' | asset_url }}" rel="stylesheet" type="text/css">
+
+{% include 'ambassador-special-portal' %}
+{% section 'custom-bogo' %}
+
+<script>
+  window.sessionStorage.setItem('customerId','{{ customer.id }}')
+</script>
+</body>
+</html>

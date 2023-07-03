@@ -1,0 +1,39 @@
+{% for product in collections.all.products %}
+  {% for collection in product.collections %}
+    {% if collection.title == 'Best Selling' %} 
+        <div class="product-item">
+        <img src="{{ product.featured_image | product_img_url: 'medium' }}" alt="{{ product.title | escape  }}" />    
+        <a class="shop-now" href="{{ product.url }}">{{ product.title | escape  }}</a>      
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+
+{% for collection in collections limit: 1 %}
+{{ collection.title }}
+{% endfor %}
+
+{% schema %}
+  {
+    "name": "Best Selling v2",
+        "class": "best--selling-revamp",
+    "settings": [
+      {
+            "type": "collection",
+            "id": "collection",
+            "label": "Product collection"
+        }
+    ],
+    "presets": [{
+    "name": "Best Selling v2",
+    "category": "Collection"
+  }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,11 @@
+
+
+{% paginate customer.orders by 10 %}
+{% for order in customer.order %}
+    {{order.order_number}}
+    {{ order.subtotal_price }}
+{% endfor %}
+
+{{ paginate | default_pagination }}
+{% endpaginate %}
+

@@ -1,0 +1,178 @@
+{% liquid
+    assign banner_height = section.settings.banner_height
+    assign banner_desktop = section.settings.banner_desktop | img_url: "master"
+    assign banner_mobile = section.settings.banner_mobile | img_url: "master"
+
+    assign banner_title = section.settings.banner_title
+    assign banner_subtitle = section.settings.banner_subtitle
+
+    assign swapped = section.settings.swapped
+    assign content_background_color = section.settings.content_background_color
+
+    assign image_size = 12 | minus: section.settings.banner_content_size
+    assign content_size = section.settings.banner_content_size
+%}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-{{ image_size }} banner--image order-{% if swapped %}1{% else %}0{% endif %}"></div>
+    <div class="col-12 col-md-{{ content_size }} banner--content order-{% if swapped %}0{% else %}1{% endif %}">
+      <div class="row w-100 align-items-center banner--mobile-content">
+        <div class="col-12 col-md-11 mx-auto">
+          <h1 class="banner--title-main text-white">{{ banner_title }}
+          </h1>
+          <h3 class="banner--title-sub text-white py-2">
+            {{ banner_subtitle }}
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .boom--banner .container-fluid .row {
+    height: {{ banner_height }}px;
+  }
+
+  .boom--banner .container-fluid .banner--content {
+    background-color: {{ content_background_color }};
+  }
+
+  .boom--banner .container-fluid .banner--image {
+    background-image: url('{{ banner_desktop }}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    object-fit: cover;
+  }
+
+  .boom--banner .banner--title-main {
+    font-size: 2.5em;
+  }
+
+  .boom--banner .banner--title-sub {
+    font-size: 1.8em;
+  }
+
+  .boom--banner a.banner--btn {
+    background-color: #212529;
+    color: #ffffff;
+    padding: 1em 2em;
+    margin-top: 0.5em;
+  }
+
+  @media(max-width: 768px) {
+    .boom--banner .banner--mobile-content {
+      margin: 0 !important;
+    }
+
+    .boom--banner .banner--mobile-content div.col-12 {
+      background-color: #00000050;
+      padding: 1em;
+    }
+
+    .boom--banner .container-fluid .banner--content {
+      background-image: url('{{ banner_mobile }}');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      object-fit: cover;
+    }
+
+    .boom--banner .container-fluid .row {
+      height: calc({{ banner_height }}px - 20px);
+    }
+
+    .boom--banner .banner--title-main {
+      font-size: 2em;
+    }
+
+    .boom--banner .banner--title-sub {
+      font-size: 1.5em;
+    }
+
+    .boom--banner a.banner--btn {
+      background-color: #F17A15;
+      color: #fff;
+      padding: 0.8em 1.8em;
+      margin-top: 0.3em;
+    }
+  }
+
+  @media(max-width: 425px) {
+    .boom--banner .banner--title-main {
+      font-size: 1.8em;
+    }
+
+    .boom--banner .banner--title-sub {
+      font-size: 1.2em;
+    }
+  }
+
+  @media(max-width: 380px) {
+    .boom--banner .banner--btn {
+      width: 100% !important;
+      padding: 0.5em 1.3em !important;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Boom Banner",
+    "class": "boom--banner",
+    "settings": [
+        {
+            "type": "range",
+            "id": "banner_height",
+            "label": "Banner Height",
+            "default": 450,
+            "min": 300,
+            "max": 600,
+            "step": 10
+        },
+        {
+            "type": "image_picker",
+            "id": "banner_desktop",
+            "label": "Banner Desktop"
+        },
+        {
+            "type": "image_picker",
+            "id": "banner_mobile",
+            "label": "Banner Mobile"
+        },
+        {
+            "type": "text",
+            "id": "banner_title",
+            "label": "Banner Title",
+            "default": "New Banner Title - Text"
+        }, 
+        {
+            "type": "text",
+            "id": "banner_subtitle",
+            "label": "Banner Sub Title",
+            "default": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni, neque sint quas tenetur placeat nobis soluta porro, in aperiam officia magnam doloribus inventore?"
+        },
+        {
+            "type": "range",
+            "id": "banner_content_size",
+            "label": "Content Size",
+            "default": 4,
+            "min": 3,
+            "max": 6
+        },
+        {
+            "type": "checkbox",
+            "id": "swapped",
+            "label": "Is banner content swapped?",
+            "default": false
+        },
+        {
+            "type": "color",
+            "id": "content_background_color",
+            "label": "Content Background Color"
+        }
+    ]
+}
+{% endschema %}

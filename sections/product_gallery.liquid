@@ -1,0 +1,134 @@
+{% assign reversedVideoArray = product.metafields.videos %}
+{% assign absorptionVideo = product.metafields.videos.absorption %}
+<div class="container-fluid" id="product-gallery__container">
+    <div id="product-gallery-slider" class="splide">
+        <div class="splide__track">
+            <ul class="splide__list">
+                {% for image in product.images %}
+                    {% comment %}
+                    <li class="splide__slide">
+                        <img loading="eager" data-splide-lazy="{{ image.src | img_url: '480x' }}" alt="{{ image.alt |
+                        escape }}"
+                             srcset="
+                                                                     {% if image.width > 640 %}{{ image.src | img_url: '640x' }}  640w{% endif %}
+                                                                     {% if image.width > 720 %},{{ image.src | img_url: '720x' }} 720w{% endif %}
+                                                                     {% if image.width > 1200 %},{{ image.src | img_url: '1500x' }} 1500w{% endif %}
+                                                                     "
+                             sizes="(min-width: 960px) 450px, (min-width: 720px) 50vw, 100vw"
+                        /></li>
+                    {% endcomment %}
+                    <li class="splide__slide">
+                        <img loading="eager" data-splide-lazy="{{ image.src | img_url: 'x50' }}" alt="{{ image.alt | escape }}"/></li>
+                {% endfor %}
+                {% if reversedVideoArray %}
+                    {% for video in reversedVideoArray %}
+                        {% assign videoFirst = video | first %}
+                        {% unless videoFirst == 'absorption' %}
+                            <li class="splide__slide" data-splide-html-video="{{ video | last }}"></li>
+                        {% endunless %}
+                    {% endfor %}
+
+                {% endif %}
+                {% if absorptionVideo %}
+                    {% comment %}<li class="splide__slide" data-splide-html-video="{{ absorptionVideo }}"></li>{% endcomment %}
+                    <li class="splide__slide" data-splide-youtube="https://youtu.be/TFBNCrgKm7k">
+
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div id="product-gallery-nav" class="splide">
+        <div class="splide__track">
+            <ul class="splide__list">
+                {% for image in product.images %}
+                    <li class="splide__slide">
+                        <img class="img-fluid" data-splide-lazy="{{ image.src | product_img_url: 'x50'
+                        }}">
+                    </li>
+                {% endfor %}
+                {% if reversedVideoArray %}
+                    {% for video in reversedVideoArray %}
+                        {% assign videoFirst = video | first %}
+                        {% unless videoFirst == 'absorption' %}
+                            <li class="splide__slide">{% render 'icon-play-button' %}</li>
+                        {% endunless %}
+                    {% endfor %}
+
+                {% endif %}
+                {% if absorptionVideo %}
+                    <li class="splide__slide">{% render 'icon-play-button' %}</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+"class": "product__gallery-main"
+}
+{% endschema %}
+
+<style>
+
+    .product__gallery-main {
+        max-width: 100%;
+        margin-top: 0 !important;
+    }
+
+    @media screen and (min-width: 576px) {
+        .product__gallery-main {
+            max-width: 80%;
+            margin: auto;
+        }
+    }
+
+    @media screen and (min-width: 992px) {
+        .product__gallery-main {
+            max-width: 50%;
+            position: sticky;
+            top: 0;
+        }
+    }
+
+
+    #product-gallery-slider {
+        padding-bottom: 1em;
+    }
+
+    #product-gallery-nav {
+        padding-top: 1em;
+    }
+
+
+    .splide__arrow svg {
+        width: 1.5em;
+        height: 1.5em;
+        fill: #212529;
+        transition: fill .2s linear;
+    }
+
+    .splide {
+        padding: 1em;
+    }
+
+    svg.bi.bi-play-btn {
+        width: 100%;
+        height: 100%;
+    }
+
+    .splide__slide img {
+        width: 100%;
+        height: auto;
+    }
+
+    .splide__arrow--next {
+        right: 0em;
+    }
+
+    .splide__arrow--prev {
+        left: 0em;
+    }
+</style>

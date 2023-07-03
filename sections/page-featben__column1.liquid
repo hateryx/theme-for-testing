@@ -1,0 +1,227 @@
+{% comment %}
+** FAQ page - static **
+- Column section
+- Page template section
+- Uses blocks
+{% endcomment %}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {% for block in section.blocks %}
+        {% unless block.type == 'heading' or block.type == 'image' %}
+          {
+            "@type": "Question",
+            "name": "{{ block.settings.title | escape }}",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "{{ block.settings.answer | strip_html }}"
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {% endunless %}
+      {% endfor %}
+    ]
+  }
+  </script>
+  
+  {% comment %} Section specific CSS {% endcomment %}
+  {% style %}
+    #shopify-section-{{section.id}} .faq-accordion {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  
+    {% if section.blocks.size == 0 %}
+      .faq__column-1 {
+        display: none;
+      }
+  
+      .faq__column-2 {
+        width: 100%;
+      }
+    {% endif %}
+  
+    {% include 'css-loop', css: section.settings.custom_css, id: section.id %}
+  {% endstyle %}
+
+  {% assign toggle_icon_style = 'carets' %}
+
+  {% if section.settings.subtitle != blank %}
+    <div class="row">
+      <div class="col-12">
+        <h2>{{ section.settings.subtitle }}</h2>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.blocks.size > 0 %}
+    <div class="accordion-tabs">
+      {% for block in section.blocks %}
+        {% assign for_index = forloop.index %}
+        {% if block.type == 'content' %}
+          {% if block.settings.title != blank %}
+            <div class="accordion-tab">
+              <input type="checkbox" id="chck-{{ for_index }}">
+              <label class="accordion-tab-label" for="chck-{{ for_index }}">{{ block.settings.title }}</label>
+              <div class="accordion-tab-content">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          {% endif %}
+        {% elsif block.type == 'heading' %}
+          {% if block.settings.title != blank %}
+              <h2 class="title">{{ block.settings.title }}</h2>
+          {% endif %}
+        {% elsif block.type == 'image' %}
+          {% if block.settings.image != blank %}
+            {% include 'image-element', image: block.settings.image, alt: block.settings.image.alt, stretch_width: true %}
+          {% else %}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+  
+  {% schema %}
+  {
+    "name": "FAQ column 1",
+    "class": "faq-template-column-1",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subheading",
+        "default": "Subheading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top spacing",
+        "default": 0,
+        "min": 0,
+        "max": 80,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom spacing",
+        "default": 0,
+        "min": 0,
+        "max": 80,
+        "unit": "px"
+      },
+      {
+        "type": "header",
+        "content": "Advanced"
+      },
+      {
+        "type": "text",
+        "id": "css_class",
+        "label": "CSS Class"
+      },
+      {
+        "type": "textarea",
+        "id": "custom_css",
+        "label": "Custom CSS"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Frequently asked question",
+        "type": "content",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Question",
+            "default": "What is your question?"
+          },
+          {
+            "type": "richtext",
+            "id": "answer",
+            "label": "Answer",
+            "default": "<p>Provide the answer to the question here.</p>"
+          }
+        ]
+      },
+      {
+        "name": "Heading",
+        "type": "heading",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Section heading"
+          }
+        ]
+      },
+      {
+        "name": "Image",
+        "type": "image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "1000 x 1000px recommended"
+          }
+        ]
+      }
+    ],
+    "default": {
+      "settings": {},
+      "blocks": [
+        {
+          "type": "heading",
+          "settings": {
+          }
+        },
+        {
+          "type": "content",
+          "settings": {
+          }
+        },
+        {
+          "type": "content",
+          "settings": {
+  
+          }
+        },
+        {
+          "type": "content",
+          "settings": {
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+          }
+        },
+        {
+          "type": "content",
+          "settings": {
+          }
+        },
+        {
+          "type": "content",
+          "settings": {
+          }
+        },
+        {
+          "type": "content",
+          "settings": {
+          }
+        }
+      ]
+    }
+  }
+  {% endschema %}

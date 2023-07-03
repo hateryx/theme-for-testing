@@ -1,0 +1,36 @@
+<a class="btn btn-primary btn-xl text-uppercase" href="{{ section.settings.upload_url }}" {% if section.settings.is_new_tab == true %}target="_blank"{% endif %}>{{ section.settings.button_text }}</a>
+
+<style>
+  a.btn-xl {
+    max-width: 400px;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Upload Video",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Go to Upload Form"
+    },
+    {
+      "type": "textarea",
+      "id": "upload_url",
+      "label": "Add Link",
+      "default": "https://docs.google.com/forms/d/e/1FAIpQLScrw2tubdAqjf0PcEtodPwk_BSEYuFB7JKUj4t9LclhcFzgZA/viewform?usp=sf_link"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_new_tab",
+      "label": "Open in new tab",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

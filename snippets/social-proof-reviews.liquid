@@ -1,0 +1,85 @@
+<div class="social-proof-reviews__container mt-2">
+  {% if product.title contains 'Greens' %}
+    <span>5.0
+    </span>
+  {% endif %}
+  {% if product.title contains 'Packets' %}
+    <span>4.9
+    </span>
+  {% endif %}
+  {% if product.title contains 'ChickPea' %}
+    <span>5.0
+    </span>
+  {% endif %}
+  {% if product.title contains 'Collagen' %}
+    <span>5.0
+    </span>
+  {% endif %}
+  {% if product.title contains 'Capsules' %}
+    <span>4.9
+    </span>
+  {% endif %}
+  {% if product.title contains 'Shaker' %}
+    <span>5.0
+    </span>
+  {% endif %}
+  {% if product.title contains 'Fish' %}
+    <span>5.0
+    </span>
+  {% endif %}
+  {% if product.title contains 'Shirt' %}
+    <span>5.0
+    </span>
+  {% endif %}
+  {% if product.title contains 'Tub' %}
+    <span>4.8
+    </span>
+  {% endif %}
+
+  <svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+  </svg>
+  <svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+  </svg>
+  <svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+  </svg>
+  <svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+  </svg>
+  <svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+  </svg>
+
+  {% if template.name contains 'cart' %}
+    <span>24,328</span>
+  {% endif %}
+</div>
+<style>
+  .social-proof-reviews__container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    /*margin: 10px auto 10px auto;*/
+    width: 100%;
+    max-width: 500px;
+  }
+  .social-proof-reviews__container span {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: 700;
+    font-size: 19px !important;
+    line-height: 27px;
+    height: 19px;
+    color: #272727;
+    margin: 0 2px;
+  }
+
+  .social-proof-reviews__container svg {
+    fill: #ECB910;
+  }
+  #social-proof-reviews__count {
+    margin-left: 7px;
+    margin-right: 3px;
+  }
+</style>

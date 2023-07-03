@@ -1,0 +1,40 @@
+{% assign heroImageDesktop = section.settings.heroImageDesktop | img_url: "master" %}
+{% assign heroImageMobile = section.settings.heroImageMobile | img_url: "master" %}
+<div id="hero__banner" class="px-4 py-5 mb-3 text-center border-bottom md:sf-d-none" style="background: url('{{ heroImageDesktop }}'); background-position: center; background-size: cover; background-repeat: no-repeat; box-shadow: inset 0px 0px 200px 200px #0000005e;">
+  <h1 id="hero__heading" class="display-4 fw-bold">{{ section.settings.heading }}</h1>
+</div>
+
+<div id="hero__banner" class="px-4 py-5 mb-3 text-center border-bottom d-none md:sf-d-block" style="background: url('{{ heroImageMobile }}'); background-position: top; background-size: cover; background-repeat: no-repeat; box-shadow: inset 0px 0px 200px 200px #0000005e;">
+  <h1 id="hero__heading" class="display-4 fw-bold">{{ section.settings.heading }}</h1>
+</div>
+
+{% schema %}
+
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "image_picker",
+      "id": "heroImageDesktop",
+      "label": "Hero Image Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "heroImageMobile",
+      "label": "Hero Image Mobile"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Hero Banners",
+      "name": "Homepage Hero"
+    }
+  ]
+}
+
+{% endschema %}

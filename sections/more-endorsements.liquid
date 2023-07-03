@@ -1,0 +1,99 @@
+{% assign moreSlides = '' %}
+{% assign moreSlide = '' %}
+{% for block in section.blocks %}
+  {% capture moreSlideTemp %}
+    <li class="splide__slide mb-3 px-3">
+      {% render 'responsiveImage' with imageSrc: block.settings.image, firstLoadWidth: '100x', classes: 'img-fluid' %}
+      <div>
+        <h5 class="uppercase mt-3">
+          {{ block.settings.name }}
+        </h5>
+        <p class="capitalize">
+          {{ block.settings.title }}
+        </p>
+      </div>
+    </li>
+  {% endcapture %}
+  {% assign moreSlide = moreSlideTemp | strip %}
+  {% assign moreSlides = moreSlides | append: '|||' | append: moreSlide %}
+{% endfor %}
+{% assign moreSlides = moreSlides | remove_first: '|||' %}
+<script>
+  const moreSlidesTemp = `{{ moreSlides }}`
+  const moreSlides = moreSlidesTemp.split( '|||' )
+
+  if ( moreSlides.length > 0 ) {
+    moreSlides.forEach( function( el ) {
+      let html = $( el )
+      $( '#endorsements-slider .splide__list' ).append( html )
+    } )
+  }
+
+  const _slides = $( `#endorsements-slider .splide__list li` ).length
+  const _median = Math.round( ( _slides - 1 ) / 2 )
+
+  const endorsementsSlider = new Splide( '#endorsements-slider', {
+    rewind: true,
+    start: _median || 0,
+    perMove: 1,
+    perPage: 3,
+    gap: 20,
+    breakpoints: {
+      1200: {
+        perPage: 2,
+      },
+      600: {
+        perPage: 1,
+      },
+    },
+    lazyLoad: 'nearby'
+  } ).mount( window.splide.Extensions )
+</script>
+
+
+{% schema %}
+{
+  "name": "More Endorsements",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Heading",
+      "id": "heading"
+    },
+    {
+      "type": "richtext",
+      "label": "Sub Heading",
+      "id": "subHeading"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "More Slide",
+      "type": "more-slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "More Endorsements",
+      "category": "Content"
+    }
+  ]
+}
+{% endschema %}

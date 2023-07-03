@@ -1,0 +1,482 @@
+{{ 'section-product-template.css' | asset_url | stylesheet_tag }}
+
+{% assign productTags = product.tags | join: ',' %}
+
+{% assign subscription_product = product.metafields.subscriptions %}
+{% assign shipping_interval_frequency = subscription_product.shipping_interval_frequency | split: ',' | default: 30 %}
+{% assign product_tags = product.tags | remove: ' ' | downcase %}
+{% if subscription_product.is_subscription_only == 'true' or product_tags contains 'subscriptiononly' %}
+{% assign shipping_interval_unit_type = subscription_product.shipping_interval_unit_type | default: 'Days' %}
+{% assign subscription_only = true %}
+{% else %}
+{% assign subscription_only = false %}
+{% endif %}
+{% assign variant_map = subscription_product.original_to_hidden_variant_map | default: false %}
+{% if variant_map %}
+{% capture variant_to_duplicate %}{
+{% for variant in variant_map %}
+{% if variant[1]['discount_variant_id'] %}
+{{variant[0] }}:'{{ variant[1]['discount_variant_id'] }}',
+{% endif %}
+{% endfor %}
+}
+{% endcapture %}
+{% endif %}
+{% comment %}Widget translation{% endcomment %}
+{% assign label_onetime = widget_settings.onetime_message | default: "One-time purchase" %}
+{% assign label_deliver_every = widget_settings.widget_deliver_every | default: "Deliver every" %}
+{% assign label_unit_type = subscription_product.label_unit_type | default: shipping_interval_unit_type %}
+
+{% capture ambassador_slash_price %}
+  {% if product.metafields.ambassador.org_price == blank %}
+    {{ product.price }}
+  {% else %}
+    {{ product.metafields.ambassador.org_price }}
+  {% endif %}
+{% endcapture %}
+
+<div class="d-flex flex-lg-row flex-column justify-content-center align-items-center align-items-lg-start">
+  {% assign reversedVideoArray = product.metafields.videos %}
+  {% assign absorptionVideo = product.metafields.videos.absorption %}
+  {% assign thirdVideo = product.metafields.addl.thirdVideo %}
+  <div class="col-12 col-lg-6 col-xl-5" id="product-gallery__container">
+    <div class="splide" id="product-gallery-slider">
+      <div class="splide__track">
+        <ul class="splide__list">
+          {% for image in product.images %}
+          <li class="splide__slide">
+            {% if forloop.index == 1 %}
+              {% capture xmas_image_overlay %}
+                {% if product.metafields.christmas.image-overlay.value != blank %}
+                  <img src="{{ product.metafields.christmas.image-overlay.value }}" class="img-fluid xmas-code-overlay overlay-gallery">
+                {% endif %}
+              {% endcapture %}
+              {{ xmas_image_overlay }}
+              <script>
+                const _product_main_image = "{{ image | img_url: '580x' }}";
+              </script>
+            {% endif %}
+            {%- comment -%}
+              {% render 'responsiveImage' with imageSrc: image, firstLoadWidth: '500x' %}
+            {%- endcomment -%}
+            <img class="lazyload" data-src="{{ image | img_url: '580x' }}" {% if forloop.index == 1 %}id="_product_main_image"{% endif %} />
+          </li>
+          {% endfor %}
+
+          {% if thirdVideo %}
+            <li class="splide__slide" data-splide-html-video="">{{ thirdVideo }}</li>
+          {% endif %}
+
+          {% if reversedVideoArray %}
+            {% for video in reversedVideoArray %}
+              {% assign videoFirst = video | first %}
+              {% unless videoFirst == 'absorption' %}
+                <li class="splide__slide" data-splide-html-video="">{{ video | last }}</li>
+              {% endunless %}
+            {% endfor %}
+          {% endif %}
+
+          {% if absorptionVideo %}
+            <li class="splide__slide" data-splide-html-video="">{{ absorptionVideo }}</li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="thumbnails js-thumbnails">
+        <ul class="thumbnails__list">
+          {% for image in product.images %}
+          <li class="thumbnails__item" role="button" tabindex="0">
+            <img class="img-fluid lazyload" data-src="{{ image.src | product_img_url: 'x50' }}">
+          </li>
+          {% endfor %}
+
+          {% if thirdVideo %}
+            <li class="thumbnails__item" role="button" tabindex="0">{% render 'icon-play-button' %}</li>
+          {% endif %}
+          
+          {% if reversedVideoArray %}
+            {% for video in reversedVideoArray %}
+              {% assign videoFirst = video | first %}
+              {% unless videoFirst == 'absorption' %}
+                <li class="thumbnails__item" role="button" tabindex="0">{% render 'icon-play-button' %}</li>
+              {% endunless %}
+            {% endfor %}
+
+          {% endif %}
+
+          {% if absorptionVideo %}
+            <li class="thumbnails__item" role="button" tabindex="0">{% render 'icon-play-button' %}</li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex flex-column col-12 col-lg-6 col-xl-5 align-items-start" style="padding: 10px;">
+    <div class="product-info__container d-flex flex-column-reverse flex-lg-column mw-50 mt-lg-4">
+      <div class="product__main-info">
+        <h3>
+          {% if section.settings.product_testimonial %}
+          {{ section.settings.product_testimonial }}
+          {% else %}
+          {{ product.title }}
+          {% endif %}
+        </h3>
+        {% if section.settings.product_short_description or section.settings.product_extended_description or section.settings.product_specs %}
+        <div>
+          <h4 style="margin-left:0px !important;">
+            {{ section.settings.product_short_description }}
+          </h4>
+        </div>
+        <div class="my-2">
+          {{ section.settings.product_extended_description }}
+        </div>
+        <div>
+          {{ section.settings.product_specs }}
+        </div>
+        {% else %}
+        {{ product.description }}
+        {% endif %}
+      </div>
+
+      {% if section.blocks.size > 0 %}
+        <div class="product-cross-sell__container d-flex flex-column vitamin--cross-sell">
+          <!-- <label class="col-form-label d-block pb-0 vitamin--flavor-lable">Vitamin Flavor - Vitamin Type Selector:</label> -->
+          {% assign currentFlavorDisplayed = false %}
+          {% for block in section.blocks %}
+            {% if block.settings.productFlavor != "Flavor" and currentFlavorDisplayed == false %}
+              <label class="col-form-label d-block pb-0 vitamin--vitamin-selection">Choose Vitamin Flavor: <strong>{{ block.settings.productFlavor }}</strong></label>
+              {% assign currentFlavorDisplayed = true %}
+            {% endif %}
+          {% endfor %}
+          <div class="d-flex">
+            {% for block in section.blocks %}
+              {% if block.settings.product.url != blank %}
+                <a href="{{ block.settings.product.url }}"
+                  class="flex-grow-1 product-cross-sell__item{% if block.settings.isActive %} cross--sell-active{% endif %}{% if section.blocks.size == 5 and forloop.index == 3 %} mx-0{% endif %}"
+                  data-image="{{ block.settings.product.featured_image | img_url: '580x' }}">
+                  <span>{{ block.settings.descriptor }}</span>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      {% if product.available == false %}
+        <div class="klaviyo-form-XE8gAT"></div>
+        <script>
+          window.addEventListener('load', function() {
+            var _klOnsite = window._klOnsite || []
+            _klOnsite.push(['openForm', 'XE8gAT'])
+          })
+        </script>
+        {%- comment -%}
+          <form name="submit-to-google-sheet" id="submit-to-google-sheet" class="my-5 text-center">
+            <p class="product--nostock-title mb-0">Out of stock</p>
+            <p class="h4">*Stocks will be back next week @ 12AM Pacific Time</p>
+            <div class="mb-5"></div>
+            <div class="form-group text-center">
+              <p class="h4">Fill out the form below to receive a notification</p>
+            </div>
+            <div class="form-group">
+              <input type="email" name="Email" placeholder="Email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <input type="text" name="Name" placeholder="Name" class="form-control" required>
+            </div>
+            <input type="hidden" name="Product" value="{{ product.handle }}">
+            <button type="submit" class="btn btn-primary btn-lg text-uppercase mx-auto product--nostock-btn">Send</button>
+          </form>
+          <div class="my-5 text-center" id="email-form-submitted" style="display: none;">
+            <p class="product--nostock-title mb-0">Thank you</p>
+            <p class="h4">We will send you a notification once <br> new stocks have arrived.</p>
+          </div>
+
+          <script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbydGkPJ1rbkkPyXgwmRbXT8ZUcax0sfZRh8wcOpr0uUTwUg5AsnqugNjd9JOSq7XCZ6/exec'
+            const form = document.forms['submit-to-google-sheet']
+          
+            form.addEventListener( 'submit', e => {
+              e.preventDefault()
+              fetch( scriptURL, { method: 'POST', body: new FormData( form ) } )
+                .then( res => {
+                  document.getElementById( 'submit-to-google-sheet' ).style.display = 'none'
+                  document.getElementById( 'email-form-submitted' ).style.display = 'block'
+                } )
+                .catch( err => console.error( 'Error!', err.message ) )
+            } )
+          </script>
+        {%- endcomment -%}
+      {% else %}
+        <form action="/cart/add" id="add-item-form" method="post" enctype="multipart/form-data"
+          data-productid="{{ product.id }}"
+          class="d-flex order-2 order-xl-0 justify-content-center align-items-center justify-content-xl-start align-items-xl-start flex-column">
+          <div id="rc_container" class="radio mt-2" {% if subscription_only %} class="rc_subscription-only" {% endif %}>
+            <select aria-hidden="true" class="styled replaced no-js" id="rc_duplicate_selector" style="display: none;"
+              data-productid="{{product.id}}">
+              {% if variant_to_duplicate %}
+              {% for variant in variant_map %}
+              {% if variant[1]['discount_variant_id'] %}
+              <option value="{{ variant[1]['discount_variant_id'] }}">{{ variant[1]['discount_variant_id'] }}</option>
+              {% endif %}
+              {% endfor %}
+              {% else %}
+              {% for variant in product.variants %}
+              <option value="{{ variant.metafields.subscriptions.discount_variant_id }}">{{variant.metafields.subscriptions.discount_variant_id }}</option>
+              {% endfor %}
+              {% endif %}
+            </select>
+            <div aria-labelledby="Purchase options"
+              class="rc_radio_options d-flex flex-column justify-content-center align-items-center align-items-xl-start mx-auto text-center"
+              id="rc_radio_options" role="radiogroup">
+              <div
+                class="rc_block rc_block__type rc_block__type__autodeliver rc_block__type--active {% if select_subscription_first %}rc_block__type--active{% endif %}{% if product.tags contains 'no-subscription' %}hidden{% endif %}"
+                {% if subscription_only and shipping_interval_frequency.size==1 %} style="display: none;" {% endif %}>
+                <div class="most-popular-subscription-container">
+                  <div class="most-popular-subscription">
+                    <!-- <div class="subscription-left"></div>
+                    <div class="subscription-right"></div> -->
+                    Most Popular
+                  </div>
+                </div>
+                <label class="rc_label rc_label__autodeliver font-weight-bold" for="rc_purchase_type_autodeliver">
+                  {% assign discount_variant_price = product.variants[0].metafields.subscriptions.discount_variant_price %}
+                  <input type="radio" name="purchase_type" id="rc_purchase_type_autodeliver" value="autodeliver"
+                    {% if select_subscription_first %} checked {% endif %} class="rc_radio rc_radio__autodeliver"
+                    {% if subscription_only %} style="display: none;" {% endif %} data-productid="{{product.id}}">
+                  {% unless subscription_only %}
+                  <div>
+                    <div class="save__big">
+                      <span aria-label="recurring price" class="rc_price rc_price__autodeliver rc_price_slashed">
+                        {{ ambassador_slash_price | money }}
+                      </span>
+                      <span aria-label="recurring price" class="rc_price rc_price__autodeliver" id="">
+                        ${{ discount_variant_price }}
+                      </span>
+                      <span aria-label="subscription discount" class="rc_label__discount rc_label__discount_2x">
+                        save BIG, FREE Shipping<span class="save__big_free_shipping">*</span>
+                      </span>
+                    </div>
+                    <div class="font-weight-normal rc_label__discount_2x" style="line-height: 1">
+                      Autoships every <span class="sub--save" data-target="#sub--save-modal">4 weeks</span>
+                      <!-- {% render 'icon-dot' %} -->
+                      Cancel anytime
+                    </div>
+                  </div>
+                </label>
+                {% endunless %}
+                <div class="rc_block rc_block__type__options" id="rc_autodeliver_options">
+                  <label aria-label="Subscription frequency options" class="rc_label rc_label__deliver_every"
+                    for="rc_shipping_interval_frequency">
+                    <span class="rc_label__delivery">{{ label_deliver_every }}</span>
+                    {% if shipping_interval_frequency.size == 1 %}
+                    <span class="rc_label__frequency">
+                      {{ shipping_interval_frequency[0] }}
+                      {% if shipping_interval_frequency[0] == "1" and label_unit_type == 'Months' or label_unit_type == 'Weeks' %}
+                      {{ label_unit_type | remove: 's' }}
+                      {% else %}
+                      {{ label_unit_type }}
+                      {% endif %}
+                    </span>
+                    {% endif %}
+                    <select name="" data-productid="{{product.id}}" id="rc_shipping_interval_frequency"
+                      class="rc_select rc_select__frequency styled replaced" {% if shipping_interval_frequency.size==1 %}
+                      style="display: none;" {% endif %}>
+                      {% for frequency in shipping_interval_frequency %}
+                      <option value="{{ frequency }}">
+                        {{ frequency }}
+                        {% if frequency == "1" and label_unit_type == 'Months' or label_unit_type == 'Weeks' %}
+                        {{ label_unit_type | remove: 's' }}
+                        {% else %}
+                        {{ label_unit_type }}
+                        {% endif %}
+                      </option>
+                      {% endfor %}
+                    </select>
+                  </label>
+                </div>
+              </div>
+              {% unless subscription_only %}
+              <div
+                class="rc_block rc_block__type rc_block__type__onetime my-2 {% if product.tags contains 'no-subscription' %}rc_block__type--active{% endif %}">
+                <div class="rc_block__type__onetime__inner">
+                  <input type="radio" id="rc_purchase_type_onetime" name="purchase_type" value="onetime"
+                    {% unless select_subscription_first %} checked {% endunless %}
+                    {% if product.tags contains 'no-subscription' %}checked{% endif %} class="rc_radio rc_radio__onetime"
+                    data-productid="{{product.id}}">
+                  <label class="rc_label rc_label__onetime font-weight-bold" for="rc_purchase_type_onetime">
+                    {% if collection.handle == 'ambassador' or product.handle contains 'ambassador' %}
+                      <span aria-label="original price slash" class="rc_price rc_price__onetime-slashed rc_price_slashed" id="rc_price_onetime-slashed">
+                        {{ ambassador_slash_price | money }}
+                      </span>
+                    {% endif %}
+                    <span aria-label="original price" class="rc_price rc_price__onetime" id="rc_price_onetime">
+                      {{ product.price | money }}
+                    </span>
+                    <span class="text-uppercase font-weight-bold rc_label__discount_2x">
+                      &nbsp;-
+                      {{ label_onetime }}
+                    </span>
+                  </label>
+                </div>
+              </div>
+              {% endunless %}
+            </div>
+          </div>
+          {% if product.available %}
+          {% render 'subscription-product' %}
+          {% endif %}
+          <select name="id" {% if product.handle contains "shirt" %} {% else %} hidden {% endif %}
+            id="product-select-{{ product.id }}" class="product__add-to-cart-select"
+            style="max-width: 500px; margin-bottom: 30px" data-productid="{{product.id}}">
+            {% for variant in product.variants %}
+            {% if variant.available == true %}
+            <option value="{{ variant.id }}">
+              {{ variant.title }}
+              for
+              {{ variant.price | money_with_currency }}</option>
+            {% else %}
+            <option disabled="disabled">
+              {{ variant.title }}
+              - sold out!
+            </option>
+            {% endif %}
+            {% endfor %}
+          </select>
+          <label {% unless quantity_show_title %} class="d-none"
+            {% endunless %}>{{ 'products.product.quantity' | t }}</label>
+          <div class="input-quantity input-quantity--type-03 d-flex js-product-quantity" {% if quantity_connect %}
+            data-js-quantity-connect="{{ quantity_connect }}" {% endif %} style="width: 100%;"
+            data-productid="{{product.id}}">
+            <input class="btn btn-primary btn-lg text-uppercase mx-auto primary-add-to-cart {% unless product.tags contains 'no-subscription' %}pointer-event-none{% endunless %}" id="add" name="add"
+              data-productid="{{product.id}}" style="width: 100%;" type="submit" value="Add to Cart">
+            <div class="quantity-main">
+              <select class="mb-0 mr-10 data-quantity" id="quantity_select" name="quantity" data-quantity="1"
+                data-productid="{{product.id}}">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+              </select>
+            </div>
+          </div>
+          <div class="floating-add-to-cart-container hidden">
+            <div class="input-quantity input-quantity--type-03 d-flex js-product-quantity" {% if quantity_connect %}
+              data-js-quantity-connect="{{ quantity_connect }}" {% endif %} style="width: 100%; margin-top: 0;"
+              data-productid="{{product.id}}">
+              <input class="btn btn-primary btn-lg text-uppercase mx-auto floating-add-to-cart {% unless product.tags contains 'no-subscription' %}pointer-event-none{% endunless %}" id="add" name="add"
+                style="width: 100%;" data-productid="{{product.id}}" type="submit" value="Add to Cart">
+              <div class="quantity-main">
+                <select class="mb-0 mr-10 data-quantity" id="quantity_select" name="quantity" data-quantity="2"
+                  data-productid="{{product.id}}">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          {% render 'social-proof-reviews' %}
+          {% render 'money-back', productTags: productTags %}
+          <div class="d-lg-none container">
+            {% render 'product-feature-images' with product as product %}
+          </div>
+        </form>
+      {% endif %}
+    </div>
+    <div class="d-lg-block d-none">
+      {% render 'product-feature-images' with product as product %}
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="sub--save-modal">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center py-5">
+        <h2 class="mb-3 text-wrap">
+          Change this delivery date from 4 weeks to however often you want from your account page after check out.
+          <br>
+          You are in 100% control 🙂
+        </h2>
+        <button type="button" class="text-uppercase btn btn-primary btn-lg mb-4 sub--save-close" style="padding: 10px;font-size: 20px;border-radius: 0;" data-dismiss="#sub--save-modal">
+          Close Dialog
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="Product--Handle-Hidden" class="d-none">{{ product.handle | strip }}</div>
+<div id="Main--Products-Json-Hidden" class="d-none">{{ 'main-products.json' | asset_url }}</div>
+<div id="Shop--Permanent-Domain" class="d-none">{{ shop.permanent_domain | strip }}</div>
+
+{% schema %}
+{
+"name": "Product Template",
+"settings": [
+{
+"type": "textarea",
+"id": "product_testimonial",
+"label": "Product Testimonial"
+},
+{
+"type": "textarea",
+"id": "product_short_description",
+"label": "Product Description"
+},
+{
+"type": "textarea",
+"id": "product_extended_description",
+"label": "Product Extended Description"
+},
+{
+"type": "textarea",
+"id": "product_specs",
+"label": "Product Specifications"
+}
+],
+"blocks": [
+{
+"name": "Cross-sell",
+"type": "product",
+"settings": [
+{
+"id":"descriptor",
+"label":"Upsell Descriptor",
+"type":"text"
+},
+{
+"id":"productFlavor",
+"label":"Flavor Name",
+"type":"text",
+"default": "Flavor"
+},
+{
+"id":"color",
+"label":"color",
+"type":"color"
+},
+{
+"type":"checkbox",
+"id":"isActive",
+"label": "Matches current product"
+},
+{
+"type": "product",
+"id": "product",
+"label": "Cross-sell product"
+}
+]
+}
+]
+}
+{% endschema %}

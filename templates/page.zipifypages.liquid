@@ -1,0 +1,131 @@
+{% assign popupPages = "/pages/sports-thread-new-landing-page||/pages/sports-thread-new-landing-page-v2||/pages/sports-thread-fb-landing-page||/pages/sports-thread-v2-legacy-form" %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {{ 'custom-zipifypages.css' | asset_url | stylesheet_tag }}
+
+    {% if popupPages contains page.url %}
+      {{ 'sf-bs.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+
+    {% if page.url == '/pages/sports-thread-v2-legacy-form' %}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+      <style>
+        .iti.iti--allow-dropdown {
+          width: 100%;
+        }
+      </style>
+    {% endif %}
+
+    {% render 'header-scripts.zipifypages', renderctx: 'tpl' %}{{ content_for_header }}
+  </head>
+  <body>
+    {% include 'page-content.zipifypages', renderctx: 'tpl' %}
+    {% render 'page-footer.zipifypages', renderctx: 'tpl' %}
+
+    {% if popupPages contains page.url %}
+      <div class="modal fade sf" id="Yvd2dnModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body text-center py-5">
+              <h3 class="mb-3">Follow us on Instagram and send us a message.</h3>
+
+              <a 
+                href="https://www.instagram.com/sport.formula.99/"
+                class="text-uppercase btn btn-primary btn-lg mb-4"
+                target="_blank"
+                style="padding: 10px;font-size: 20px;border-radius: 0;"
+              >
+                Go follow us on Instagram
+              </a>
+              <h3>Tell us why you should be sponsored.</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="{{ 'jquery.js' | asset_url }}"></script>
+      <script src="{{ 'bootstrap.bundle.js' | asset_url }}"></script>
+    {% endif %}
+    
+    
+    <script src="{{ 'jquery.js' | asset_url }}"></script>
+    <script src="{{ 'custom-zipifypages.js' | asset_url }}"></script>
+
+    {% if page.url == '/pages/sports-thread-v2-legacy-form' %}
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+      <script>
+        window.onload = function() {
+          let input = document.querySelector( "#k_id_phone" )
+          let errorMsg = document.querySelector( "#error-msg" )
+          let errorMap = [ "Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number" ]
+          let iti = window.intlTelInput( input, {
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.min.js"
+          } )
+          let reset = function() {
+            input.classList.remove( "is-invalid" );
+            errorMsg.innerHTML = "";
+            errorMsg.classList.add( "collapse" );
+          };
+
+          // on blur: validate
+          input.addEventListener( 'blur', function() {
+            reset();
+            if ( input.value.trim() ) {
+              if ( ! iti.isValidNumber()) {
+                input.classList.add( "is-invalid" )
+                let errorCode = iti.getValidationError()
+                errorCode = errorCode < 0 ? 0 : errorCode
+                errorMsg.innerHTML = errorMap[errorCode]
+                errorMsg.classList.remove( "collapse" )
+              }
+            }
+          } )
+
+          // on keyup / change flag: reset
+          input.addEventListener( 'change', reset )
+          input.addEventListener( 'keyup', reset )
+
+          $( document ).on( 'submit', '#legacy-form-custom', function(e) {
+            e.preventDefault()
+            const form = $( '#legacy-form-custom' )
+
+            $.ajax({
+              dataType: 'json',
+              crossOrigin: true,
+              async: true,
+              url: "https://hooks.zapier.com/hooks/catch/11210907/bzpqirp",
+              method: "POST",
+              data: {
+                g: "TwSPib",
+                email: form.find('#k_id_email').val(),
+                phone_number: form.find('#k_id_phone').val(),
+                first_name: form.find('#k_id_fname').val(),
+              },
+              success: function( res ) {
+                if ( res ) {
+                  $( '#Yvd2dnModal' ).modal( 'show' )
+                  $( '#legacy-form-custom' ).hide()
+                  $( '#legacy-form-message' ).removeClass( 'collapse' )
+                }
+              }
+            });
+          })
+        }
+      </script>
+    {% endif %}
+  </body>
+</html>
+{% layout none %}
+
+<script>
+  window.addEventListener( "klaviyoForms", function(e) { 
+    const formIds = [ 'Yvd2dn', 'S6Q7y2', 'Rmg47G' ]
+    if ( e.detail.type == 'submit' && ( formIds.indexOf( e.detail.formId ) !== -1 ) ) {
+      $( '#Yvd2dnModal' ).modal( 'show' )
+    }
+  } )
+</script>

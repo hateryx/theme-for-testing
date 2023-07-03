@@ -1,0 +1,89 @@
+<div class="container-fluid bg-light py-2">
+  <div class="container text-center">
+    {% if section.settings.title != blank %}
+      <h3 class="text-uppercase">{{ section.settings.title }}</h3>
+    {% endif %}
+    {% if section.settings.subtitle_1 != blank %}
+      <span class="subtitle">{{ section.settings.subtitle_1 }}</span>
+    {% endif %}
+    {% if section.settings.subtitle_2 != blank %}
+      <p class="subtext">{{ section.settings.subtitle_2 }}</p>
+    {% endif %}
+    {% if section.settings.subtitle_3 != blank %}
+      <p class="subtext text-center mt-30 mb-50">{{ section.settings.subtitle_3 }}</p>
+    {% endif %}
+  </div>
+  <div class="container" style="max-width: 1400px;">
+    <div class="row row-cols-1 row-cols-lg-4 mx-auto justify-content-center">
+      {% for block in section.blocks %}
+        <div class="col text-center">
+          <div class="img-fluid">
+            <img loading="lazy" class="lazyload" data-src="{{ block.settings.image | img_url:'x100' }}" alt="{{ block.settings.image.alt }}"></div>
+          <div>
+            <h5 class="h4 text-uppercase">{{ block.settings.title }}</h5>
+            <p>{{ block.settings.desc }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+
+{
+  "name": "ENERGY-STRENGTH-RECOVERY",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_custom_class",
+      "label": "Custom class for section"
+    }, {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title",
+      "default": "energy. strength. recovery"
+    }, {
+      "type": "textarea",
+      "id": "subtitle_1",
+      "label": "Subtitle 1",
+      "default": "Radiate with passion and energy using a simple daily dose of Sport Formula and start feeling the results right away."
+    }, {
+      "type": "textarea",
+      "id": "subtitle_2",
+      "label": "Subtitle 2",
+      "default": "Whether you’re a pro athlete or work a 9-5, we all feel better when we have more energy.  For that reason, the Sport Formula line of products is designed to give you energy, strength and recovery."
+    }, {
+      "type": "textarea",
+      "id": "subtitle_3",
+      "label": "Subtitle 3",
+      "default": "Start by taking a daily dose of the powder multivitamin to begin your day.  The result? A healthier version of you."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content",
+      "name": "Content",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "label": "Title",
+          "id": "title",
+          "default": "Pro Athlete endorsed"
+        }, {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Description",
+          "default": "Don’t be fooled, our exact same nutrients that have fueled Olympic Athletes to achieve Gold Medals is exactly what every human body needs to be healthy."
+        }, {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %} 

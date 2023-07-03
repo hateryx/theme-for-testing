@@ -1,0 +1,26 @@
+<div class="container my-4">
+    <div class="mt-2">
+        <div class="row">
+            <div class="col-12 text-center">
+                <label class="h4 text-primary font-weight-bold">Go Back To</label>
+                <div class="d-flex justify-content-center learn-more-container">
+                    <a href="/pages/feature-and-benefit" class="mb-3 btn btn-primary mx-1">
+                      Features and Benefits
+                    </a>
+                    <a href="/pages/supplement-facts" class="mb-3 btn btn-primary mx-1">
+                      Multivitamin Facts
+                    </a>
+                  </div>
+            </div>
+            <div class="col-12">
+                {{ page.content }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.location.href = '/pages/supplement-facts'
+    }
+</script>

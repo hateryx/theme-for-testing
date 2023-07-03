@@ -1,0 +1,38 @@
+<div class="m-4">
+  {% form 'customer_login' %}
+  {{ form_errors | default_errors }}
+
+  <h2>Login</h2>
+  <div class="email mb-3">
+    <label hidden for="email">Email</label>
+    <input type="email" placeholder="Email" class="form-control" name="customer[email]" required>
+  </div>
+
+  <div class="password mb-3">
+    <label hidden for="password">Password</label>
+    <input type="password" placeholder="Password" class="form-control" name="customer[password]" required>
+  </div>
+
+  <div class="submit">
+    <input type="submit" class="btn btn-primary btn-lg text-uppercase w-50 sm:w-100" value="Sign in">
+  </div>
+
+  <div class="recover mt-3">
+    <label class="d-block text-primary">Having trouble logging in?</label>
+    <a href="#" class="recoverBtn btn btn-outline-primary btn-lg text-uppercase w-50 sm:w-100 shadow">Re-set Password</a>
+  </div>
+
+  <div class="form-group row mt-3">
+    <div class="col-12 text-center">
+      <label class="d-block text-primary">Learn to manage your account</label>
+      <button type="button" class="btn btn-outline-primary btn-lg text-uppercase w-50 sm:w-100 shadow" id="trigger-video-modal" data-target="#accountVideoModal">View video instructions</button>
+    </div>
+  </div>
+  {% endform %}
+</div>
+
+<style>
+div#rc_login {
+  display: none !important;
+}
+</style>

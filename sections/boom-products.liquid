@@ -1,0 +1,149 @@
+{% liquid
+    assign title = section.settings.title
+    assign content = section.settings.content
+
+    assign outline_button_label = section.settings.outline_button_label
+    assign outline_button_link = section.settings.outline_button_link
+
+    assign after_outline_button_label = section.settings.after_outline_button_label
+    assign after_outline_button_link = section.settings.after_outline_button_link
+%}
+
+<div class="products--content">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12 col-md-10 mx-auto">
+                <h3 class="text-center mb-5">{{ title }}</h3>
+
+                <p>{{ content }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container products--container">
+    <div class="form-group row">
+        <div class="col-12 col-md-11 mx-auto">
+            <div class="form-group row">
+                {%- for block in section.blocks -%}
+                    <div class="col-12 col-md-6 col-lg-4 mb-3 mx-auto">
+                        <div class="card shadow rounded py-5 product--card">
+                            <div class="card-header text-center bg-white border-0">
+                                {% assign product = all_products[block.settings.product] %}
+                                <img src="{{ product.featured_image | img_url: '240x' }}" class="img-fluid mx-auto" />
+                                <p class="font-weight-bold text-primary mt-2 md:mt-m-5">
+                                    <span class="product--price">{{ product.price | money }}</span> {{ product.title }}
+                                </p>
+                                <button type="button" class="btn btn-primary text-uppercase boom--products-addtocart" product-id="{{ product.selected_or_first_available_variant.id }}">Add to Cart</button>
+                            </div>
+                            <div class="card-body text-center">
+                                <label class="text-uppercase text-secondary">Watch Demo Video:</label>
+                                {{ block.settings.content }}
+                            </div>
+                        </div>
+                    </div>
+                {%- endfor -%}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-12 text-center mb-4">
+            <a href="{{ outline_button_link }}" class="btn btn-outline-primary text-uppercase">{{ outline_button_label }}</a>
+        </div>
+        <div class="col-12 text-center">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <a href="{{ after_outline_button_link }}" class="btn btn-primary text-uppercase py-2 px-4 mb-2">{{ after_outline_button_label }}</a>
+                <small>Get new videos, discount codes, and more!</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = () => {
+        const productsAddtoCart = document.getElementsByClassName( 'boom--products-addtocart' )
+        Array.from( productsAddtoCart ).forEach( ( el ) => {
+            el.addEventListener( 'click', () => {
+                const id = el.getAttribute( 'product-id' )
+                addProdToCart( id )
+            } )
+        } )
+
+        function addProdToCart( id ) {
+            const data = {
+                'items': [ { id: id, quantity: 1 } ]
+            }
+
+            fetch( '/cart/add.js', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            } )
+            .then( r => r.json() )
+            .then( res => window.location.href = '/cart' )
+        }
+    }
+</script>
+
+{% schema %}
+{
+    "name": "Boom Products",
+    "class": "boom--products",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Available on our website, Boom cosmetic sticks are compact, travel-ready tubes that fit in the palm of your hand:"
+        },
+        {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+        },
+        {
+            "type": "text",
+            "id": "outline_button_label",
+            "label": "Outline button label",
+            "default": "Check Out All Products"
+        },
+        {
+            "type": "url",
+            "id": "outline_button_link",
+            "label": "Outline button link"
+        },
+        {
+            "type": "text",
+            "id": "after_outline_button_label",
+            "label": "After Outline Button Label",
+            "default": "Join The Club"
+        },
+        {
+            "type": "url",
+            "id": "after_outline_button_link",
+            "label": "After Outline Button Link"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "products",
+            "name": "Products",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Select Product"
+                },
+                {
+                    "type": "textarea",
+                    "id": "content",
+                    "label": "Content"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

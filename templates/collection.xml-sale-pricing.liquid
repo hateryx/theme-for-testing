@@ -1,0 +1,29 @@
+{% layout none %}
+<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+  {% paginate collection.products by 1000 %}
+  <channel>
+    <title>{{ shop.name }}</title>
+    <link>{{ shop.url }}</link>
+    <description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+    {% for product in collection.products %}
+      {% for variant in product.variants %}
+        {%- if variant.compare_at_price > variant.price -%}
+        {%- assign OnSale = true -%}
+        {%- assign Price = variant.compare_at_price -%}
+        {%- assign SubscriptionDiscount = variant.price | times: 10.0 | divided_by: 100 -%}
+        {%- assign SalePrice =  product.price | minus: SubscriptionDiscount | round: 2 -%}
+      
+        <item>
+          <g:title>{{ product.title }}</g:title>
+          <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
+          <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
+          <g:price>{{ Price | money_without_currency }} {{ shop.currency }}</g:price>
+          <g:sale_price>{{ SalePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
+        </item>
+        {%- endif -%}
+      {% endfor %}
+    {% endfor %}
+  </channel>
+</rss>
+{% endpaginate %}

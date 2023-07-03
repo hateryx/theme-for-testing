@@ -1,0 +1,109 @@
+<div class="container-fluid container--revamp h-100">
+    <div class="form-group row py-5 h-100 align-items-center">
+        <div class="col-12 text-center">
+            <h2 class="cta--title">{{ section.settings.title }}</h2>
+            <p class="cta--text">{{ section.settings.text }}</p>
+        </div>
+
+        <div class="col-6">
+            <input type="email" class="form-control newsletter--email col-4 ml-auto" placeholder="Email">
+        </div>
+        <div class="col-6">
+            <button type="button" class="btn newsletter--submit w-25">Submit</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .newsletter--cta-revamp .cta--title {
+        color: #000;
+        text-transform: uppercase;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #F17A15;
+    }
+
+    .newsletter--cta-revamp .cta--text {
+        color: #FFF;
+        font-size: 1.1em;
+        letter-spacing: .8px;
+    }
+
+    .newsletter--cta-revamp .newsletter--email {
+        padding: 23px 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+      min-width: 175px;
+;
+    }
+
+    .newsletter--cta-revamp .newsletter--email::placeholder {
+        color: #B8B8B8;
+    }
+
+    .newsletter--cta-revamp .newsletter--submit {
+        background-color: #F17A15;
+        color: #FFF;
+        font-size: 1.3rem;
+        padding: 7px 25px;
+        font-weight: bold;
+        width: 160px !important;
+        position: relative;
+    }
+    .newsletter--cta-revamp .newsletter--submit::before {
+    position: absolute;
+    height: 47px;
+    width: 160px;
+    top: -8.5px;
+    left: 5px;
+    background: transparent;
+    border: 1px solid #F17A15;
+    content: '';
+  }
+
+    .newsletter--cta-revamp {
+        background-image: url({{ section.settings.background_image | img_url: 'master' }});
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 320px;
+    }
+@media only screen and (max-width: 425px) {
+          .newsletter--cta-revamp {
+            height: 500px;
+          }
+  }
+</style>
+
+{% schema %}
+{
+    "name": "Newsletter CTA Revamp",
+    "class": "newsletter--cta-revamp",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "background_image",
+            "label": "Background Image"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Newsletter"
+        },
+        {
+            "type": "text",
+            "id": "text",
+            "label": "Text",
+            "default": "Join our newsletter to get exclusive contents, offers, services and first access to products."
+        }
+    ],
+    "presets": [
+      {
+        "category": "Content",
+        "name": "Newsletter CTA Revamp"
+      }
+    ]
+}
+{% endschema %}

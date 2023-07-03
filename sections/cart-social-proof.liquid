@@ -1,0 +1,50 @@
+<div class="cart-social-proof__container text-center p-3 sm:pt-0">
+  <div class="social-proof-header sm-max:hidden">
+    <h2>{{ section.settings.name }}</h2>
+    <h6 class="mb-3">{{section.settings.title}}</h6>
+  </div>
+
+  <div class="social-proof-image">
+    <img class="img-fluid" loading="lazy" src="{{ section.settings.image | img_url: '300x'}}" alt="" srcset="">
+  </div>
+
+  <div class="social-proof-header-mobile hidden sm-max:block">
+    <h2>{{ section.settings.name }}</h2>
+    <h6 class="mb-3">{{section.settings.title}}</h6>
+  </div>
+  
+  <div class="social-content mb-3">
+    {% render 'social-proof-reviews' %}
+    {% render 'money-back' %}
+  </div>
+
+  <div class="social-description">
+    {{ section.settings.testimonial }}
+  </div>
+</div>
+{% schema %}
+
+{
+  "name": "Cart Social Proof",
+  "settings": [
+    {
+      "label": "Name",
+      "id": "name",
+      "type": "text"
+    }, {
+      "label": "Title",
+      "id": "title",
+      "type": "text"
+    }, {
+      "label": "Image",
+      "id": "image",
+      "type": "image_picker"
+    }, {
+      "label": "Testimonial",
+      "id": "testimonial",
+      "type": "richtext"
+    }
+  ]
+}
+
+{% endschema %}

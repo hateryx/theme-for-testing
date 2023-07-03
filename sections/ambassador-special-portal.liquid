@@ -1,0 +1,11 @@
+{% assign products = collections['20-off-formula'].products %}
+{% assign _ambassador_ids = "" %}
+
+{% for product in products %}
+  {% assign _ambassador_ids = _ambassador_ids | append: product.id | append: ',' %}
+{% endfor %}
+
+<script>
+  let _ambassador_ids = {{ _ambassador_ids | json }}
+  localStorage.setItem( '_ambassador_ids', JSON.stringify( _ambassador_ids ) )
+</script> 

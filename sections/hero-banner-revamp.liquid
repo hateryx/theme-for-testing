@@ -1,0 +1,171 @@
+<div 
+  id="banner--revamp"
+  style="background-image: url({{ section.settings.banner_image_revamp | img_url: 'master' }});"
+>
+  <div class="form-group row align-items-center h-100">
+    <div class="col-12 col-lg-7"></div>
+    <div class="col-12 col-lg-5">
+      <div class="banner--content pl-5 uid_trapeziod-container">
+        <div id="uid_trapeziod" style="position: absolute;"></div>
+        <div id="uid_trapeziod2" style="position: absolute;"></div>
+        <h2 class="banner--tagline d-inline-block z2_uid_trapeziod">{{ section.settings.banner_tagline }}</h2>
+        <h1 class="banner--title z2_uid_trapeziod">
+          <span class="main">{{ section.settings.banner_title_main }}</span>
+          <br>
+          <span class="secondary">{{ section.settings.banner_title_secondary }}</span>
+        </h1>
+        <p class="banner--text mb-4 z2_uid_trapeziod">{{ section.settings.banner_text }}</p>
+
+        <a href="{{ section.settings.link }}" class="btn banner--shop z2_uid_trapeziod">Shop Now</a>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<style>
+  a.btn.banner--shop.z2_uid_trapeziod:hover::before {
+    transform: translate(-11px, 5px);
+}
+  a.btn.banner--shop.z2_uid_trapeziod:hover {
+    transform: translate(2px, -1px);
+}
+  .uid_trapeziod-container{
+/*     position: relative; */
+/*     border: 5px solid blue !important; */
+  }
+  .z2_uid_trapeziod{
+    position: relative;
+    z-index: 2;
+  }
+  #uid_trapeziod{
+    height: 450px;
+    width: 630px;
+    background: rgb(241,122,21);
+    background: linear-gradient(180deg, rgba(241,122,21,1) 35%, rgba(255,255,255,0) 100%);
+    poition: absolute !important;
+    top: 20px;
+    left: 0;
+    clip-path: polygon(0 0, 40% 0, 100% 100%, 60% 100%);
+    z-index: 1;
+    transform: translateX(-142px);
+  }
+  #uid_trapeziod2 {
+    height: 450px;
+    width: 690px;
+    background: rgb(241,122,21);
+    background: linear-gradient(180deg, rgba(241,122,21,1) 35%, rgba(255,255,255,0) 100%);
+    poition: absolute !important;
+    top: -63px;
+    left: 0;
+    clip-path: polygon(0 0, 40% 0, 100% 100%, 60% 100%);
+    z-index: 1;
+    transform: translateX(-44px);
+  }
+  #banner--revamp {
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    object-fit: cover;
+    height: 800px;
+  }
+
+  /* #banner--revamp .banner--content {
+    position: absolute;
+    transform: translateY(70%);
+  } */
+
+  #banner--revamp .banner--social {
+    position: absolute;
+    transform: translateY(70%);
+  }
+
+  #banner--revamp .banner--tagline {
+    background-color: #FFF;
+    color: #F17A15;
+    text-transform: uppercase;
+    padding: 5px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  #banner--revamp .banner--title {
+    color: #FFF;
+    text-transform: uppercase;
+    font-size: 2.3rem;
+    margin-bottom: 1.5rem;
+    max-width: 50%;
+  }
+
+  #banner--revamp .banner--title .main {
+    font-weight: bold;
+  }
+
+  #banner--revamp .banner--text {
+    color: #FFF;
+    margin-bottom: 2.5rem !important;
+  }
+
+  #banner--revamp .banner--shop {
+    background-color: #FFF;
+    color: #F17A15;
+    font-size: 1.2rem;
+    padding: 5px 25px;
+    font-weight: bold;
+    position: relative;
+    text-transform: uppercase;
+  }
+  #banner--revamp .banner--shop::before {
+    position: absolute;
+    height: 48px;
+    width: 160px;
+    top: -10px;
+    left: 10px;
+    background: transparent;
+    border: 2px solid white;
+    content: '';
+  }
+</style>
+  
+{% schema %}
+  {
+    "name": "Hero Banner Revamp",
+    "settings": [
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Shop Now Link"
+      },
+      {
+        "type": "text",
+        "id": "banner_tagline",
+        "label": "Banner Tagline"
+      },
+      {
+        "type": "text",
+        "id": "banner_title_main",
+        "label": "Banner Main Title"
+      },
+      {
+        "type": "text",
+        "id": "banner_title_secondary",
+        "label": "Banner Secondary Title"
+      },
+      {
+        "type": "text",
+        "id": "banner_text",
+        "label": "Banner Text"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_image_revamp",
+        "label": "Banner Image"
+      }
+    ],
+    "presets": [
+      {
+        "category": "Hero Banners",
+        "name": "Hero Banner Revamp"
+      }
+    ]
+  }
+{% endschema %}

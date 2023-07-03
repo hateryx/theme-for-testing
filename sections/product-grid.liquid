@@ -1,0 +1,63 @@
+<div class="product-grid__container container-fluid">
+  <div class="text-center py-4">
+    <button class="btn btn-primary btn-lg text-decoration-none text-uppercase align-self-center" id="view-bundles">
+      View Bundles
+    </button>
+  </div>
+
+  <ul class="row row-cols-1 {% if collection.handle contains 'bariatric' %}row-cols-lg-2 product-grid__container-bariatric{% else %}row-cols-lg-3{% endif %} justify-content-center align-items-center list-unstyled m-0 align-items-stretch">
+    {% for product in collection.products %}
+      {% assign btnText = '' %}
+      {% for tag in product.tags %}
+        {% if tag contains 'get' %}
+          {% assign btn = tag | split: '-' | last %}
+          {% assign btnText = btn %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      <li class="card p-3 m-1 col product-grid__container-item">
+        <a class="product-card d-flex align-items-center justify-content-center flex-column"
+          href="{{ product.url | within: collection }}">
+          <div class="reveal">
+            <img class="reveal img-fluid card-img-top lazyload" data-src="{{ product.featured_image.src | img_url: 'x400' }}" alt="{{product.featured_image.alt | escape }}">
+            <img class="hidden lazyload" data-src="{{ product.images[1] | img_url: 'x400' }}" alt="{{ product.images.last.alt | escape }}"/>
+            {% capture xmas_image_overlay %}
+              {% if product.metafields.christmas.image-overlay.value != blank %}
+              <img src="{{ product.metafields.christmas.image-overlay.value }}" class="img-fluid xmas-code-overlay overlay-product" data-data="{{ globalBogoImageOverlay }}">
+              {% endif %}
+            {% endcapture %}
+            {{ xmas_image_overlay }}
+          </div>
+          
+          <div class="ratings-container text-center">
+            {% render 'collection-ratings', rating: product.metafields.stamped.reviews_average %}
+            <p>
+              {% if product.metafields.extra_info.one_liner  %}
+                {{ product.metafields.extra_info.one_liner }}
+              {% else %}
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+              {% endif %}
+            </p>
+          </div>
+          
+          <button class="product-grid__grid-button btn btn-primary btn-lg w-75 sm-max:w-100 mt-2 text-uppercase">
+            {% if btnText %}
+              View
+              {{ btnText }}
+            {% else %}
+              View
+            {% endif %}
+          </button>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<style>
+@media screen and (min-width: 768px){
+  .product-grid__container-bariatric li{
+    max-width: 45%;
+  }
+}
+</style>

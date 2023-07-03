@@ -1,0 +1,178 @@
+{% assign products = collections[section.settings.collection].products %}
+<div class="container-fluid container--revamp p-5 mt-5 uidBestSellPds">
+    <div class="form-group row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="selling--tagline d-inline-block mb-4">Our Products</h2>
+            <h2 class="selling--title mb-5">Best Selling Products</h2>
+        </div>
+    </div>
+
+    <div class="form-group row mb-5">
+        {% for product in section.blocks %}
+            <div class="col-12 col-md-4 col-lg-3 text-center">
+              <a href="{{ product.settings.url }}" class="selling--button">  
+              <div class="selling--product position-relative">
+                    <!-- <h5 class="selling--tags selling--percent">{{ product.settings.discount }}</h5>
+                    <h5 class="selling--tags selling--new">New</h5> -->
+                    {% liquid
+                        assign src = product.settings.image | img_url: 'master'    
+                    %}
+                    <img data-src="{{ src }}" class="lazyload img-fluid" />
+                </div>
+                {{ product.settings.label }}</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group row">
+        <div class="col-12 text-center">
+            <a href="{{ section.settings.url }}" class="btn selling--all">View All Products</a>
+        </div>
+    </div>
+</div>
+
+<style>
+  #shopify-section-template--14256787783774__1659075699e88ce446{
+    background-size: 30px 30px;
+    background-image: radial-gradient(
+    circle,
+    #deddd0 2px,
+    rgba(0, 0, 0, 0) 1px
+    );
+    margin: 0px !important;
+  }
+  .uidBestSellPds {
+    background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 22%, rgba(255,255,255,0) 100%);
+  }
+  #shopify-section-template--14256787783774__1659075699e88ce446 .mt-5{
+    margin-top: 0px !important;
+  }
+    .best--selling-revamp .selling--tagline {
+        background-color: #F17A15;
+        color: #FFF;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .best--selling-revamp .selling--title {
+        color: #1E1E1E;
+        text-transform: uppercase;
+        font-size: 2.25rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .best--selling-revamp .selling--product {
+        background-color: #F4F4F4;
+        margin-bottom: 1.5em;
+        padding-top: 4em;
+        padding-bottom: 4em;
+    }
+
+    .best--selling-revamp .selling--button {
+        color: #000;
+        font-size: 1.3em;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .best--selling-revamp .selling--tags {
+        position: absolute;
+        top: 10px;
+        font-size: 1.125em;
+        padding: 5px;
+        font-weight: 600;
+    }
+
+    .best--selling-revamp .selling--percent {
+        left: 10px;
+        border: 2px solid #F17A15;
+        color: #F17A15;
+    }
+
+    .best--selling-revamp .selling--new {
+        right: 10px;
+        border: 2px solid #000;
+        color: #000;
+    }
+
+    .best--selling-revamp .selling--all {
+        background-color: #F17A15;
+        color: #FFF;
+        font-size: 1rem;
+        padding: 11px 13px;
+        font-weight: bold;
+        margin-top: 3em;
+        position: relative;
+        width: 100%;
+        max-width: 205px;
+        text-transform: uppercase;
+    }
+  .best--selling-revamp .selling--all::before {
+    position: absolute;
+    height: 48px;
+    width: 205px;
+    top: -8px;
+    left: 6px;
+    background: transparent;
+    border: 2px solid #F17A15;
+    content: '';
+  }
+</style>
+
+{% schema %}
+{
+    "name": "Best Selling Revamp",
+    "class": "best--selling-revamp",
+    "settings": [
+        {
+            "type": "collection",
+            "id": "collection",
+            "label": "Product collection"
+        },
+        {
+            "type": "url",
+            "id": "url",
+            "label": "All Products Page"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Product",
+            "type": "product",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "label",
+                    "label": "Button Label"
+                },
+                {
+                  "type": "text",
+                  "id": "discount",
+                  "label": "discount percentage",
+                  "default": "10%"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Button URL"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "category": "Content",
+        "name": "Best Selling Revamp"
+      }
+    ]
+}
+{% endschema %}

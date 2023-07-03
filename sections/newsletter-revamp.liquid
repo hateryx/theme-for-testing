@@ -1,0 +1,173 @@
+<div class="container-fluid" id="edge">
+    <div class="row">
+        <div class="col-12 col-lg-9" id="coal">
+            <div 
+                class="row newsletter--container py-4 h-100 align-items-center"
+                style="background-image: url({{ section.settings.background_image | img_url: 'master' }});"
+            >
+                <div class="col-12 col-md-6 col-lg-4 text-center">
+                    <img src="{{ section.settings.image | img_url: 'master' }}" class="img-fluid w-75 mx-auto" />
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 uidnewltRevampedStyling1">
+                    <h2 class="newsletter--title">{{ section.settings.title }}</h2>
+                    <p class="newsletter--text" id="nl-text">{{ section.settings.text }}</p>
+                </div>
+                <div class="col-12 col-md-12 col-lg-4 uidnewltRevampedStyling" >
+                    <input type="email" class="form-control newsletter--email mb-4" placeholder="Email" id="email">
+
+                    <button type="button" class="btn newsletter--submit" id="submit-btn">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    @media(max-width: 991px) {
+      .uidnewltRevampedStyling {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    @media(max-width: 767px) {
+      .uidnewltRevampedStyling1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  
+    .newsletter--revamp {
+        background-image: linear-gradient(180deg, #fff 50%, #212529 50%);
+    }
+    .newsletter--revamp img.w-75 {
+        width: 100%;
+        max-width: 200px !important;
+    }
+    .newsletter--revamp .form-control{
+        border: none !important;
+    }
+
+
+    .newsletter--revamp .newsletter--title {
+        color: #FFF;
+        text-transform: uppercase;
+        font-size: 2.5rem;
+        font-weight: bold;
+        letter-spacing: 3px;
+    }
+
+    .newsletter--revamp .newsletter--text {
+        font-size: 1rem;
+        color: #FFF;
+    }
+
+    .newsletter--revamp .newsletter--container {
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .newsletter--revamp .newsletter--email {
+        width: 210px;
+        padding: 25px 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .newsletter--revamp .newsletter--email::placeholder {
+        color: #B8B8B8;
+    }
+
+    .newsletter--revamp .newsletter--submit {
+        background-color: #FFF;
+        color: #F17A15;
+        font-size: 1rem;
+        padding: 7px 11px;
+        height: 47px;
+        width: 150px;
+        font-weight: bold;
+        position: relative;
+        text-transform: uppercase;
+    }
+  .newsletter--revamp .newsletter--submit::before {
+    position: absolute;
+    height: inherit;
+    width: inherit;
+    top: -8px;
+    left: 6px;
+    background: transparent;
+    border: 2px solid white;
+    content: '';
+  }
+
+  
+  @media only screen and (max-width: 425px) {
+    #nl-text {
+      text-align: center;
+    }
+    #submit-btn {
+    width: 100%;
+    }
+  .newsletter--revamp .newsletter--container {
+      background-repeat: no-repeat;
+      background-size: 0%;
+      background-color: #F17A15;
+  }
+    #edge {
+          width: 100%;
+          padding-right: 0;
+          padding-left: 0;
+          margin-right: auto;
+          margin-left: auto;-  
+    }
+    #coal {
+        padding: 0;
+    }
+    #email {
+        width: 100%;
+    }
+  }
+  
+
+</style>
+
+{% schema %}
+{
+    "name": "Newsletter Revamp",
+    "class": "newsletter--revamp",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "background_image",
+            "label": "Backgroun Image"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Newsletter"
+        },
+        {
+            "type": "text",
+            "id": "text",
+            "label": "Text",
+            "default": "Join our newsletter to get exclusive contents, offers, <br>services and first access to products."
+        }
+    ],
+    "presets": [
+      {
+        "category": "Content",
+        "name": "Newsletter Revamp"
+      }
+    ]
+}
+{% endschema %}

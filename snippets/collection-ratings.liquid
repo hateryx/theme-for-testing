@@ -1,0 +1,72 @@
+{% if rating %}
+<div class="ratings">
+    <div class="rating">
+      {{ rating | round: 2 }}
+    </div>
+
+    <div class="stars">
+      {% assign rating = rating | round %}
+
+      {% for i in (1..5) %}
+        <svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+        </svg>
+
+        {% if i >= rating %}
+          {% break; %}
+      	{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% else %}
+<div class="ratings">
+    <div class="rating">
+      No Ratings
+    </div>
+
+    <div class="stars no-stars">
+        <svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+        </svg>
+    </div>
+  </div>
+{% endif %}
+
+<style>
+  .ratings-container {
+    color: #000;
+  }
+  
+  .ratings {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 10px 0;
+  }
+  
+  .ratings .rating {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 16px;
+  }
+  
+  .ratings .stars {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: 700;
+    font-size: 19px !important;
+    line-height: 27px;
+    height: 19px;
+    color: #272727;
+    margin: 0 2px;
+  }
+
+  .ratings .stars svg {
+    fill: #ECB910;
+  }
+  
+  .ratings .stars.no-stars svg {
+    fill: #EFEFEF;
+  }
+</style>

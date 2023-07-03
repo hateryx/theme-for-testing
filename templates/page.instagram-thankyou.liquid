@@ -1,0 +1,33 @@
+<div class="container my-4">
+    <div class="my-3">
+        <div class="klaviyo-form-Yvd2dn"></div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center py-5">
+                    <h3 class="mb-3">Follow us on Instagram and send us a message.</h3>
+
+                    <a 
+                        href="https://www.instagram.com/sport.formula.99/"
+                        class="text-uppercase btn btn-primary btn-lg mb-4"
+                        target="_blank"
+                        style="padding: 10px;font-size: 20px;"
+                    >
+                        Go follow us on Instagram
+                    </a>
+                    <h3>Tell us why you should be sponsored.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  window.addEventListener("klaviyoForms", function(e) { 
+    if (e.detail.type == 'submit') {
+      $('#exampleModal').modal('show')
+    }
+  });
+</script>

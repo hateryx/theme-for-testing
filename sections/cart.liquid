@@ -1,0 +1,219 @@
+<!-- Begin ReCharge code -->
+{% include 'subscription-cart-footer' %}
+<!-- End ReCharge code -->
+<!-- {% include 'breadcrumbs' %} -->
+{% comment %}Top Checkout button{% endcomment %}
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center footer-checkout" id="mobile-cart-buttons">
+    <a class="btn btn-outline-secondary checkout__buttons mb-2 mb-md-0 mr-md-1 btn-lg text-uppercase font-weight-bold w-100"
+        href="/collections/formula">Continue Shopping</a>
+    <a id="checkout_button" class="checkout__buttons checkout-buttons btn btn-primary btn-lg text-uppercase ml-md-1 font-weight-bold w-100" href="/checkout">Checkout Now</a>
+</div>
+
+<script>
+    const _subItems = []
+</script>
+
+{% comment %}Cart container{% endcomment %}
+<div class="cart__container d-flex flex-column pt-3 pt-sm-1" data-cart="cart-table">
+    {% comment %}Each item in cart{% endcomment %}
+    {% for item in cart.items %}
+    <div class="cart__item d-flex flex-column flex-md-row my-3 my-sm-1 pb-1" id="cart__item-{{ item.variant_id }}-container">
+        {% comment %}The items image and title, plus sub text{% endcomment %}
+        <div class="cart__item-primary-info col-md-5 pl-4">
+            <span class="cart__item-delete" data-item-id="{{ item.variant_id }}">
+                {% render 'icon-trash' %}
+            </span>
+            <img loading="lazy" src="{{ item.image | img_url: '150x' }}" class="img-fluid" alt="" srcset="" />
+            {% assign _handle = item.product.handle %}
+            {% assign _handle_second_last_temp = _handle | size | minus: 2 %}
+            {% assign _handle_last_temp = _handle | size | minus: 1 %}
+
+            {% assign _handle_second_last = _handle | slice: _handle_second_last_temp %}
+            {% assign _handle_last = _handle | slice: _handle_last_temp %}
+
+            {% assign _handle_temp = _handle_second_last | append: _handle_last %}
+            
+            {% if _handle_temp == '-1' %}
+                {% assign size = _handle | size | minus: 2 %}
+                {% assign final_handle = _handle | slice: 0, size %}
+            {% else %}
+                {% assign final_handle = _handle %}
+            {% endif %}
+            
+            {%- comment -%}
+                {% assign multiplier = 15.0 %}
+                {% if item.product.handle contains 'ambassador-special' %}
+                    {% if item.properties != '' %}
+                        {% assign multiplier = 20.0 %}
+                    {% endif %}
+                {% endif %}
+            {%- endcomment -%}
+
+            {% assign _product = all_products[final_handle] %}
+            {% assign _15_off_price = _product.price %}
+            {% assign _inflated_15_percent = _product.metafields.off_price.inflated_15_percent %}
+            {% if _inflated_15_percent == null %}
+                {% assign slash_price = _15_off_price | times: 15.0 | divided_by: 100 | plus: _15_off_price | round: 2 | money %}
+            {% else %}
+                {% assign slash_price = _inflated_15_percent | prepend: '$' %}
+            {% endif %}
+            <div class="ml-2">
+                <script>
+                    var _item_id = {{ item.variant.id }}
+                    var _item_weight_oz = {{ item.product.metafields.shipping.weight_oz }}
+                    _subItems.push( { id: _item_id, weight: _item_weight_oz } )
+                </script>
+                <div>
+                    {% capture product_handle_url %}
+                        {% if item.product.metafields.xmas.free_handle != blank %}
+                            {{ item.product.metafields.xmas.free_handle }}
+                        {% else %}
+                            {{ final_handle }}?variant={{ item.variant.id }}
+                        {% endif %}
+                    {% endcapture %}
+                    {% assign product_handle_url = product_handle_url | strip %}
+                    {% capture item_is_ambassador_kit  %}
+                        {% if product_handle_url contains 'ambassador-kit?variant=' or product_handle_url contains 'ambassador-sample?variant=' %}
+                            disabled
+                        {% endif %}
+                    {% endcapture %}
+                    <a href="/products/{{ product_handle_url }}">
+                        {{ item.product.title | replace: 'Subscription - Auto Shipment', '' }}
+                    </a>
+                </div>
+                <div class="font-weight-normal">
+                    {% unless item.title contains 'Shaker' or item.title contains 'Shirt' %}
+                        {% assign variant_title = item.variant.title | replace: '(1 Month Supply)', '' %}
+                        {% if variant_title contains 'FREE SHIPPING' %}
+                            {% assign variant_title_temp = variant_title | split: '<br>' %}
+                            {% assign variant_title = variant_title_temp[1] %}
+                        {% endif %}
+                        {% assign variant_title = variant_title | strip %}
+                        {% if variant_title != 'Default Title' %}
+                            {{ variant_title }}
+                        {% endif %}
+                        {% if item.product.title contains 'Subscription' or item.product.title contains 'subscription' or item.product.title contains 'SUBSCRIPTION' %}
+                            <span
+                                aria-label="original price" 
+                                class="rc_price rc_price__onetime rc_price_slashed font-weight-normal ml-1">
+                                {{ _product.price | money }}
+                            </span>
+                            <span class="ml-1">- FREE SHIPPING</span>
+                        {% endif %}
+                        {%- comment -%}
+                            <span
+                                aria-label="original price" 
+                                class="rc_price rc_price__onetime rc_price_slashed font-weight-normal ml-1">
+                                {{ slash_price }}
+                            </span>
+                            <span class="ml-1 md:line-break">now {{ item.original_price | money }}</span>
+                        {%- endcomment -%}
+                    {% endunless %}
+                    {% if item.title contains 'Shaker' or item.title contains 'Shirt' %}
+                        {%- comment -%}
+                            <span
+                                aria-label="original price" 
+                                class="rc_price rc_price__onetime rc_price_slashed font-weight-normal ml-1">
+                                {{ slash_price }}
+                            </span>
+                            <span class="ml-1 md:line-break">now {{ item.original_price | money }}</span>
+                        {%- endcomment -%}
+                    {% endif %}
+                </div>
+                {% for property in item.properties %}
+                {% if property contains
+                'shipping_interval_frequency' %}
+                <p class="text-uppercase small mb-0">
+                    Autoships every 4 weeks
+                    {% render 'icon-dot' %}
+                    Cancel anytime
+                </p>
+                {% break %}
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% comment %}The items price plus qty{% endcomment %}
+        <div class="cart__item-secondary-info align-items-center justify-content-center">
+            <table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th class="cart__item-info-titles pull-initial md:px-0" scope="col">Price</th>
+                        <th class="cart__item-info-titles text-center" scope="col"><span class="xs:ml-10px">QTY</span></th>
+                        <th class="cart__item-info-titles pull-endmd:px-0" scope="col">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-row="cart-item" data-row-id="{{ item.variant_id }}">
+                        {% assign frees = '39582288117854,39584640696414' | split: ',' %}
+                        {% capture free_product_disabled %}
+                            {% if frees contains item.variant_id %}
+                                disabled
+                            {% endif %}
+                        {% endcapture %}
+                        <td class="text-center md:px-0">{{ item.original_price | money }}</td>
+                        <td class="cart-item__quantity col">
+                            <div class="input-group mx-auto justify-content-center d-flex align-items-center flex-row">
+                                <span class="input-group-btn">
+                                    <button type="button" class="quantity-left-minus btn btn-dark btn-number {{ free_product_disabled }} {{ item_is_ambassador_kit }}"
+                                        data-item-id="{{ item.variant_id }}" data-price="{{ item.original_price }}"
+                                        data-type="minus" data-field="" {{ free_product_disabled }} {{ item_is_ambassador_kit }}>
+                                        <span>{% render 'icon-minus' %}</span>
+                                    </button>
+                                </span>
+                                <input type="text" id="quantity-{{ item.variant_id }}"
+                                    data-price="{{ item.original_price }}" data-item-id="{{ item.variant_id }}"
+                                    name="quantity" class="form-control text-center
+                                                   cart-item__quantity input-number {{ free_product_disabled }} {{ item_is_ambassador_kit }}" style="min-width: 42px"
+                                    value="{{ item.quantity }}" min="1" {{ free_product_disabled }} {{ item_is_ambassador_kit }} /><span class="input-group-btn">
+                                    <button type="button" class="quantity-right-plus btn btn-primary btn-number {{ free_product_disabled }} {{ item_is_ambassador_kit }}"
+                                        data-item-id="{{ item.variant_id }}" data-price="{{ item.original_price }}"
+                                        data-type="plus" data-field="" {{ free_product_disabled }} {{ item_is_ambassador_kit }}>
+                                        <span>{% render 'icon-plus' %}</span>
+                                    </button>
+                                </span>
+                            </div>
+                        </td>
+                        <td class="cart-item__subtotal text-center col md:px-0" id="subtotal-{{ item.variant_id }}">
+                            {{ item.quantity | times: item.original_price | money }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% render 'cart-coupon' %}
+<div class="cart__info d-flex flex-column align-items-end justify-content-end my-2 py-2">
+    <div class="content d-flex justify-content-between" id="cart__shipping-fee">
+        <!--  -->
+    </div>
+    <div class="h5 pb-0 mb-0" id="cart__total">
+        Your Subtotal: $<span id="cart__total-price" data-total={{ cart.total_price | money_without_currency }}>{{ cart.total_price | money_without_currency }}</span>
+    </div>
+
+    <div class="h5 pb-0 mb-0 d-none" id="cart__total-new">
+        New subtotal:
+        <span id="cart__total-new-price" data-total={{ cart.total_price | money_without_currency }}>{{ cart.total_price | money }}</span>
+    </div>
+</div>
+
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center footer-checkout">
+    <a class="btn btn-outline-secondary checkout__buttons mb-2 mb-md-0 mr-md-1 btn-lg text-uppercase font-weight-bold w-100"
+        href="/collections/formula">Continue Shopping</a>
+    <a id="checkout_button" class="checkout__buttons checkout-buttons btn btn-primary btn-lg text-uppercase ml-md-1 font-weight-bold w-100" href="/checkout">Checkout Now</a>
+</div>
+
+<style>
+    .table thead th {
+        border: none;
+    }
+</style>
+
+<form class="collapse">
+    <input type="text" id="form_state" name="form_state">
+</form>
+
+<script src="{{ 'cart.js' | asset_url }}"></script>

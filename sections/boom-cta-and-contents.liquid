@@ -1,0 +1,198 @@
+{% liquid
+    assign quote_title = section.settings.quote_title
+    assign quote_content = section.settings.quote_content
+    assign quote_author = section.settings.quote_author
+
+    assign cta_title = section.settings.cta_title
+    assign cta_button_label = section.settings.cta_button_label
+    assign cta_button_link = section.settings.cta_button_link
+
+    assign content_title = section.settings.content_title
+    assign content_details = section.settings.content_details
+
+    assign bottom_cta_title = section.settings.bottom_cta_title
+    assign bottom_cta_button_label = section.settings.bottom_cta_button_label
+    assign bottom_cta_button_link = section.settings.bottom_cta_button_link
+    assign bottom_notes = section.settings.bottom_notes
+%}
+
+<div class="quote--content">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-12 col-md-10 mx-auto py-4">
+                <h3 class="text-center">{{ quote_title }}</h3>
+
+                <p class="mb-0">{{ quote_content }} <b>-- {{ quote_author }}</b></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="after--quote-content">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-12 col-md-10 mx-auto text-center">
+                <h3>{{ cta_title }}</h3>
+                <a href="{{ cta_button_link }}" class="btn btn-primary text-uppercase">{{ cta_button_label }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-5 pb-2">
+    <div class="form-group row">
+        <div class="col-12 col-md-10 mx-auto text-center">
+            <h3>{{ content_title }}</h3>
+            <p class="mb-0">{{ content_details }}</p>
+        </div>
+    </div>
+
+    <div class="form-group row justify-content-center">
+        {%- for block in section.blocks -%}
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <div class="card shadow rounded py-5 product--card">
+                    <div class="card-header text-center bg-white border-0">
+                        {% assign product = all_products[block.settings.product] %}
+                        <img src="{{ product.featured_image | img_url: '240x' }}" class="img-fluid mx-auto" />
+                        <p class="font-weight-bold text-primary mt-5">
+                            {{ product.title }}
+                            <span class="product--price d-block">{{ product.price | money }}</span>
+                        </p>
+                        <a href="{{ product.url }}" class="btn btn-primary text-uppercase">View Product</a>
+                    </div>
+                    <div class="card-body text-center pt-2">
+                        <label class="text-uppercase text-secondary watch--demo-video clickable" data-id="demo--product-{{ forloop.index }}">
+                            <i class="fa fa-play-circle"></i> Watch Demo Video
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="demo--product-{{ forloop.index }}">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                {{ block.settings.modal_content }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%- endfor -%}
+    </div>
+
+    <div class="form-group row mt-5">
+        <div class="col-12 col-md-10 mx-auto text-center">
+            <h3>{{ bottom_cta_title }}</h3>
+            <a href="{{ bottom_cta_button_link }}" class="btn btn-primary mt-4 text-uppercase py-2 px-4 mb-2">{{ bottom_cta_button_label }}</a>
+
+            <p class="font-italic">{{ bottom_notes }}</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    ( function( $ ) {
+
+        $( document ).ready( function() {
+            $( document ).on( 'click', '.watch--demo-video', function() {
+                const id = $( this ).data( 'id' )
+
+                $( `#${id}` ).modal( 'show' )
+            } )
+        } )
+
+    } )( jQuery )
+</script>
+
+{% schema %}
+{
+    "name": "Boom CTA and Contents",
+    "class": "boom--cta-and-contents",
+    "settings": [
+        {
+            "type": "text",
+            "id": "quote_title",
+            "label": "Quote Title",
+            "default": "What others are saying about us..."
+        },
+        {
+            "type": "textarea",
+            "id": "quote_content",
+            "label": "Quote Content",
+            "default": "I've never felt my joints this strong until I started taking Sport Formula products. The only products that worked best for me. Highly recommend it!"
+        },
+        {
+            "type": "text",
+            "id": "quote_author",
+            "label": "Quote Author",
+            "default": "Sarah"
+        },
+        {
+            "type": "text",
+            "id": "cta_title",
+            "label": "CTA Title",
+            "default": "Having a subscription makes things easy. It saves me time and money"
+        },
+        {
+            "type": "text",
+            "id": "cta_button_label",
+            "label": "CTA Button Label",
+            "default": "Check Out Our Products"
+        },
+        {
+            "type": "url",
+            "id": "cta_button_link",
+            "label": "CTA Button Link"
+        },
+        {
+            "type": "text",
+            "id": "content_title",
+            "label": "Content Title",
+            "default": "Lorem ipsum dolor amit amir-miracle."
+        },
+        {
+            "type": "richtext",
+            "id": "content_details",
+            "label": "Content Details"
+        },
+        {
+            "type": "richtext",
+            "id": "bottom_cta_title",
+            "label": "Bottom CTA Title"
+        },
+        {
+            "type": "text",
+            "id": "bottom_cta_button_label",
+            "label": "Bottom CTA Buttton label"
+        },
+        {
+            "type": "url",
+            "id": "bottom_cta_button_link",
+            "label": "Bottom CTA Buttton Link"
+        },
+        {
+            "type": "text",
+            "id": "bottom_notes",
+            "label": "Bottom Notes"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "bottom_products",
+            "name": "Bottom Products",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Select Product"
+                },
+                {
+                    "type": "textarea",
+                    "id": "modal_content",
+                    "label": "Modal Video Content"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

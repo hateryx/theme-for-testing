@@ -1,0 +1,6 @@
+<div class="input-group">
+    <button class="btn" data-control="-">{% include 'icon-minus' %}</button>
+    <input type="number" class="form-control btn-number"  name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="1">
+    <button class="btn" data-control="+">{% include 'icon-plus' %}</button>
+</div>
+

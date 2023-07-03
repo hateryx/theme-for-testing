@@ -1,0 +1,102 @@
+<div class="container-fluid">
+  <h2 class="text-center mb-3">More Products</h2>
+  <div class="splide" id="multi-product-slider"{% if template.name contains 'product' %} style="width: 90%;"{% endif %}>
+    <div class="splide__track">
+      <ul class="splide__list">
+        {% for product in collections[section.settings.slideCollection].products %}
+          {% assign btnText = '' %}
+          {% for tag in product.tags %}
+            {% if tag contains 'get' %}
+              {% assign btn = tag | split: '-' | last %}
+              {% assign btnText = btn %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+          <li class="splide__slide">
+            <a href="{{ product.url }}">
+              {% render 'responsiveImage' with imageSrc: product.featured_image, firstLoadWidth: '200x', classes: 'img-fluid w-75' %}
+              <button class="btn btn-primary btn-lg text-decoration-none text-uppercase align-self-center" style="max-width: 400px;">
+                {% if btnText %}
+                  View
+                  {{ btnText }}
+                {% else %}
+                  View
+                {% endif %}
+              </button>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% if template.name == 'index' %}
+  <div class="container-fluid d-flex align-items-center" id="shop--full-store">
+    <a class="text-uppercase btn btn-primary btn-lg mx-auto w-100" href="{{ section.settings.shopNow }}">
+      Shop full store
+    </a>
+  </div>
+{% endif %}
+
+<style>
+  #shop--full-store {
+    padding: 0 25px;
+  }
+
+  #shop--full-store a {
+    padding: 10px;
+    font-size: 25px;
+    font-weight: 700;
+    max-width: 400px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Multi Product Slider",
+  "class": "my-5 multi-product-slider__container",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "slideCollection",
+      "label": "Collection to show"
+    },
+    {
+      "type": "url",
+      "id": "shopNow",
+      "label": "Shop All Link"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Sliders",
+      "name":"Multi Product Slider"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    new Splide('#multi-product-slider', {
+      pagination: false,
+      arrows: true,
+      perPage: 3,
+      padding: '10px',
+      gap: '2em',
+      breakpoints: {
+        1600: {
+          perPage: 3,
+        },
+        1200: {
+          perPage: 2,
+        },
+        800: {
+          perPage: 1,
+        },
+      },
+      lazyLoad: 'nearby',
+    }).mount(window.splide.Extensions);
+  });
+</script>

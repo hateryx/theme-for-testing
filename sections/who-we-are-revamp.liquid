@@ -1,0 +1,155 @@
+<div class="desktop-only">
+<div id="who-we-are-rev" class="container-fluid container--revamp p-5 my-5">
+    <div class="form-group row align-items-center h-100 who-we-are-rev-child">
+        <div class="col-12 col-lg-8">
+            <h2 class="content--tagline d-inline-block mb-4">{{ section.settings.content_tagline }}</h2>
+            <h2 class="content--title mb-5" id="wwa-title">{{ section.settings.content_title }}</h2>
+
+            <p class="content--text mb-5" id="wwa-text">{{ section.settings.content_text }}</p>
+
+            <a href="#" class="btn learn--more">Learn More</a>
+        </div>
+        <div class="col-12 col-lg-4">
+            <img src="{{ section.settings.content_image | img_url: 'master' }}" class="img-fluid" style="width: 100%;" />
+        </div>
+    </div>
+</div>
+</div>
+<div class="for-mobile">
+<div id="who-we-are-rev" class="container-fluid container--revamp p-5 my-5">
+    <div class="form-group row align-items-center h-100 who-we-are-rev-child">
+        <div class="col-12 col-lg-5 col-md-pull-6">
+            <img src="{{ section.settings.content_image | img_url: 'master' }}" class="img-fluid" />
+        </div>
+        <div class="col-12 col-lg-7 col-md-push-6">
+            <h2 class="content--tagline d-inline-block mb-4">{{ section.settings.content_tagline }}</h2>
+            <h2 class="content--title mb-5" id="wwa-title">{{ section.settings.content_title }}</h2>
+
+            <p class="content--text mb-5" id="wwa-text">{{ section.settings.content_text }}</p>
+
+            <a href="#" class="btn learn--more">Learn More</a>
+        </div>
+        
+    </div>
+</div>
+</div>
+<style>
+  #shopify-section-template--14256787783774__1659075661a93498a6 {
+    background-size: 30px 30px;
+    background-image: radial-gradient(
+    circle,
+    #deddd0 2px,
+    rgba(0, 0, 0, 0) 1px
+    );
+  }
+  #who-we-are-rev{
+    margin: 0px !important;
+/*     border: 10px solid red; */
+    position: relative;
+    background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 100%);
+    padding: 15px !important;
+  }
+    .who-we-are-revamp .content--tagline {
+        background-color: #F17A15;
+        color: #FFF;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .who-we-are-revamp .content--title {
+        width: 90%;
+        color: #212529;
+        text-transform: uppercase;
+        font-size: 2.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .who-we-are-revamp .content--text {
+        font-size: 1.1rem;
+    }
+
+    .who-we-are-revamp .learn--more {
+        background-color: #F17A15;
+        color: #FFF;
+        font-size: 1rem;
+        padding: 11px 13px;
+        font-weight: bold;
+        position: relative;
+        text-transform: uppercase;
+    }
+  .who-we-are-revamp .learn--more::before {
+    position: absolute;
+    height: 48px;
+    width: 132px;
+    top: -10px;
+    left: 10px;
+    background: transparent;
+    border: 2px solid #F17A15;
+    content: '';
+  }
+.for-mobile {
+  display: none;
+}
+  .desktop-only {
+        padding: 100px;  
+  }
+@media only screen and (max-width: 425px) {
+  #wwa-title {
+    font-size: 32px;
+  }
+  #wwa-text {
+    text-align: justify;
+  }
+
+  .for-mobile {
+    display: block;
+  }
+  .desktop-only {
+    display: none;
+  }
+  
+}
+</style>
+
+{% schema %}
+{
+    "name": "Content Image Revamp",
+    "class": "who-we-are-revamp container--revamp",
+    "settings": [
+        {
+            "type": "text",
+            "id": "content_tagline",
+            "label": "Tagline"
+        },
+        {
+            "type": "textarea",
+            "id": "content_title",
+            "label": "Title"
+        },
+        {
+            "type": "textarea",
+            "id": "content_text",
+            "label": "Content"
+        },
+        {
+            "type": "url",
+            "id": "content_url",
+            "label": "Button Title"
+        },
+        {
+            "type": "image_picker",
+            "id": "content_image",
+            "label": "Content Image"
+        }
+    ],
+    "presets": [
+        {
+            "category": "Content",
+            "name": "Content Image Revamp"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,281 @@
+<div class="header__container test" hidden data-section-type="header" data-section-id="{{ section.id }}">
+  <nav class="navbar navbar-expand-xl navbar-dark bg-dark py-1 px-2 p-xl-2 py-md-3 text-white">
+    <div class="container-fluid flex" style="max-width: 1440px">
+      <!-- We're using the mobile logo id because of existing css -->
+      <a class="navbar-brand block col-6 col-xl-3 p-0 m-0" href="/" id="mobile-logo" data-purpose="Desktop and Mobile">
+        <picture>
+          <source media="(min-width:1199px)" srcset="{{ settings.logo_desktop | img_url: '500x' }}">
+          <source media="(min-width:1024px)" srcset="{{ settings.logo_mobile | img_url: '500x' }}">
+          <source media="(min-width:575px)" srcset="{{ settings.logo_desktop | img_url: '500x' }}">
+          <source media="(min-width:0px)" srcset="{{ settings.logo_mobile | img_url: '200x' }}">
+          <img src="{{ settings.logo_desktop | img_url: '500x' }}" alt="Sport Formula" loading="lazy" class="img-fluid" id="logo-m">
+      	</picture>
+      </a>
+      {% if template.name contains 'product' %}
+        {% assign backToUrl = collection.url %}
+        {% if collection.url contains 'ambassador' or product.handle contains 'ambassador' %}
+          {% assign backToUrl = '/private' %}
+        {% endif %}
+        {% if backToUrl == blank %}
+          {% assign backToUrl = '/collections/formula' %}
+        {% endif %}
+        <a class="d-none d-xl-flex justify-content-center align-items-center" id="backtostore__link" href="{{ backToUrl }}"
+          {% if collection.url contains 'ambassador' %}
+          style="left: 12%"
+          {% endif %}
+          >
+          {% render 'icon-leftarrow' %}
+          
+          <h4>Back to 
+            {% if collection.url contains 'ambassador' or product.handle contains 'ambassador' %}
+            <span>ambassador</span>
+            {% endif %}
+            store
+          </h4>
+        </a>
+      {% endif %}
+      <div class="flex justify-content-center align-items-center menu-icons-container-mobile">
+        <button aria-controls="toggleMobileMenu" aria-expanded="false" aria-label="Toggle navigation"
+                                                                       class="navbar-toggler" data-bs-target="#toggleMobileMenu" data-bs-toggle="collapse" type="button">
+          {% render 'icon-menu.liquid' %}
+          <div class="h6 font-weight-normal" style="margin: 0;">Menu</div>
+        </button>
+        <a class="col-4 flex text-white d-xl-none justify-content-end align-items-center flex-column"
+           href="/account/">
+          {% render 'icon-account' %}
+          <div class="h6 font-weight-normal" style="margin: 0;">Account</div>
+        </a>
+        <a class="col-4 flex d-xl-none text-white justify-content-end align-items-center flex-column" href="/cart/">
+          {% render 'icon-cart' %}
+          <div class="h6 font-weight-normal" style="margin: 0;">Cart</div>
+        </a>
+      </div>
+      <div class="collapse navbar-collapse" id="toggleMobileMenu">
+        <div class="col flex flex-column flex-xl-row justify-content-center align-items-center">
+          <div>
+            <ul class="{% if template.name contains 'product' %} d-xl-none {% endif %} navbar-nav me-auto mb-xl-8 col text-center justify-content-xl-center pr-0 mr-5">
+              {% for link in linklists.top-menu.links %}
+                <li class="nav-item h5 mt-1 mb-0 my-xl-0 font-weight-normal text-uppercase menu-item">
+                  <a class="nav-link text-white mx-xl-2" href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+              {% if section.settings.subscribeSave %}
+                <li class="nav-item h5 mt-1 mb-0 my-xl-0 font-weight-normal text-uppercase menu-item">
+                  <a class="nav-link text-white mx-xl-2" href="{{ section.settings.subscribeSave }}">Subscribe & Save</a>
+                </li>
+              {% endif %}
+              {% if section.settings.contactus %}
+                <li class="d-xl-none nav-item h5 nmt-1 mb-0 my-xl-0 font-weight-normal text-uppercase menu-item">
+                  <a class="nav-link text-white mx-2" href="{{ section.settings.contactus }}">Contact Us</a>
+                </li>
+              {% endif %}
+              {% if section.settings.returnpolicy %}
+                <li class="d-xl-none nav-item h5 mt-1 mb-0 my-xl-0 font-weight-normal text-uppercase menu-item">
+                  <a class="nav-link text-white mx-2" href="{{ section.settings.returnpolicy }}">Shipping and Returns</a>
+                </li>
+              {% endif %}
+              {% if customer.id == null %}
+                <li class="d-xl-none nav-item h5 mt-1 mb-0 my-xl-0 font-weight-normal text-uppercase menu-item">
+                  <a class="nav-link text-white mx-2" href="/account">Login / Register</a>
+                </li>
+              {% else %}
+                <li class="d-xl-none nav-item h5 mt-1 mb-0 my-xl-0 font-weight-normal text-uppercase menu-item">
+                  <a class="nav-link text-white mx-2" href="/tools/recurring/login/">Manage
+                    Subscriptions</a>
+                </li>
+              {% endif %}
+            </ul>
+
+          </div>
+            {% if section.settings.topButtonLink %}
+              <a 
+                class="btn btn-primary text-uppercase position-relative mx-auto mt-3 mb-2 m-xl-0 {% if template.name contains 'product' %} d-xl-none {% endif %}"
+                style="line-height: 30px; left:0;"
+                href="{{ section.settings.topButtonLink }}"
+                id="topButtonLink"
+              >
+              {{ section.settings.topButtonText }}
+            </a>
+            {% endif %}
+            {% if section.settings.secondaryLink %}
+              <a href="{{ section.settings.secondaryLink }}" class="nav-link text-white mx-xl-2{% if template.name contains 'product' %} d-xl-none {% endif %} text-uppercase" style="font-size:22px ;">{{ section.settings.secondaryLinkText }}</a>
+            {% endif %}
+        </div>
+        {% if template.name contains 'product' %}
+          <div class="col-10 col-xl-9 col-xl-7 justify-content-center ml-auto mr-0">
+            <div class="row row-cols-3 align-items-center justify-content-center">
+              <div class="d-none d-xl-block col-xl-6 text-center">
+                <div>
+                  Call us<br>{% render 'phone' %}
+                </div>
+              </div>
+              <a class="col-2 d-xl-flex d-none mr-0 pr-0 text-white justify-content-end align-items-center flex-column"
+                 href="/account/">
+                {% render 'icon-account' %}
+                <div class="h6 font-weight-normal">Account</div>
+              </a>
+              <a class="col-2 d-xl-flex d-none ml-0 pl-0 text-white justify-content-end align-items-center flex-column"
+                 href="/cart/">
+                {% render 'icon-cart' %}
+                <div class="h6 font-weight-normal">Cart</div>
+              </a>
+            </div>
+          </div>
+        {% else %}
+          <div class="col-10 col-xl-3  justify-content-center ml-auto mr-0 menu-icons-container-desktop">
+            <div class="row row-cols-2 align-items-center justify-content-center">
+
+              <a class="col-5 d-xl-flex d-none mr-0 pr-0 text-white justify-content-end align-items-center flex-column"
+                 href="/account/">
+                {% render 'icon-account' %}
+                <div class="h6 font-weight-normal">Account</div>
+              </a>
+              <a class="col-5 d-xl-flex d-none ml-0 pl-0 text-white justify-content-end align-items-center flex-column"
+                 href="/cart/">
+                {% render 'icon-cart' %}
+                <div class="h6 font-weight-normal">Cart</div>
+              </a>
+            </div>
+            <div class="d-none d-xl-block col-xl-12 text-center">
+              <div>
+                Call us<br>{% render 'phone' %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar--revamp">
+  <div class="container-fluid px-5">
+    <a class="navbar-brand" href="/" id="mobile-logo">
+      <picture>
+        <source media="(max-width:992px)" srcset="{{ settings.logo_desktop | img_url: '500x' }}">
+        <img src="{{ settings.logo_desktop | img_url: '500x' }}" class="img-fluid" id="logo-m" />
+      </picture>
+    </a>
+    <div class="d-flex d-lg-none">
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavLinks">
+        <i class="fa fa-align-justify"></i>
+      </button>
+      <a class="nav-link text-white h5 mx-lg-3 mb-0" href="/cart"><i class="fa fa-shopping-cart"></i></a>
+      <a class="nav-link text-white h5 mx-lg-3 mb-0" href="/account"><i class="fa fa-user"></i></a>
+    </div>
+    <div class="collapse navbar-expand-lg navbar-collapse" id="mainNavLinks">
+      <ul class="navbar-nav mx-auto">
+        {% for link in linklists.top-menu.links %}
+          <li class="nav-item text-uppercase menu-item">
+            <a class="nav-link text-white h5 mx-lg-3 text-center" href="{{ link.url }}">{{ link.title }}</a>
+          </li>
+        {% endfor %}
+        {% if section.settings.subscribeSave %}
+          <li class="nav-item text-uppercase menu-item">
+            <a class="nav-link text-white h5 mx-lg-3 text-center" href="{{ section.settings.subscribeSave }}">Subscribe & Save</a>
+          </li>
+        {% endif %}
+        {% if section.settings.topButtonLink %}
+          <li class="nav-item text-uppercase menu-item">
+            <a class="nav-link text-white h5 mx-lg-3 text-center" href="{{ section.settings.topButtonLink }}">{{ section.settings.topButtonText }}</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+    <ul class="navbar-nav d-xl-max-none ml-auto">
+      <li class="nav-item text-uppercase menu-item">
+        <a class="nav-link text-white h5 mx-lg-3 text-center" href="tel:1-{{ settings.shopPhoneNumber | remove: "(" | remove: ")" | replace: " ", "-" }}">CALL US {{ settings.shopPhoneNumber }}</a>
+      </li>
+      <li class="nav-item text-uppercase menu-item">
+        <a class="nav-link text-white h5 mx-lg-3 text-center" href="/cart"><i class="fa fa-shopping-cart"></i></a>
+      </li>
+      <li class="nav-item text-uppercase menu-item">
+        <a class="nav-link text-white h5 mx-lg-3 text-center" href="/account"><i class="fa fa-user"></i></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+svg.icon.icon-theme-201, svg.icon.icon-theme-109 {
+  width: 33px;
+}
+
+@media screen and (min-width: 992px) {
+  a.btn.btn-primary.text-uppercase.position-relative {
+    left: 50px;
+  }
+}
+
+#navbar--revamp .navbar-brand img {
+  height: 23px;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 1600px) {
+  #navbar--revamp .nav-link {
+    font-size: 1rem;
+  }
+}
+
+
+@media screen and (max-width: 992px) {
+  #navbar--revamp .nav-link {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 425px) {
+    #logo-m {
+      width: 100%;
+    }
+#navbar--revamp .navbar-brand img{
+object-fit: contain;
+}
+}
+</style>
+
+{% schema %}
+{
+"name": "Header",
+"settings": [
+{
+"type": "url",
+"id": "topButtonLink",
+"label": "Top Button Link"
+},
+{
+"type": "text",
+"id": "topButtonText",
+"label": "Top Button Text",
+"default": "Join the club"
+},
+{
+"type": "url",
+"id": "secondaryLink",
+"label": "Secondary Button Link"
+},
+{
+"type": "url",
+"id": "contactus",
+"label": "Contact Us"
+},
+{
+"type": "url",
+"id": "subscribeSave",
+"label": "Subscribe & Save"
+},
+{
+"type": "url",
+"id": "returnpolicy",
+"label": "Return Policy"
+},
+{
+"type": "url",
+"id": "backToStore",
+"label": "Back to store url"
+}
+
+]
+}
+{% endschema %}

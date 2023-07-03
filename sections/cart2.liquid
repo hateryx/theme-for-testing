@@ -1,0 +1,119 @@
+<!-- Begin ReCharge code -->
+{% include 'subscription-cart-footer' %}
+<!-- End ReCharge code -->
+<!-- {% include 'breadcrumbs' %} -->
+
+<div class="cart__container border-bottom">
+  <a
+    class="btn btn-primary btn-lg w-100 font-weight-bold text-uppercase"
+    href="/checkout"
+    >Checkout now</a
+  >
+  <div class="cart__table table-responsive-xl">
+    <table class="table">
+      <thead>
+        <tr class="text-center">
+          <th scope="col">Item</th>
+          <th scope="col">Price</th>
+          <th scope="col">QTY</th>
+          <th scope="col">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+        <tr id="cart__item-{{ item.variant_id }}-container row">
+          <th scope="row">
+            <div
+              class="d-flex flex-column flex-md-row align-items-start justify-content-start"
+            >
+              <span
+                class="cart__item-delete"
+                data-item-id="{{ item.variant_id }}"
+              >
+                {% render 'icon-trash' %}
+              </span>
+              <img src="{{ item.image | img_url: '150x' }}" class="img-fluid" loading="lazy" alt="" srcset="" />
+
+              <div class="ml-2">
+                <div>
+                  <a href="{{ item.url }}">
+                    {{ item.product.title }}
+                  </a>
+                </div>
+                <div class="font-weight-normal">
+                  {{ item.variant.title }}
+                </div>
+                {% for property in item.properties %} {% if property contains
+                'shipping_interval_frequency' %}
+                <p class="text-uppercase small">
+                  Ships every 30 days {% render 'icon-dot' %} Cancel anytime
+                </p>
+                {% break %} {% endif %} {% endfor %}
+              </div>
+            </div>
+          </th>
+          <td class="text-center">{{ item.original_price | money }}</td>
+          <td class="cart-item__quantity text-center" style="width: 160px;">
+            <div class="input-group mx-auto">
+              <span class="input-group-btn">
+                <button
+                  type="button"
+                  class="quantity-left-minus btn btn-dark btn-number"
+                  data-item-id="{{ item.variant_id }}"
+                  data-price="{{ item.original_price }}"
+                  data-type="minus"
+                  data-field=""
+                >
+                  <span>{% render 'icon-minus' %}</span>
+                </button>
+              </span>
+              <input
+                type="text"
+                id="quantity-{{ item.variant_id }}"
+                data-price="{{ item.original_price }}"
+                data-item-id="{{ item.variant_id }}"
+                name="quantity"
+                class="
+                  form-control
+                  text-center
+                  cart-item__quantity
+                  input-number
+                "
+                value="{{ item.quantity }}"
+                min="1"
+              />
+              <span class="input-group-btn">
+                <button
+                  type="button"
+                  class="quantity-right-plus btn btn-primary btn-number"
+                  data-item-id="{{ item.variant_id }}"
+                  data-price="{{ item.original_price }}"
+                  data-type="plus"
+                  data-field=""
+                >
+                  <span>{% render 'icon-plus' %}</span>
+                </button>
+              </span>
+            </div>
+          </td>
+          <td
+            class="cart-item__subtotal text-center"
+            id="subtotal-{{ item.variant_id }}"
+          >
+            {{ item.quantity | times: item.original_price | money }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="cart__info d-flex align-items-end justify-content-end my-3">
+    <div class="h5">
+        Order subtotal: <span id="cart__total">{{cart.total_price | money}}</span>
+    </div>
+</div>
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center">
+    <a href="/" class="btn btn-outline-secondary mb-2 mb-md-0 mr-md-1 btn-lg text-uppercase font-weight-bold w-100">Continue Shopping</a>
+    <a href="/checkout" class="btn btn-primary btn-lg text-uppercase ml-md-1 font-weight-bold w-100">Checkout</a>
+</div>
