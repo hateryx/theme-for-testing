@@ -10,7 +10,7 @@
       <ul class="splide__list">
         {% for block in section.blocks %}
           <li class="splide__slide mb-3 {% if forloop.index > 4 %}px-3{% endif %}">
-            {% render 'responsiveImage' with imageSrc: block.settings.image, firstLoadWidth: '100x', classes: 'img-fluid' %}
+            {% render 'responsiveImage' with imageSrc, imageSrc: block.settings.image, firstLoadWidth: '100x', classes: 'img-fluid' %}
             <div>
               <h5 class="uppercase mt-3">
                 Juan Dela Cruz
@@ -127,4 +127,15 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'responsiveImage' with imageSrc: block.settings.image, firstLoadWidth:
+    '100x', classes: 'img-fluid' %}"
+  to: "{% render 'responsiveImage' with imageSrc, imageSrc: block.settings.image,
+    firstLoadWidth: '100x', classes: 'img-fluid' %}"
+  position: 422..544
+{%- endcomment -%}

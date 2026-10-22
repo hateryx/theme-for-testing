@@ -14,7 +14,7 @@
           {% endfor %}
           <li class="splide__slide">
             <a href="{{ product.url }}">
-              {% render 'responsiveImage' with imageSrc: product.featured_image, firstLoadWidth: '200x', classes: 'img-fluid w-75' %}
+              {% render 'responsiveImage' with imageSrc, imageSrc: product.featured_image, firstLoadWidth: '200x', classes: 'img-fluid w-75' %}
               <button class="btn btn-primary btn-lg text-decoration-none text-uppercase align-self-center" style="max-width: 400px;">
                 {% if btnText %}
                   View
@@ -100,3 +100,15 @@
     }).mount(window.splide.Extensions);
   });
 </script>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'responsiveImage' with imageSrc: product.featured_image, firstLoadWidth:
+    '200x', classes: 'img-fluid w-75' %}"
+  to: "{% render 'responsiveImage' with imageSrc, imageSrc: product.featured_image,
+    firstLoadWidth: '200x', classes: 'img-fluid w-75' %}"
+  position: 728..857
+{% endcomment %}

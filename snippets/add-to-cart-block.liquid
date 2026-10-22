@@ -13,8 +13,7 @@ settings.color_product_page_button_compare_type == '3' %} btn--secondary{% endif
 %}{% endcapture %} {% capture countdown_html %} {%- if show_countdown -%}
 <div class="product-page-info__countdown mb-20">
   {% capture countdown_title %}{{ 'products.roduct.countdown.title' | t }}{%
-  endcapture %} {% include 'product-get-countdown' with date: countdown_date,
-  countdown_type: 2, countdown_title: countdown_title, centered: centered %}
+  endcapture %} {% include 'product-get-countdown' with date, date: countdown_date, countdown_type: 2, countdown_title: countdown_title, centered: centered %}
 </div>
 {%- endif -%} {% endcapture %} {% capture stock_countdown_html %} {%- if
 show_stock_countdown -%}
@@ -126,7 +125,7 @@ show_text_countdown -%}
 {%- endif -%} {% endcapture %} {% capture free_shipping_html %} {%- if
 show_free_shipping and settings.show_free_shipping -%}
 <div class="product-page-info__free-shipping mt-10 mb-15">
-  {% include 'free-shipping' with mobile_centered: true centered: centered %}
+  {% include 'free-shipping' with mobile_centered, mobile_centered: true, centered: centered %}
 </div>
 {%- endif -%} {% endcapture %} {% capture payments_html %} {%- if show_payments
 -%}
@@ -166,7 +165,7 @@ show_free_shipping and settings.show_free_shipping -%}
   %} {%- endif -%} {%- if settings[prop_image] != blank -%} {% capture icon_html
   %}
   <div class="payments__image payments__image--{{ tooltip_value }}">
-    {% include 'rimage' with image: settings[prop_image] size: '100x' %}
+    {% include 'rimage' with image, image: settings[prop_image], size: '100x' %}
     <span class="d-none">{{ tooltip_value }}</span>
   </div>
   {% endcapture %} {%- else -%} {%- if settings[prop_code] != blank -%} {%-
@@ -233,9 +232,7 @@ show_free_shipping and settings.show_free_shipping -%}
   </div>
   {%- if show_reviews -%}
   <div class="product-page-info__reviews text-center text-lg-left">
-    {% include 'product-get-review' with hide_empty: hide_empty_reviews
-    hide_counter: hide_reviews_counter hide_mobile_counter:
-    hide_reviews_mobile_counter %}
+    {% include 'product-get-review' with hide_empty, hide_empty: hide_empty_reviews, hide_counter: hide_reviews_counter, hide_mobile_counter: hide_reviews_mobile_counter %}
   </div>
   {%- endif -%} {%- if show_sku or show_barcode or show_availability or
   show_type or show_vendor -%}
@@ -387,8 +384,7 @@ show_free_shipping and settings.show_free_shipping -%}
     product.has_only_default_variant -%}
     <div class="product-page-info__options mb-15">
       {%- unless is_quick_view -%} {%- assign trigger_id = 'footbar' -%} {%-
-      endunless -%} {% include 'product-get-options' with options_type: 2
-      options_show_title: true change_history: true %}
+      endunless -%} {% include 'product-get-options' with options_type, options_type: 2, options_show_title: true, change_history: true %}
     </div>
     {%- endunless -%} {%- endif -%} {%- if show_button_add_to_cart or
     show_options -%}
@@ -429,8 +425,7 @@ show_free_shipping and settings.show_free_shipping -%}
     {%- endif -%} {%- if show_quantity -%}
     <div class="product-page-info__quantity mb-20">
       {%- unless is_quick_view -%} {%- assign quantity_connect = 'footbar' -%}
-      {%- endunless -%} {% include 'product-get-quantity' with
-      quantity_show_title: true %}
+      {%- endunless -%} {% include 'product-get-quantity' with quantity_show_title, quantity_show_title: true %}
     </div>
     {%- endif -%} {%- if show_button_add_to_cart or show_button_add_to_wishlist
     or show_button_add_to_compare or show_button_dynamic_checkout -%}
@@ -891,8 +886,7 @@ show_free_shipping and settings.show_free_shipping -%}
     product.has_only_default_variant -%}
     <div class="product-page-info__options mb-15">
       {%- unless is_quick_view -%} {%- assign trigger_id = 'footbar' -%} {%-
-      endunless -%} {% include 'product-get-options' with options_type: 2
-      options_show_title: true change_history: true %}
+      endunless -%} {% include 'product-get-options' with options_type, options_type: 2, options_show_title: true, change_history: true %}
     </div>
     {%- endunless -%} {%- endif -%} {%- if show_button_add_to_cart or
     show_options -%}
@@ -956,8 +950,7 @@ show_free_shipping and settings.show_free_shipping -%}
         <div class="product-page-info__quantity mb-20">
           <div class="product-page-info__quantity-inner">
             {%- unless is_quick_view -%} {%- assign quantity_connect = 'footbar'
-            -%} {%- endunless -%} {% include 'product-get-quantity' with
-            quantity_show_title: true %}
+            -%} {%- endunless -%} {% include 'product-get-quantity' with quantity_show_title, quantity_show_title: true %}
           </div>
         </div>
         {%- endif -%} {%- if show_button_add_to_wishlist -%} {% capture
@@ -1221,9 +1214,7 @@ show_free_shipping and settings.show_free_shipping -%}
   </div>
   {%- if show_reviews -%}
   <div class="product-page-info__reviews text-center text-lg-left">
-    {% include 'product-get-review' with hide_empty: hide_empty_reviews
-    hide_counter: hide_reviews_counter hide_mobile_counter:
-    hide_reviews_mobile_counter %}
+    {% include 'product-get-review' with hide_empty, hide_empty: hide_empty_reviews, hide_counter: hide_reviews_counter, hide_mobile_counter: hide_reviews_mobile_counter %}
   </div>
   {%- endif -%} {%- if show_sku or show_barcode or show_availability or
   show_type or show_vendor -%}
@@ -1375,8 +1366,7 @@ show_free_shipping and settings.show_free_shipping -%}
     product.has_only_default_variant -%}
     <div class="product-page-info__options mb-15">
       {%- unless is_quick_view -%} {%- assign trigger_id = 'footbar' -%} {%-
-      endunless -%} {% include 'product-get-options' with options_type: 2
-      options_show_title: true change_history: true %}
+      endunless -%} {% include 'product-get-options' with options_type, options_type: 2, options_show_title: true, change_history: true %}
     </div>
     {%- endunless -%} {%- endif -%} {%- if show_button_add_to_cart or
     show_options -%}
@@ -1417,8 +1407,7 @@ show_free_shipping and settings.show_free_shipping -%}
     {%- endif -%} {%- if show_quantity -%}
     <div class="product-page-info__quantity mb-20">
       {%- unless is_quick_view -%} {%- assign quantity_connect = 'footbar' -%}
-      {%- endunless -%} {% include 'product-get-quantity' with
-      quantity_show_title: true %}
+      {%- endunless -%} {% include 'product-get-quantity' with quantity_show_title, quantity_show_title: true %}
     </div>
     {%- endif -%} {%- if show_button_add_to_cart or show_button_add_to_wishlist
     or show_button_add_to_compare or show_button_dynamic_checkout -%}
@@ -1586,9 +1575,7 @@ show_free_shipping and settings.show_free_shipping -%}
   </div>
   {%- if show_reviews -%}
   <div class="product-page-info__reviews text-center text-lg-left">
-    {% include 'product-get-review' with hide_empty: hide_empty_reviews
-    hide_counter: hide_reviews_counter hide_mobile_counter:
-    hide_reviews_mobile_counter %}
+    {% include 'product-get-review' with hide_empty, hide_empty: hide_empty_reviews, hide_counter: hide_reviews_counter, hide_mobile_counter: hide_reviews_mobile_counter %}
   </div>
   {%- endif -%} {%- if show_sku or show_barcode or show_availability or
   show_type or show_vendor -%}
@@ -1740,8 +1727,7 @@ show_free_shipping and settings.show_free_shipping -%}
     product.has_only_default_variant -%}
     <div class="product-page-info__options mb-15">
       {%- unless is_quick_view -%} {%- assign trigger_id = 'footbar' -%} {%-
-      endunless -%} {% include 'product-get-options' with options_type: 2
-      options_show_title: true change_history: true %}
+      endunless -%} {% include 'product-get-options' with options_type, options_type: 2, options_show_title: true, change_history: true %}
     </div>
     {%- endunless -%} {%- endif -%} {%- if show_button_add_to_cart or
     show_options -%}
@@ -1782,8 +1768,7 @@ show_free_shipping and settings.show_free_shipping -%}
     {%- endif -%} {%- if show_quantity -%}
     <div class="product-page-info__quantity mb-20">
       {%- unless is_quick_view -%} {%- assign quantity_connect = 'footbar' -%}
-      {%- endunless -%} {% include 'product-get-quantity' with
-      quantity_show_title: true %}
+      {%- endunless -%} {% include 'product-get-quantity' with quantity_show_title, quantity_show_title: true %}
     </div>
     {%- endif -%} {%- if show_button_add_to_cart or show_button_add_to_wishlist
     or show_button_add_to_compare or show_button_dynamic_checkout -%}
@@ -1966,9 +1951,7 @@ show_free_shipping and settings.show_free_shipping -%}
   </div>
   {%- if show_reviews -%}
   <div class="product-page-info__reviews text-center text-lg-left">
-    {% include 'product-get-review' with hide_empty: hide_empty_reviews
-    hide_counter: hide_reviews_counter hide_mobile_counter:
-    hide_reviews_mobile_counter %}
+    {% include 'product-get-review' with hide_empty, hide_empty: hide_empty_reviews, hide_counter: hide_reviews_counter, hide_mobile_counter: hide_reviews_mobile_counter %}
   </div>
   {%- endif -%} {%- if show_sku or show_barcode or show_availability or
   show_type or show_vendor -%}
@@ -2120,8 +2103,7 @@ show_free_shipping and settings.show_free_shipping -%}
     product.has_only_default_variant -%}
     <div class="product-page-info__options mb-15">
       {%- unless is_quick_view -%} {%- assign trigger_id = 'footbar' -%} {%-
-      endunless -%} {% include 'product-get-options' with options_type: 2
-      options_show_title: true change_history: true %}
+      endunless -%} {% include 'product-get-options' with options_type, options_type: 2, options_show_title: true, change_history: true %}
     </div>
     {%- endunless -%} {%- endif -%} {%- if show_button_add_to_cart or
     show_options -%}
@@ -2162,8 +2144,7 @@ show_free_shipping and settings.show_free_shipping -%}
     {%- endif -%} {%- if show_quantity -%}
     <div class="product-page-info__quantity mb-20">
       {%- unless is_quick_view -%} {%- assign quantity_connect = 'footbar' -%}
-      {%- endunless -%} {% include 'product-get-quantity' with
-      quantity_show_title: true %}
+      {%- endunless -%} {% include 'product-get-quantity' with quantity_show_title, quantity_show_title: true %}
     </div>
     {%- endif -%} {%- if show_button_add_to_cart or show_button_add_to_wishlist
     or show_button_add_to_compare or show_button_dynamic_checkout -%}
@@ -2344,9 +2325,7 @@ show_free_shipping and settings.show_free_shipping -%}
       product-page-info__reviews product-page-info__reviews--center
       text-center
     ">
-    {% include 'product-get-review' with hide_empty: hide_empty_reviews
-    hide_counter: hide_reviews_counter hide_mobile_counter:
-    hide_reviews_mobile_counter %}
+    {% include 'product-get-review' with hide_empty, hide_empty: hide_empty_reviews, hide_counter: hide_reviews_counter, hide_mobile_counter: hide_reviews_mobile_counter %}
   </div>
   {%- endif -%} {%- if show_sku or show_barcode or show_availability or
   show_type or show_vendor -%}
@@ -2483,8 +2462,7 @@ show_free_shipping and settings.show_free_shipping -%}
     product.has_only_default_variant -%}
     <div class="product-page-info__options mb-15">
       {%- unless is_quick_view -%} {%- assign trigger_id = 'footbar' -%} {%-
-      endunless -%} {% include 'product-get-options' with options_type: 2
-      centered: true options_show_title: true change_history: true %}
+      endunless -%} {% include 'product-get-options' with options_type, options_type: 2, centered: true, options_show_title: true, change_history: true %}
     </div>
     {%- endunless -%} {%- endif -%} {%- if show_button_add_to_cart or
     show_options -%}
@@ -2535,8 +2513,7 @@ show_free_shipping and settings.show_free_shipping -%}
       "
     >
       {%- unless is_quick_view -%} {%- assign quantity_connect = 'footbar' -%}
-      {%- endunless -%} {% include 'product-get-quantity' with
-      quantity_show_title: true %}
+      {%- endunless -%} {% include 'product-get-quantity' with quantity_show_title, quantity_show_title: true %}
     </div>
     {%- endif -%} {%- if show_button_add_to_cart or show_button_add_to_wishlist
     or show_button_add_to_compare or show_button_dynamic_checkout -%}
@@ -2725,4 +2702,136 @@ show_free_shipping and settings.show_free_shipping -%}
   if ($(window).width() < 1025) {
     $('.content-product-page').insertBefore(productBenefits);
   }
-</script>
+</script>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% include 'product-get-countdown' with date: countdown_date,
+      countdown_type: 2, countdown_title: countdown_title, centered: centered %}
+  to: "{% include 'product-get-countdown' with date, date: countdown_date, countdown_type:
+    2, countdown_title: countdown_title, centered: centered %}"
+  position: 1062..1204
+- from: "{% include 'free-shipping' with mobile_centered: true centered: centered
+    %}"
+  to: "{% include 'free-shipping' with mobile_centered, mobile_centered: true, centered:
+    centered %}"
+  position: 5030..5123
+- from: "{% include 'rimage' with image: settings[prop_image] size: '100x' %}"
+  to: "{% include 'rimage' with image, image: settings[prop_image], size: '100x' %}"
+  position: 7138..7214
+- from: |-
+    {% include 'product-get-review' with hide_empty: hide_empty_reviews
+        hide_counter: hide_reviews_counter hide_mobile_counter:
+        hide_reviews_mobile_counter %}
+  to: "{% include 'product-get-review' with hide_empty, hide_empty: hide_empty_reviews,
+    hide_counter: hide_reviews_counter, hide_mobile_counter: hide_reviews_mobile_counter
+    %}"
+  position: 9923..10091
+- from: |-
+    {% include 'product-get-options' with options_type: 2
+          options_show_title: true change_history: true %}
+  to: "{% include 'product-get-options' with options_type, options_type: 2, options_show_title:
+    true, change_history: true %}"
+  position: 15028..15146
+- from: |-
+    {% include 'product-get-quantity' with
+          quantity_show_title: true %}
+  to: "{% include 'product-get-quantity' with quantity_show_title, quantity_show_title:
+    true %}"
+  position: 16480..16568
+- from: |-
+    {% include 'product-get-options' with options_type: 2
+          options_show_title: true change_history: true %}
+  to: "{% include 'product-get-options' with options_type, options_type: 2, options_show_title:
+    true, change_history: true %}"
+  position: 34915..35033
+- from: |-
+    {% include 'product-get-quantity' with
+                quantity_show_title: true %}
+  to: "{% include 'product-get-quantity' with quantity_show_title, quantity_show_title:
+    true %}"
+  position: 37575..37663
+- from: |-
+    {% include 'product-get-review' with hide_empty: hide_empty_reviews
+        hide_counter: hide_reviews_counter hide_mobile_counter:
+        hide_reviews_mobile_counter %}
+  to: "{% include 'product-get-review' with hide_empty, hide_empty: hide_empty_reviews,
+    hide_counter: hide_reviews_counter, hide_mobile_counter: hide_reviews_mobile_counter
+    %}"
+  position: 48827..48995
+- from: |-
+    {% include 'product-get-options' with options_type: 2
+          options_show_title: true change_history: true %}
+  to: "{% include 'product-get-options' with options_type, options_type: 2, options_show_title:
+    true, change_history: true %}"
+  position: 53932..54050
+- from: |-
+    {% include 'product-get-quantity' with
+          quantity_show_title: true %}
+  to: "{% include 'product-get-quantity' with quantity_show_title, quantity_show_title:
+    true %}"
+  position: 55384..55472
+- from: |-
+    {% include 'product-get-review' with hide_empty: hide_empty_reviews
+        hide_counter: hide_reviews_counter hide_mobile_counter:
+        hide_reviews_mobile_counter %}
+  to: "{% include 'product-get-review' with hide_empty, hide_empty: hide_empty_reviews,
+    hide_counter: hide_reviews_counter, hide_mobile_counter: hide_reviews_mobile_counter
+    %}"
+  position: 62961..63129
+- from: |-
+    {% include 'product-get-options' with options_type: 2
+          options_show_title: true change_history: true %}
+  to: "{% include 'product-get-options' with options_type, options_type: 2, options_show_title:
+    true, change_history: true %}"
+  position: 68066..68184
+- from: |-
+    {% include 'product-get-quantity' with
+          quantity_show_title: true %}
+  to: "{% include 'product-get-quantity' with quantity_show_title, quantity_show_title:
+    true %}"
+  position: 69518..69606
+- from: |-
+    {% include 'product-get-review' with hide_empty: hide_empty_reviews
+        hide_counter: hide_reviews_counter hide_mobile_counter:
+        hide_reviews_mobile_counter %}
+  to: "{% include 'product-get-review' with hide_empty, hide_empty: hide_empty_reviews,
+    hide_counter: hide_reviews_counter, hide_mobile_counter: hide_reviews_mobile_counter
+    %}"
+  position: 77797..77965
+- from: |-
+    {% include 'product-get-options' with options_type: 2
+          options_show_title: true change_history: true %}
+  to: "{% include 'product-get-options' with options_type, options_type: 2, options_show_title:
+    true, change_history: true %}"
+  position: 82902..83020
+- from: |-
+    {% include 'product-get-quantity' with
+          quantity_show_title: true %}
+  to: "{% include 'product-get-quantity' with quantity_show_title, quantity_show_title:
+    true %}"
+  position: 84354..84442
+- from: |-
+    {% include 'product-get-review' with hide_empty: hide_empty_reviews
+        hide_counter: hide_reviews_counter hide_mobile_counter:
+        hide_reviews_mobile_counter %}
+  to: "{% include 'product-get-review' with hide_empty, hide_empty: hide_empty_reviews,
+    hide_counter: hide_reviews_counter, hide_mobile_counter: hide_reviews_mobile_counter
+    %}"
+  position: 92629..92797
+- from: |-
+    {% include 'product-get-options' with options_type: 2
+          centered: true options_show_title: true change_history: true %}
+  to: "{% include 'product-get-options' with options_type, options_type: 2, centered:
+    true, options_show_title: true, change_history: true %}"
+  position: 97155..97289
+- from: |-
+    {% include 'product-get-quantity' with
+          quantity_show_title: true %}
+  to: "{% include 'product-get-quantity' with quantity_show_title, quantity_show_title:
+    true %}"
+  position: 98720..98808
+{%- endcomment -%}

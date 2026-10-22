@@ -6,8 +6,7 @@
       {% if block.settings.image %}
         <div class="col col-lg- col-xl-5 text-center">
 
-          {% render 'responsiveImage' with imageSrc: block.settings.image,firstLoadWidth: '570x', classes:
-          'img-fluid w-100' %}
+          {% render 'responsiveImage' with imageSrc, imageSrc: block.settings.image, firstLoadWidth: '570x', classes: 'img-fluid w-100' %}
         </div>
       {% else %}
         <div class="col col-lg-6 col-xl-5">{{ block.settings.embed }}</div>
@@ -58,3 +57,16 @@
 }
 
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'responsiveImage' with imageSrc: block.settings.image,firstLoadWidth: '570x', classes:
+              'img-fluid w-100' %}
+  to: "{% render 'responsiveImage' with imageSrc, imageSrc: block.settings.image,
+    firstLoadWidth: '570x', classes: 'img-fluid w-100' %}"
+  position: 506..634
+{% endcomment %}
